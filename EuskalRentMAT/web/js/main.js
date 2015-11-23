@@ -1,4 +1,6 @@
 $(document).ready(function(){
+    
+    
     //Handles menu drop down
     $('.dropdown-menu').find('form').click(function (e) {
         e.stopPropagation();
@@ -7,33 +9,53 @@ $(document).ready(function(){
         interval: 3000
     });
     
-    
-    $("#accede").click(function (){ //función para el boton de enviar
-        //recolectamos en variables, lo que tenga cada input.
-        //Para mejor manipulación en los if's
-        var nombre = $("#loginEmail").val();
-        var apellidos = $("#loginPass").val();
-
-        
-        $("#menuAccede").remove();
-        $.get("menuUsuario.html", function (data) {
-                    $("#bs-example-navbar-collapse-1").append(data);
-        });
-
-        
-
+    $(".formLogin").bind('change blur keyup',function(e){
+        var elemento = e.target;
+        if (elemento.validity.valid) {
+            elemento.style.background = '#FFFFFF';
+            if(elemento === document.getElementById("loginEmail")){
+                $("#avisoEmailLogin").text("");
+            }
+            else if(elemento === document.getElementById("loginPass")){
+                $("#avisoPassLogin").text("");
+            }
+            
+        }
+        else {
+            elemento.style.background = '#FFA1A1';
+            if(elemento === document.getElementById("loginEmail")){
+                $("#avisoEmailLogin").text("Introduzca un correo válido");
+            }
+            else if(elemento === document.getElementById("loginPass")){
+                $("#avisoPassLogin").text("Introduzca una contraseña valida");
+            }
+           
+        }
     });
     
-    //function to sign in
-    function login() {
-        var inputUsername = localStorage.getItem("username");
-        var inputPassword = localStorage.getItem("password");
-        if (username != "undefined" || username != "null" || password != "undefined" || password !="null")
-        {
-           document.getElementByID('welcomeMessage').innerHTML = "Welcome " + username + "!";
-        } else
-            document.getElementById('welcomeMessage').innerHTML = "Hello!";
-     }
+    $("#accede").click(function (){ 
+        
+        var email = $("#loginEmail").val();
+        var pass = $("#loginPass").val();
+        
+        var usuario = JSON.parse(localStorage.getItem(email));
+
+        
+        if((usuario !== null) && (usuario.pass = pass)){
+            
+            $("#menuAccede").remove();
+            $.get("menuUsuario.html", function (data) {
+                    $("#bs-example-navbar-collapse-1").append(data);
+            });
+            
+        } else {
+            $("#noExiste").text("El usuario no existe o su contraseña es invalida");           
+        }
+
+        
+    });
     
+    
+   
     
 });
