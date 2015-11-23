@@ -19,12 +19,12 @@
 .navbar-toggle{
     border: none;
 }
-#accede{
-    color: white;
+.botones{
+    color: white !important;
 }
-#accede:hover,#accede:focus{
-    background-color: white;
-    color: #337AB7;
+.botones:hover,.botones:focus, .botones:after {
+    background-color: white !important;
+    color: #337AB7 !important;
 }
 #logo{
     color: white;
