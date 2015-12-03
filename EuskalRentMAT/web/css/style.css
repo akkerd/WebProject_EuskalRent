@@ -102,3 +102,114 @@ body {
 #CarouselContenedor{
     padding-top: 75px;
 }
+/************************ FORMULARIO REGISTRO *********************/
+#formRegistro{
+    text-align: center;
+    margin: 0 20% 0 20%;
+    padding-bottom: 15px;
+}
+#inputRegistro{
+    padding: 0 5% 0 5%;
+    width: 50%;
+}
+.requerido {
+    color:#d45252;
+    margin-top:15px;
+    text-align:center;
+    font-size: 1px;
+}
+/************************ PERFIL *********************/
+.nav-menus {
+  border-bottom: 1px solid #ddd;
+}
+
+.nav-menus > li {
+  float: left;
+  margin-bottom: -1px;
+}
+
+.nav-menus > li > a {
+  margin-right: 2px;
+  line-height: 1.42857143;
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+}
+
+.nav-menus > li > a:hover {
+  border-color: #eee #eee #ddd;
+}
+.nav-menus > li.active > a,
+.nav-menus > li.active > a:hover,
+.nav-menus > li.active > a:focus {
+  color: #555;
+  cursor: default;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
+}
+
+#menuPerfil{
+    padding: 15px;
+    min-width: 250px;
+}
+
+#botonFormPerfil{
+    background-color: #337AB7;
+    color: white;
+}
+
+#formEmail{
+    background-color: lightgray;
+}
+
+.botonGR {
+    background-color: #337AB7;
+    color: white;
+    width: 100%;
+}
+
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+#drop_zone, #drop_zone_aloj{
+  height: 150px;
+  width: 150px;
+  float: left;
+  border: 2px solid #666666;
+  background-color: #ccc;
+  margin-right: 10px;
+  -webkit-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 3px #000;
+  -ms-box-shadow: inset 0 0 3px #000;
+  box-shadow: inset 0 0 3px #000;
+  text-align: center;
+  cursor: move;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  margin-bottom: 10px;
+}
+
+
+.dnd.over {
+  border: 2px dashed #000;
+}
+
+/******** GEOLOCATION **********/
+.map {
+
+margin-left: auto;
+margin-right: auto;
+width:500px;
+height:300px;
+}
+
+
