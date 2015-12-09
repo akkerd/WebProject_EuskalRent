@@ -1,0 +1,16 @@
+Informe EuskalRent 26 de Noviembre de 2015 
+
+Tras la reunión de evaluación del Sprint 1 con la profesora, hemos definido los puntos más importantes a desarrollar:
+
+Funcionalidades a corregir:
+	- Corregir <spans> de errores en formulario ( no se veían en registro de alojamiento)
+
+Funcionalidades de Sprint 2:
+	- Hacer la Base de Datos (con MySql)
+	- Pasar las páginas que tenemos a jsp's
+	- Controlar fechas en calendarios
+	- Búsqueda de alojamientos 
+	- Filtros para la búsqueda (primero búsqueda, luego ya filtraremos)
+	- Mostrar las reservas realizadas
+
+La entrega del Sprint 2 es 
