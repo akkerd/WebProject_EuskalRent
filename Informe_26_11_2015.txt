@@ -13,4 +13,4 @@ Funcionalidades de Sprint 2:
 	- Filtros para la búsqueda (primero búsqueda, luego ya filtraremos)
 	- Mostrar las reservas realizadas
 
-La entrega del Sprint 2 es 
+La entrega del Sprint 2 es (creemos el 18 de Diciembre)
