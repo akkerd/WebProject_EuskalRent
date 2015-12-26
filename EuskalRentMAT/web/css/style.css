@@ -121,7 +121,6 @@ body {
     text-align:center;
     font-size: 1px;
 }
->>>>>>> refs/remotes/origin/master
 /************************ PERFIL *********************/
 .nav-menus {
   border-bottom: 1px solid #ddd;
@@ -170,9 +169,6 @@ body {
     background-color: #337AB7;
     color: white;
     width: 100%;
-<<<<<<< HEAD
-}
-=======
 }
 
 [draggable] {
@@ -218,6 +214,3 @@ margin-right: auto;
 width:500px;
 height:300px;
 }
-
-
->>>>>>> refs/remotes/origin/master
