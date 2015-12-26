@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/EuskalRentMAT"/>
-
-<Resource name="jdbc/ConexionMySQL" auth="Container"  type= "javax.sql.DataSource"
-          maxActive="15" maxIdle="30" maxWait="10000"
-          username="root" password="root" driverClassName="com.mysql.jdbc.Driver"
-          url="jdbc:mysql://localhost:3306/euskalrent"/>
-=======
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/EuskalRentMAT">
 
@@ -41,4 +32,3 @@
                url="jdbc:mysql://localhost:3306/euskalrent"/>
 
 </Context>
->>>>>>> refs/remotes/origin/master
