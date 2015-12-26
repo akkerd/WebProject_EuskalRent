@@ -1,0 +1,37 @@
+<div id="borrable">
+    <div id="inputRegistro" class="center-block">
+        <form role="form" name="registro">
+            <div class="form-group">
+                <label for="nombre">*Nombre:</label>
+                <input type="text" pattern="[A-Za-z ,.'-]{3,}" maxlength="20" id="nombre" class="form-control" required >
+                <span class="span-registro" id="span-nombre"> </span>
+            </div>
+            <div class="form-group">
+                <label for="appellidos">Apellidos:</label>
+                <input type="text" id="appellidos" class="form-control" >
+                <span class="span-registro" > </span>
+            </div>
+            <div class="form-group">
+                <label for="tel">*Teléfono:</label>
+                <input type="tel" pattern="[9|6|7][0-9]{8}"  id="tel" class="form-control" required>
+                <span class="span-registro" id="span-tel"> </span>
+            </div>
+            <div class="form-group">
+                <label for="email">*Email:</label>
+                <input type="email" class="form-control" id="email" required>
+                <span class="span-registro" id="span-email"> </span>
+            </div>
+            <div class="form-group">
+                <label for="pwd">*Contraseña:</label>
+                <input type="password" id="pwd" class="form-control"  required>
+                <span class="span-registro"> </span>
+            </div>
+             <div class="form-group">
+                <label for="pwd2">*Comprobar contraseña:</label>
+                <input type="password" id="pwd2" class="form-control" required>
+                <span class="span-registro" id="span-pwd2"> </span>
+             </div>
+            <button type="submit" id="formulario-cambio" class="btn btn-default">Modificar datos</button>
+        </form>   
+    </div>
+</div>
