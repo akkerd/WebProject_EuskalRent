@@ -93,42 +93,12 @@ $(document).ready(function(){
         cambiarCabeceraNotLoged();
         $("a#nombreUser").text("ACCEDE");   
         
-        
-        
-        
- 
+
     });
-    
-
-
     
     
     //Joseba
-    //función para añadir datos JSON a la sesion.
-    $("#formulario-registro").click(function(){
-        
-        nombre = $("#nombre").val();
-        apellidos = $("#appellidos").val();
-        tel = $("#tel").val();
-        email = $("#email").val();
-        pwd = $("#pwd").val();
-        
-        
-        
-        var datos = {
-            nombre : nombre,
-            apellidos : apellidos,
-            telefono : tel,
-            email : email,
-            pass : pwd
-        };
-        
-        var json = JSON.stringify(datos);;
-        
-        sessionStorage.setItem(email,json);
-        
-    });
-    
+  
     //validación en la página de perfil
     $(document).on('click','.cambiable',function(){
         $(".form-control").bind('change blur keyup',function(e){
@@ -193,29 +163,108 @@ $(document).ready(function(){
         });             
     }
 
+    //guarda los valores de la página de registro
+    $("#formulario-registro").click(function(){
+        
+        nombre = $("#nombre").val();
+        apellidos = $("#appellidos").val();
+        tel = $("#tel").val();
+        email = $("#email").val();
+        pwd = $("#pwd").val();
+        
+        guardaJson(nombre,apellidos,tel,email,pwd);
+        // DIEGO Cuando te registras te loegea automaticamente
+        sessionStorage.setItem('logged',email);        
+    });
+    //guarda los valores de la página perfil, valores modificados
+    $("#formulario-cambio").click(function(){
+        
+        nombre = $("#nombre-perfil").val();
+        apellidos = $("#appellidos-perfil").val();
+        tel = $("#tel-perfil").val();
+        email = $("#email-perfil").val();
+        pwd = $("#pwd-perfil").val();
+        
+        guardaJson(nombre,apellidos,tel,email,pwd);
+        
+    });
+     //función para añadir datos JSON a la sesion.     
+    function guardaJson(nombre,apellidos,tel,email,pwd){
+        var datos = {
+            nombre : nombre,
+            apellidos : apellidos,
+            telefono : tel,
+            email : email,
+            pass : pwd
+        };
+        
+        var json = JSON.stringify(datos);;
+        
+        sessionStorage.setItem(email,json);
+    }  
     
+      //----Insertar datos del usuario en la página perfil
+     insertarJson();
+                 
+         function insertarJson(){
+             var email = sessionStorage.getItem("logged");
+             if( email !== "0" ){
+                var usuario = JSON.parse(sessionStorage.getItem(email));
+
+                $("#nombre-perfil").val(usuario.nombre);
+                // Cuidado con APPELLIDOS <-- Cambiado
+                $("#appellidos-perfil").val(usuario.apellidos); 
+                $("#tel-perfil").val(usuario.telefono);
+                $("#email-perfil").val(usuario.email);
+            }else{
+                window.alert("No hay usuario logeado");
+            }
+         }
+    //----Fin--Insertar datos del usuario en la página perfil
     
     // JOSEBA DRAG
-    
-    
+  
+    $(document).on('dragover','.cambiable',function(){   
+           
 
+           $('#drop-zone #drop-zone2').on('dragover',function(e){
+               
+               e.stopPropagation();
+               e.preventDefault();
+           });
 
+           $('#drop-zone').on('drop',function(e){
+               e.preventDefault();
+               e.stopPropagation();
+               drop(e);
+           });
+           
+            $('#drop-zone2').on('drop',function(e){
+               e.preventDefault();
+               e.stopPropagation();
+               drop2(e);
+           });
+           
        
            var dropZone;
+           var dropZone2;
                      
-         window.onload = function(){
+         //window.onload = function(){
              
-           dropZone = document.getElementById("drop_zone");
+           dropZone = document.getElementById("drop-zone");
            dropZone.ondragenter = ignoreDrag;
            dropZone.ondragover = ignoreDrag;
            dropZone.ondrop = drop;
-         };
+           
+           dropZone2 = document.getElementById("drop-zone2");
+           dropZone2.ondragenter = ignoreDrag;
+           dropZone2.ondragover = ignoreDrag;
+           dropZone2.ondrop = drop2;
+         //};
          function ignoreDrag(e){
            e.stopPropagation();
            e.preventDefault();
          }
-                   
-        
 
         function drop(e){
            e.stopPropagation();
@@ -235,64 +284,58 @@ $(document).ready(function(){
            };
            reader.readAsDataURL(file);
          }
-         insertarJson();
-                 
-         function insertarJson(){
-             var email = sessionStorage.getItem("logged");
-             var usuario = JSON.parse(sessionStorage.getItem(email));
-             
-             $("#nombre-perfil").text(usuario.nombre);
-             $("#apellidos-perfil").text(usuario.apellidos);
-             $("#tel-perfil").text(usuario.telefono);
-             $("#email-perfil").text(usuario.email);
+         
+         function drop2(e){
+           e.stopPropagation();
+           e.preventDefault();
+
+           var data = e.dataTransfer;
+           var files = data.files;
+
+           processFiles2(files);
+        }
+
+         function processFiles2(files){
+            var file = files[0],
+            reader = new FileReader();
+            reader.onload = function(e){
+            dropZone2.style.backgroundImage = "url('"+e.target.result+"')";
+           };
+           reader.readAsDataURL(file);
          }
-  //-----geolocation
-  initMapa();
    
+     }); 
+         
+    //----Control de navegación en la página de perfil------
+    
+      $("#perfil").click(function(){
+        $("#gAlojamientos").fadeOut();
+        $("#gReservas").fadeOut();
+        $("#gPerfil").fadeIn();
+       
+    });
+    
+    $("#reservas").click(function(){
+        $("#gAlojamientos").fadeOut();
+        $("#gPerfil").fadeOut();
+        $("#gReservas").fadeIn();
+    });
+    
+    $("#alojamiento").click(function(){
+        $("#gPerfil").fadeOut();
+        $("#gReservas").fadeOut();
+        $("#gAlojamientos").fadeIn();
+        // Recolocar el mapa y su centro
+        google.maps.event.trigger(mapa, 'resize');
+        mapa.panTo(marcador.getPosition());
+    });
+    
+    //----Fin-Control de navegación en la página de perfil---
+    
+    //control de fechas
+    document.getElementById("date-llegada").onchange = function () {
+        var input = document.getElementById("date-salida");
+        input.setAttribute("min", this.value);
+    }; 
     
 });
-
-//-------------Geolocation
-var mapa;
-var direccion = new google.maps.LatLng(42.8591656,-2.681791800000042);
-var marcador;
-var infoMarcador;
-var localizacion;
-
-function initMapa(){
-    var mapOptions = {
-        center: direccion,
-        zoom: 13,
-        mapTypeId: google.maps.MapTypeId.SATELLITE
-    };
-    
-    mapa = new google.maps.Map(document.getElementById('map'), mapOptions);
-    
-    marcador = new google.maps.Marker({  
-        position: direccion,
-        map: mapa,
-        title:"Titulo",
-        draggable: true
-    });
-    
-    infoMarcador = new google.maps.InfoWindow({ content:"direccion"});
-    function mostrarInfo(){
-        infoMarcador.open(mapa, marcador);
-    }
-    google.maps.event.addListener(marcador, 'click', mostrarInfo);
-} 
-
-google.maps.event.addDomListener(window, 'load', initMapa);
-
-function buscarDireccion(direccion) {
-    var geoCoder = new google.maps.Geocoder(direccion);
-    var consulta = {address:direccion};
-    geoCoder.geocode(consulta, function(result, status){
-        localizacion = new google.maps.LatLng(result[0].geometry.location.lat(), result[0].geometry.location.lng());
-    });
-    
-    mapa.panTo(localizacion);
-    mapa.setZoom(17);
-    marcador.setPosition(localizacion);
-    
-}

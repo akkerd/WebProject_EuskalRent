@@ -5,7 +5,7 @@
     <!-- Mapeado -->
     <!-- FIN_Mapeado -->
     <welcome-file-list>
-        <welcome-file>prueba.jsp</welcome-file>
+        <welcome-file>perfil.html</welcome-file>
     </welcome-file-list>
     
     <!-- Base de datos -->
