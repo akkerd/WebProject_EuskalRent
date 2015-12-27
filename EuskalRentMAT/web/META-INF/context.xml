@@ -28,7 +28,7 @@
 
   <Resource name="jdbc/ConexionMySQL" auth="Container" type="javax.sql.DataSource"
                maxActive="15" maxIdle="30" maxWait="10000"
-               username="asierph" password="pass" driverClassName="com.mysql.jdbc.Driver"
+               username="asierph" password="nexuss3cur1ty" driverClassName="com.mysql.jdbc.Driver"
                url="jdbc:mysql://localhost:3306/euskalrent"/>
 
 </Context>

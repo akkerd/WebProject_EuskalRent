@@ -20,6 +20,9 @@
             if ( user != null){
             %>
             <h1><%=user.getNombreCompleto()%></h1>
+            <h1><%=user.getListaAlquileres().getNumeroAlquileres()  %></h1>
+            <h1><%=user.getListaReservas().getNumeroReservas() %></h1>
+
             <% } else {%>
             <h1>No existe el usuario</h1>
             <% }%>

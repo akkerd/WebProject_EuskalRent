@@ -1,6 +1,6 @@
 $(document).ready(function(){
     
-    
+    /*
     comprobarLogin();
     function comprobarLogin()
     {
@@ -37,7 +37,7 @@ $(document).ready(function(){
         $.get("menuLogearse.html", function (data) {
             $("#menuCambiable").append(data);
         });       
-    }   
+    }  */  
     
     //Handles menu drop down
     $('.dropdown-menu').find('form').click(function (e) {
@@ -70,7 +70,7 @@ $(document).ready(function(){
            
         }
     });
-    
+    /*
     $( "#menuCambiable" ).on( "click","#accede" ,function() {
 
         var email = $("#loginEmail").val();
@@ -95,7 +95,7 @@ $(document).ready(function(){
         
         
         
-        
+       */  
  
     });
     
