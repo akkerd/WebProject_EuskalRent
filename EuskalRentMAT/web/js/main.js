@@ -98,18 +98,19 @@ $(document).ready(function(){
     
     
     //Joseba
-  
+    
     //validación en la página de perfil
     $(document).on('click','.cambiable',function(){
-        $(".form-control").bind('change blur keyup',function(e){
-            validar(e); 
-        });
+      $(".form-control").bind('change blur keyup',function(e){
+          validar(e); 
+      });
     });
+    
     //validación en la página de registro
     $(".formularioRegistro").bind('change blur keyup',function(e){
         validar(e);
     });
-     //Función de validación del formulario con comprobación de contraseña
+    //Función de validación del formulario con comprobación de contraseña
     function validar(e){
         var elemento = e.target;
         if (elemento.validity.valid) {
@@ -122,6 +123,8 @@ $(document).ready(function(){
             }
             else if(elemento === document.getElementById("email")){
                 $("#span-email").text("");
+            }else if(elemento === document.getElementById("tarifa")){
+                $("#span-tarifa").text("");
             }
         }
         else {
@@ -133,8 +136,10 @@ $(document).ready(function(){
                 $("#span-tel").text("Introduzca un teléfono válido");
             }
             else if(elemento === document.getElementById("email")){
-                
                 $("#span-email").text("Introduzca un email válido");
+            }
+            else if(elemento === document.getElementById("tarifa")){
+                $("#span-tarifa").text("Introduzca un numero con dos decimales entre 0.00 y 9999.99");
             }
         }
         
@@ -165,29 +170,31 @@ $(document).ready(function(){
 
     //guarda los valores de la página de registro
     $("#formulario-registro").click(function(){
-        
+
         nombre = $("#nombre").val();
-        apellidos = $("#appellidos").val();
+        apellidos = $("#apellidos").val();
         tel = $("#tel").val();
         email = $("#email").val();
         pwd = $("#pwd").val();
-        
+
         guardaJson(nombre,apellidos,tel,email,pwd);
         // DIEGO Cuando te registras te loegea automaticamente
         sessionStorage.setItem('logged',email);        
     });
+    
     //guarda los valores de la página perfil, valores modificados
     $("#formulario-cambio").click(function(){
-        
+
         nombre = $("#nombre-perfil").val();
-        apellidos = $("#appellidos-perfil").val();
+        apellidos = $("#apellidos-perfil").val();
         tel = $("#tel-perfil").val();
         email = $("#email-perfil").val();
         pwd = $("#pwd-perfil").val();
-        
+
         guardaJson(nombre,apellidos,tel,email,pwd);
-        
+
     });
+    
      //función para añadir datos JSON a la sesion.     
     function guardaJson(nombre,apellidos,tel,email,pwd){
         var datos = {
@@ -202,135 +209,6 @@ $(document).ready(function(){
         
         sessionStorage.setItem(email,json);
     }  
-    
-      //----Insertar datos del usuario en la página perfil
-     insertarJson();
-                 
-         function insertarJson(){
-             var email = sessionStorage.getItem("logged");
-             if( email !== "0" ){
-                var usuario = JSON.parse(sessionStorage.getItem(email));
-
-                $("#nombre-perfil").val(usuario.nombre);
-                // Cuidado con APPELLIDOS <-- Cambiado
-                $("#appellidos-perfil").val(usuario.apellidos); 
-                $("#tel-perfil").val(usuario.telefono);
-                $("#email-perfil").val(usuario.email);
-            }else{
-                window.alert("No hay usuario logeado");
-            }
-         }
-    //----Fin--Insertar datos del usuario en la página perfil
-    
-    // JOSEBA DRAG
-  
-    $(document).on('dragover','.cambiable',function(){   
-           
-
-           $('#drop-zone #drop-zone2').on('dragover',function(e){
-               
-               e.stopPropagation();
-               e.preventDefault();
-           });
-
-           $('#drop-zone').on('drop',function(e){
-               e.preventDefault();
-               e.stopPropagation();
-               drop(e);
-           });
-           
-            $('#drop-zone2').on('drop',function(e){
-               e.preventDefault();
-               e.stopPropagation();
-               drop2(e);
-           });
-           
-       
-           var dropZone;
-           var dropZone2;
-                     
-         //window.onload = function(){
-             
-           dropZone = document.getElementById("drop-zone");
-           dropZone.ondragenter = ignoreDrag;
-           dropZone.ondragover = ignoreDrag;
-           dropZone.ondrop = drop;
-           
-           dropZone2 = document.getElementById("drop-zone2");
-           dropZone2.ondragenter = ignoreDrag;
-           dropZone2.ondragover = ignoreDrag;
-           dropZone2.ondrop = drop2;
-         //};
-         function ignoreDrag(e){
-           e.stopPropagation();
-           e.preventDefault();
-         }
-
-        function drop(e){
-           e.stopPropagation();
-           e.preventDefault();
-
-           var data = e.dataTransfer;
-           var files = data.files;
-
-           processFiles(files);
-        }
-
-         function processFiles(files){
-            var file = files[0],
-            reader = new FileReader();
-            reader.onload = function(e){
-            dropZone.style.backgroundImage = "url('"+e.target.result+"')";
-           };
-           reader.readAsDataURL(file);
-         }
-         
-         function drop2(e){
-           e.stopPropagation();
-           e.preventDefault();
-
-           var data = e.dataTransfer;
-           var files = data.files;
-
-           processFiles2(files);
-        }
-
-         function processFiles2(files){
-            var file = files[0],
-            reader = new FileReader();
-            reader.onload = function(e){
-            dropZone2.style.backgroundImage = "url('"+e.target.result+"')";
-           };
-           reader.readAsDataURL(file);
-         }
-   
-     }); 
-         
-    //----Control de navegación en la página de perfil------
-    
-      $("#perfil").click(function(){
-        $("#gAlojamientos").fadeOut();
-        $("#gReservas").fadeOut();
-        $("#gPerfil").fadeIn();
-       
-    });
-    
-    $("#reservas").click(function(){
-        $("#gAlojamientos").fadeOut();
-        $("#gPerfil").fadeOut();
-        $("#gReservas").fadeIn();
-    });
-    
-    $("#alojamiento").click(function(){
-        $("#gPerfil").fadeOut();
-        $("#gReservas").fadeOut();
-        $("#gAlojamientos").fadeIn();
-        // Recolocar el mapa y su centro
-        google.maps.event.trigger(mapa, 'resize');
-        mapa.panTo(marcador.getPosition());
-    });
-    
-    //----Fin-Control de navegación en la página de perfil---
     
     //control de fechas
     document.getElementById("date-llegada").onchange = function () {

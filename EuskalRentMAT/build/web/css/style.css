@@ -212,6 +212,13 @@ width:500px;
 height:300px;
 }
 
+#buscador{
+    width: 100%;
+}
+#btnBuscador{
+    margin-left: 42.5%;
+}
+
 /* Oculta partes de la página de perfil al principio*/
 #gAlojamientos, #gReservas{
     display:none;

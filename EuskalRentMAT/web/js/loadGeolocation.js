@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 
+// Inicializar mapa al cargar
+google.maps.event.addDomListener(window, 'load', initMapa);
+
 //-------------Geolocation
 var mapa;
 var direccion = new google.maps.LatLng(42.839290, -2.674297);
@@ -11,14 +14,16 @@ var marcador;
 var infowindow;
 var geoCoder = new google.maps.Geocoder(direccion);
     
-$(document).ready(function(){
+/*$(document).ready(function(){
     
   initMapa();
-});
+});*/
+
 
 $("#buscador").change(function(){
     var dir = document.getElementById('buscador').value;
     buscarDireccion(dir);
+    mapa.setZoom(15);
     // Se busca con direccion(global) porque TIENE QUE SER COORDENADA, no string
     //leerCoordenada(direccion);
 });
@@ -26,10 +31,21 @@ $("#buscador").change(function(){
  $("#btnBuscador").click(function(){
     var dir = document.getElementById('buscador').value;
     buscarDireccion(dir);
+    mapa.setZoom(15);
     // Se busca con direccion(global) porque TIENE QUE SER COORDENADA, no string
     //leerCoordenada(direccion);
  });
 
+
+function recolocarMarcador(pDireccion){
+    mapa.panTo(pDireccion);
+    marcador.setPosition(pDireccion);
+}
+
+function actualizarDireccion(dirStr){
+    infowindow.setContent(dirStr);
+    $("#buscador").val(dirStr);
+}
 
 function initMapa(){
     var mapOptions = {
@@ -64,25 +80,18 @@ function initMapa(){
     });
 } 
 
-google.maps.event.addDomListener(window, 'load', initMapa);
-
 function buscarDireccion(pDireccion) {
     var consulta = {address:pDireccion};
-    geoCoder.geocode(consulta, function(result, status){
-        var dir = new google.maps.LatLng(result[0].geometry.location.lat(), result[0].geometry.location.lng());
+    geoCoder.geocode(consulta, function(results, status){
+        var dir = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
         // Actualizar el contenido del marcador
         //mapa.setZoom(15);
-        infowindow.setContent(result[0].formatted_address);
-        infowindow.open(mapa, marcador);
+        actualizarDireccion( results[0].formatted_address );
+        
+        //infowindow.open(mapa, marcador);
         // Recolocar marcador en el centro
         recolocarMarcador(dir);
     });
-}
-
-function recolocarMarcador(pDireccion){
-    mapa.panTo(pDireccion);
-    marcador.setPosition(pDireccion);
-    mapa.setZoom(15);
 }
 
 function leerCoordenada(pDireccion) {
@@ -94,10 +103,11 @@ function leerCoordenada(pDireccion) {
     // El parámetro 'results' es un array de posibles direcciones, de más a menos exacta
     if (status === google.maps.GeocoderStatus.OK) {
       if (results[1]) {
-        mapa.setZoom(15);
+          
         // Cogemos la direccion mas excata con results[0]
-        infowindow.setContent(results[0].formatted_address);
-        infowindow.open(mapa, marcador);
+        actualizarDireccion( results[0].formatted_address );
+        //infowindow.open(mapa, marcador);
+        
       } else {
         window.alert('No results found');
       }
