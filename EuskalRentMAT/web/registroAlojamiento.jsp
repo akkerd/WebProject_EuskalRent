@@ -34,18 +34,18 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                    </button>
-                    <a id="logo" class="navbar-brand" href="index.html"><img id="imgLogo" src="img/logo.png"></a>
+                    <a id="logo" class="navbar-brand" href="index.jsp"><img id="imgLogo" src="img/logo.png"></a>
                 </div>
                    <!-- Navegador superior -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
                     <ul class="nav navbar-nav navbar-right"> 
                         <li id="menuCambiable" class="dropdown">
-                            <a id="nombreUser" href="index.html" class="botones dropdown-toggle" data-toggle="dropdown">ACCEDE <b class="caret"></b></a>
+                            <a id="nombreUser" href="index.jsp" class="botones dropdown-toggle" data-toggle="dropdown">ACCEDE <b class="caret"></b></a>
                         </li> 
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li id="menuCambiable">
-                            <a id="registroAlojamiento" href="index.html" class="botones ">Inicio</a>
+                            <a id="registroAlojamiento" href="index.jsp" class="botones ">Inicio</a>
                         </li>  
                     </ul>
                </div>

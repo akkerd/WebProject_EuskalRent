@@ -177,7 +177,7 @@ body {
   -khtml-user-drag: element;
   -webkit-user-drag: element;
 }
-#drop_zone, #drop_zone_aloj{
+#drop-zone, #drop-zone2{
   height: 150px;
   width: 150px;
   float: left;

@@ -36,7 +36,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
                     <ul class="nav navbar-nav navbar-right"> 
                         <li id="menuCambiable" class="dropdown">
-                            <a id="nombreUser" href="index.html" class="botones dropdown-toggle" data-toggle="dropdown">ACCEDE <b class="caret"></b></a>
+                            <a id="nombreUser" href="index.jsp" class="botones dropdown-toggle" data-toggle="dropdown">ACCEDE <b class="caret"></b></a>
                         </li> 
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -73,7 +73,12 @@
                             <form role="form">
                                 <div class="form-group">
                                     <label>Destino</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Barrio" required>
+                                    <div>Selecciona barrio de destino:</div>
+                                    <select class="form-control" id="barrio">
+                                        <option>El Ensanche</option>
+                                        <option>Lakua-Arriaga</option>
+                                        <option>Zabalgana</option>
+                                    </select>
                                 </div>
                                 <label>Fechas</label>
                                 <div class="input-group form-group">
