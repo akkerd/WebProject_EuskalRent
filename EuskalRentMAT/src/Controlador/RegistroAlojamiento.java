@@ -19,20 +19,25 @@ import javax.servlet.*;
 import javax.servlet.http.HttpSession;
 
 import Modelo.Entidades.Alojamiento;
+import Modelo.Entidades.Alquiler;
+import Modelo.Listas.ListaAlquileres;
 import Modelo.Entidades.Usuario;
+import Modelo.conexionBD.ConexionBD;
+
+//import java.util.Calendar;
+import java.util.Date;
 /**
  *
  * @author Diegaker
  */
 public class RegistroAlojamiento extends HttpServlet {
-
-    int numAlojamiento = 0;
     
     private Connection con;
     private Statement set;
     private ResultSet rs;
     String cad;
-
+    
+    Date fechaHoy;
     @Override
     public void init(ServletConfig cfg) throws ServletException {
         String sURL = "jdbc:mysql://localhost:3306/euskalrent";
@@ -123,7 +128,7 @@ public class RegistroAlojamiento extends HttpServlet {
         }else{
     
             // Incrementamos el numero de alojamientos para usarlo como id
-            numAlojamiento += 1;
+            int numAlojamiento = 0;
             String tipoAlojamiento = request.getParameter("tipoAloj");
             int numHabitaciones = Integer.parseInt( request.getParameter("nHuesp") );// Esto deberia ser numHuespedes, no habitaciones
             String barrio = request.getParameter("barrio");
@@ -133,9 +138,19 @@ public class RegistroAlojamiento extends HttpServlet {
             String tipoCancelacion = request.getParameter("politica");
             String comentario = request.getParameter("coment");
             String titulo = request.getParameter("titulo");
-            String piso = request.getParameter("piso");
             
-            Alojamiento miAlojamiento = new Alojamiento(numAlojamiento, tipoAlojamiento,numHabitaciones,barrio,direccion,fotoAlojamiento,precioNoche,tipoCancelacion,comentario,titulo,piso);
+            Alojamiento miAlojamiento = new Alojamiento(numAlojamiento, tipoAlojamiento,numHabitaciones,barrio,direccion,fotoAlojamiento,precioNoche,tipoCancelacion,comentario,titulo);
+            int idUsuario = miUsuario.getIdUsuario();
+            
+            // Creo el objeto Alojamiento
+            ListaAlquileres miListaAlquileres = ConexionBD.getConexionBD().getListaAlquileres(idUsuario);
+            
+            fechaHoy = new Date();
+            
+            // Creo el objeto Alquiler
+            Alquiler miAlquiler = new Alquiler(0, miAlojamiento, fechaHoy, fechaHoy, fechaHoy);
+            // addAlojamientoBD();
+            // addAlquilerBD
             
             ServletContext sc = getServletContext();
             RequestDispatcher rd = sc.getRequestDispatcher("/perfil.jsp");

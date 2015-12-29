@@ -13,7 +13,7 @@ public class Alojamiento {
     
     private int idAlojamiento;
     private String tipoAlojamiento;
-    private int numHabitaciones;
+    private int numHuespedes;
     private String barrio;
     private String direccion;
     private String fotoAlojamiento;
@@ -21,13 +21,12 @@ public class Alojamiento {
     private String tipoCancelacion;
     private String comentario;
     private String titulo;
-    private String piso;
     
-    public Alojamiento (int idAlojamiento, String tipoAlojamiento,int numHabitaciones, String barrio, String direccion,String fotoAlojamiento ,int precioNoche,String tipoCancelacion,String comentario, String titulo, String piso ){
+    public Alojamiento (int idAlojamiento, String tipoAlojamiento,int numHuespedes, String barrio, String direccion,String fotoAlojamiento ,int precioNoche,String tipoCancelacion,String comentario, String titulo ){
         
         this.idAlojamiento = idAlojamiento;
         this.tipoAlojamiento = tipoAlojamiento;
-        this.numHabitaciones = numHabitaciones;
+        this.numHuespedes = numHuespedes;
         this.barrio = barrio;
         this.direccion = direccion;
         this.fotoAlojamiento = fotoAlojamiento;
@@ -35,7 +34,6 @@ public class Alojamiento {
         this.tipoCancelacion = tipoCancelacion;
         this.comentario = comentario;
         this.titulo = titulo;
-        this.piso = piso;
         
     }
 
@@ -71,14 +69,14 @@ public class Alojamiento {
      * @return the numHabitaciones
      */
     public int getNumHabitaciones() {
-        return numHabitaciones;
+        return numHuespedes;
     }
 
     /**
      * @param numHabitaciones the numHabitaciones to set
      */
     public void setNumHabitaciones(int numHabitaciones) {
-        this.numHabitaciones = numHabitaciones;
+        this.numHuespedes = numHabitaciones;
     }
 
     /**
@@ -177,19 +175,6 @@ public class Alojamiento {
      */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
-    }
-    /**
-     * @return the piso
-     */
-    public String getPiso() {
-        return piso;
-    }
-
-    /**
-     * @param piso the comentario to set
-     */
-    public void setPiso(String piso) {
-        this.piso = piso;
     }
     
 }

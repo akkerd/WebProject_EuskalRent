@@ -22,7 +22,6 @@
     <body>
         <%
             ConexionBD conexion = ConexionBD.getConexionBD();
-            Usuario user = conexion.buscarUsuario("asmartinez@ehu.eus","pass1");
         %>
             
         <nav class="navbar navbar-default navbar-static-top">
@@ -70,7 +69,7 @@
                                         </li>
                                         <li class="divider"></li>
                                         <li>
-                                            <a class="btn btn-primary btn-block" href="registro.html">REGISTRO</a>
+                                            <a class="btn btn-primary btn-block" href="registro.jsp">REGISTRO</a>
                                         </li>
                                     </ul>
                                     <%
@@ -103,7 +102,7 @@
             <div  id="contenedorJumbotron" class="container-fluid" >  
                 <div id="inputRegistro" class="center-block">
                     <div class="row">
-                        <h3 class="center">Registra tu alojamiento aquí: </h3>
+                        <h3 class="center">¡Registra tu alojamiento y empieza a ganar dinero!</h3>
                             <div class="col-md-12">
                                 <form class="form" action="RegistroAlojamiento" method="post" id="form-registro-alojamiento" role="form"  accept-charset="UTF-8">
                                     <div class="form-group">
@@ -141,6 +140,16 @@
                                             <option>Estricta</option>
                                         </select>
                                     </div>   
+                                    <label>Fechas en las que se podría alquilar:</label>
+                                    <h5>(Si lo dejas en blanco significa que pueden reservar cualquier día)</h5>
+                                    <div class="input-group form-group">
+                                        <input type="text" class="form-control" name="date1" id="date1" data-select="datepicker" placeholder="Fecha inicio">
+                                        <span class="input-group-btn"><button type="button" class="btn btn-primary" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button></span>
+                                    </div>
+                                    <div class="input-group form-group">
+                                        <input type="text" class="form-control" name="date2" id="date2" data-select="datepicker" placeholder="Fecha fin">
+                                        <span class="input-group-btn"><button type="button" class="btn btn-primary" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button></span>
+                                    </div>
                                     <div class="form-group">
                                         <label for="tarifa">Tárifa por noche ( €/noche):</label>
                                         <input type="text" pattern="[0-9]{1,4}\.[0-9]{1}[0-9]{1}$" id="tarifa" class="form-control" title="Utiliza un número con dos decimales entre 0.00 y 9999.99" >
@@ -153,13 +162,8 @@
                                         <div class="map" id="map"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="piso">Piso:</label>
-                                        <input type="text" name="piso"  id="piso" class="form-control">
-                                        <span class="span-registro" id="span-piso"> </span>
-                                    </div>
-                                    <div class="form-group">
                                         <label for="coment">Comentarios sobre el piso:</label>
-                                        <input type="text" name="titulo"  id="coment" class="form-control">
+                                        <input type="text" name="coment"  id="coment" class="form-control">
                                         <span class="span-registro" id="span-coment"> </span>
                                     </div>
                                     <div class="form-group"> 
@@ -183,11 +187,11 @@
         <!-- JS -->
         <script src="js/jquery-1.11.3.min.js"></script>
         <script src="js/datepicker.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <script src="http://maps.google.com/maps/api/js?sensor=false" language="javascript" type="text/javascript"></script>
         <script src="js/loadGeolocation.js" type="text/javascript"></script> 
         <script src="js/main.js" type="text/javascript"></script> 
         <script src="js/perfil.js" type="text/javascript"></script> 
         <!-- Validar formulario -->
-        <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
