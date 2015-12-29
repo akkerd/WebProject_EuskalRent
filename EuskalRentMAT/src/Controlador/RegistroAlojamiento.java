@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 
 import Modelo.Entidades.Alojamiento;
 import Modelo.Entidades.Alquiler;
-import Modelo.Listas.ListaAlquileres;
+import Modelo.Listas.ListaAlojamientos;
 import Modelo.Entidades.Usuario;
 import Modelo.conexionBD.ConexionBD;
 
@@ -128,29 +128,35 @@ public class RegistroAlojamiento extends HttpServlet {
         }else{
     
             // Incrementamos el numero de alojamientos para usarlo como id
-            int numAlojamiento = 0;
+            // int numAlojamiento += 1;
             String tipoAlojamiento = request.getParameter("tipoAloj");
-            int numHabitaciones = Integer.parseInt( request.getParameter("nHuesp") );// Esto deberia ser numHuespedes, no habitaciones
+            int numHuespedes = Integer.parseInt( request.getParameter("nHuesp") );// Esto deberia ser numHuespedes, no habitaciones
             String barrio = request.getParameter("barrio");
             String direccion = request.getParameter("buscador");
             String fotoAlojamiento = request.getParameter("drop-zone2"); // De aquí recoger el String base64
             int precioNoche = Integer.parseInt( request.getParameter("tarifa") );
             String tipoCancelacion = request.getParameter("politica");
             String comentario = request.getParameter("coment");
-            String titulo = request.getParameter("titulo");
-            
-            Alojamiento miAlojamiento = new Alojamiento(numAlojamiento, tipoAlojamiento,numHabitaciones,barrio,direccion,fotoAlojamiento,precioNoche,tipoCancelacion,comentario,titulo);
-            int idUsuario = miUsuario.getIdUsuario();
+            //String titulo = request.getParameter("titulo");
             
             // Creo el objeto Alojamiento
-            ListaAlquileres miListaAlquileres = ConexionBD.getConexionBD().getListaAlquileres(idUsuario);
+            Alojamiento miAlojamiento = new Alojamiento( 0, tipoAlojamiento,numHuespedes,barrio,direccion,fotoAlojamiento,precioNoche,tipoCancelacion,comentario);
+            int idUsuario = miUsuario.getIdUsuario();
             
             fechaHoy = new Date();
             
             // Creo el objeto Alquiler
             Alquiler miAlquiler = new Alquiler(0, miAlojamiento, fechaHoy, fechaHoy, fechaHoy);
+            
             // addAlojamientoBD();
+            ConexionBD.getConexionBD().añadirAlojamiento(miAlojamiento);
+            
+           // POSIBLE SOLUCION AL TEMA DE LOS IDs
+            ListaAlojamientos miListaAlojamientos = ConexionBD.getConexionBD().getListaAlojamientos();
+            int numAlojamientos = miListaAlojamientos.getNumeroAumentos();
+            
             // addAlquilerBD
+            ConexionBD.getConexionBD().añadirAlquiler(miAlquiler, idUsuario, numAlojamientos+1);
             
             ServletContext sc = getServletContext();
             RequestDispatcher rd = sc.getRequestDispatcher("/perfil.jsp");

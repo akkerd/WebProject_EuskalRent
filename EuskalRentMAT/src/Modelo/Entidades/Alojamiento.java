@@ -20,9 +20,8 @@ public class Alojamiento {
     private int precioNoche;
     private String tipoCancelacion;
     private String comentario;
-    private String titulo;
     
-    public Alojamiento (int idAlojamiento, String tipoAlojamiento,int numHuespedes, String barrio, String direccion,String fotoAlojamiento ,int precioNoche,String tipoCancelacion,String comentario, String titulo ){
+    public Alojamiento (int idAlojamiento,String tipoAlojamiento,int numHuespedes, String barrio, String direccion,String fotoAlojamiento ,int precioNoche,String tipoCancelacion,String comentario ){
         
         this.idAlojamiento = idAlojamiento;
         this.tipoAlojamiento = tipoAlojamiento;
@@ -33,52 +32,32 @@ public class Alojamiento {
         this.precioNoche = precioNoche;
         this.tipoCancelacion = tipoCancelacion;
         this.comentario = comentario;
-        this.titulo = titulo;
         
     }
-
     /**
      * @return the idAlojamiento
      */
     public int getIdAlojamiento() {
         return idAlojamiento;
     }
-
     /**
      * @param idAlojamiento the idAlojamiento to set
      */
     public void setIdAlojamiento(int idAlojamiento) {
         this.idAlojamiento = idAlojamiento;
     }
-
     /**
      * @return the tipoAlojamiento
      */
     public String getTipoAlojamiento() {
         return tipoAlojamiento;
     }
-
     /**
      * @param tipoAlojamiento the tipoAlojamiento to set
      */
     public void setTipoAlojamiento(String tipoAlojamiento) {
         this.tipoAlojamiento = tipoAlojamiento;
     }
-
-    /**
-     * @return the numHabitaciones
-     */
-    public int getNumHabitaciones() {
-        return numHuespedes;
-    }
-
-    /**
-     * @param numHabitaciones the numHabitaciones to set
-     */
-    public void setNumHabitaciones(int numHabitaciones) {
-        this.numHuespedes = numHabitaciones;
-    }
-
     /**
      * @return the barrio
      */
@@ -162,19 +141,19 @@ public class Alojamiento {
     public void setComentario(String comentario) {
         this.comentario = comentario;
     }
-    
+
     /**
-     * @return the titulo
+     * @return the numHuespedes
      */
-    public String getTitulo() {
-        return titulo;
+    public int getNumHuespedes() {
+        return numHuespedes;
     }
 
     /**
-     * @param titulo the comentario to set
+     * @param numHuespedes the numHuespedes to set
      */
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setNumHuespedes(int numHuespedes) {
+        this.numHuespedes = numHuespedes;
     }
     
 }

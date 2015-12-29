@@ -27,6 +27,17 @@ public class Usuario {
         this.listaReservas = listaReservas;
         this.listaAlquileres = listaAlquileres;
     }
+    public Usuario(int idUsuario,String nombreCompleto, String email,String fotoPerfil, int telefono, String descripcion){
+        this.idUsuario = idUsuario;
+        this.nombreCompleto = nombreCompleto;
+        this.email = email;
+        this.fotoPerfil = fotoPerfil;
+        this.telefono = telefono;
+        this.descripcion = descripcion;
+        this.listaReservas = new ListaReservas();
+        this.listaAlquileres = new ListaAlquileres();
+    }
+
 
     /**
      * @return the idUsuario

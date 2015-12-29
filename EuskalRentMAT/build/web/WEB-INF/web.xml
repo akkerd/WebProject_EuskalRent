@@ -16,12 +16,12 @@
     </resource-ref>
     <!-- FIN_Base de datos -->
     <servlet>
-        <servlet-name>RegistroAlojamientos</servlet-name>
+        <servlet-name>RegistroAlojamiento</servlet-name>
         <servlet-class>Controlador.RegistroAlojamiento</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>RegistroAlojamientos</servlet-name>
-        <url-pattern>/RegistroAlojamientos</url-pattern>
+        <servlet-name>RegistroAlojamiento</servlet-name>
+        <url-pattern>/RegistroAlojamiento</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>logear</servlet-name>
