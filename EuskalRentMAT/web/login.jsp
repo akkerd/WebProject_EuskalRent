@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : 27-dic-2015, 17:54:13
+    Document   : login
+    Created on : 28-dic-2015, 13:25:45
     Author     : Diegaker
 --%>
 
@@ -15,7 +15,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>EuskalRent</title>
+        <title>Login</title>
         <!-- CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/datepicker.min.css" rel="stylesheet">
@@ -34,8 +34,8 @@
                    </button>
                     <a id="logo" class="navbar-brand" href="#"><img id="imgLogo" src="img/logo.png"></a>
                 </div>
-                <!-- Navegador superior -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">               
+                   <!-- Navegador superior -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">    
                     <ul class="nav navbar-nav navbar-right">                
                         <li id="menuCambiable" class="dropdown">
                             <% String text;
@@ -85,63 +85,51 @@
 
                                <% }%>
                                <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><%=text%><b class="caret"></b></a>
-
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li id="menuCambiable">
                             <a id="registroAlojamiento" href="registroAlojamiento.jsp" class="botones ">Registra tu alojamiento</a>
                         </li>  
-                    </ul>                    
+                    </ul> 
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="menuCambiable">
+                            <a id="toIndex" href="index.jsp" class="botones ">Inicio</a>
+                        </li>  
+                    </ul>                   
                </div>
             </div>
         </nav><!-- /navbar -->          
            <div class="jumbotron"> 
-               <div class="container-fluid">                   
-                    <div class="row">
-                        <div id="CarouselContenedor" class="col-md-3">
-                            <div id="Carousel" class="carousel slide">
-                            <ol class="carousel-indicators">
-                                <li data-target="#Carousel" data-slide-to="0" class="active"></li>
-                                <li data-target="#Carousel" data-slide-to="1"></li>
-                                <li data-target="#Carousel" data-slide-to="2"></li>
-                              </ol>
-                              <!-- Carousel items -->
-                              <div class="carousel-inner">
-                                <div class="active item"><img class="ImgCarousel" src="img/a1.jpg" alt="a1" /></div>
-                                <div class="item"><img class="ImgCarousel" src="img/a2.jpg" alt="a2" /></div>
-                                <div class="item"><img class="ImgCarousel" src="img/a3.jpg" alt="a3" /></div>
-                              </div>
-                              <!-- Carousel nav -->
-                              <a class="carousel-control left" href="#Carousel" data-slide="prev">&lsaquo;</a>
-                              <a class="carousel-control right" href="#Carousel" data-slide="next">&rsaquo;</a>
-                          </div>                      
-                        </div>
-                        <div class="col-md-6">
-                            <h3 id="tituloBuscador" class="center-block">¡Busca tu alojamiento ahora mismo!</h3>
-                            <form role="form">
-                                <div class="form-group">
-                                    <label>Destino</label>
-                                    <div>Selecciona barrio de destino:</div>
-                                    <select class="form-control" id="barrio">
-                                        <option>El Ensanche</option>
-                                        <option>Lakua-Arriaga</option>
-                                        <option>Zabalgana</option>
-                                    </select>
+               <div class="container-fluid">   
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3 id="formRegistro" class="center-block">¡Logueate con tu cuenta para acceder a TODAS las prestaciones de la web!</h3> 
+                                    <form action="logear" method="post" role="form" id="login-nav">
+                                        <div class="form-group">
+                                            <label class="sr-only" for="email" >E-mail</label>
+                                            <input name="email" id="loginEmail" class="form-control formLogin" type="email" placeholder="Correo electronico" required>
+                                            <span class="span-registro" id="avisoEmailLogin"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="sr-only" for="contraseña" >Contraseña</label>
+                                            <input name="pass" id="loginPass" class="form-control formLogin" type="password" placeholder="Contraeña" required>
+                                            <span class="span-registro" id="avisoPassLogin"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <button id="accede" type="submit" class="btn btn-success center-block">ACCEDE</button>
+                                            <span class="span-registro" id="noExiste"></span>
+                                        </div>
+                                    </form>
                                 </div>
-                                <label>Fechas</label>
-                                <div class="input-group form-group">
-                                    <input type="text" class="form-control" name="date" id="date" data-select="datepicker" placeholder="Llegada">
-                                    <span class="input-group-btn"><button type="button" class="btn btn-primary" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button></span>
-                                </div>
-                                <div class="input-group form-group">
-                                    <input type="text" class="form-control" name="date" id="date" data-select="datepicker" placeholder="Salida">
-                                    <span class="input-group-btn"><button type="button" class="btn btn-primary" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button></span>
-                                </div>
-                                <button id="botonBuscar" type="submit" class="btn btn-default center-block">Buscar</button>
-                            </form>
-                        </div>
-                    </div>               
+                            </div>
+                        <div class="divider"></div>
+                        <h3 id="formRegistro" class="center-block">¿Aún no estás registrado? ¡Registrate gratis aquí!</h3> 
+                        <div>
+                            <a href="registro.jsp"> 
+                                <button class="btn btn-primary center-block">REGISTRO</button>
+                            </a>
+                        </div>           
                 </div>
             </div>
             <div class="container-fluid">                   
@@ -175,3 +163,4 @@
         <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
+

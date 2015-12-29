@@ -7,6 +7,7 @@ package Modelo.Listas;
 
 import Modelo.Entidades.Reserva;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -19,14 +20,35 @@ public class ListaReservas {
     /**
     * Metodo constructor
     */
-     public ListaReservas(){        
+     public ListaReservas(){ 
+         this.reservas = new ArrayList<Reserva>();
      }
     /**
     * Metodo que devuelve el numero de reservas de la lista.
     * @return Numero de objetos que consta la lista.
     */
-    public int getNumeroAumentos(){
+    public int getNumeroReservas(){
         return reservas.size(); 
+    }
+    /**
+    * Metodo que borra una reserva de la lista.
+    * @param idReserva id de la reserva a borrar.
+    */
+    public void borrarReserva(int idReserva){
+        Iterator<Reserva> it = reservas.iterator();
+        boolean controlador = false;
+        while(it.hasNext() && controlador == false){
+            if ( it.next().getIdReserva() == idReserva){
+                controlador = true;
+            }
+        }
+    }
+    /**
+    * Metodo que añade una nueva reserva Reserva
+    * @param Reserva Reserva a añadir.
+    */
+    public void añadirReserva(Reserva reserva){
+        reservas.add(reserva);
     }
     
 }

@@ -38,14 +38,61 @@
                 </div>
                    <!-- Navegador superior -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
-                    <ul class="nav navbar-nav navbar-right"> 
+                    <ul class="nav navbar-nav navbar-right">                
                         <li id="menuCambiable" class="dropdown">
-                            <a id="nombreUser" href="index.jsp" class="botones dropdown-toggle" data-toggle="dropdown">ACCEDE <b class="caret"></b></a>
-                        </li> 
+                            <% String text;
+                            // Si entra aqui quiere decir que el usuario no esta loged
+                                if (request.getSession().getAttribute("usuario") == null){
+                                    text = "ACCEDE";
+                                    %>
+                                    <ul  id="borrableLogearse" class="dropdown-menu" style="padding: 15px;min-width: 250px;">
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <form action="logear" method="post" role="form" id="login-nav">
+                                                        <div class="form-group">
+                                                            <label class="sr-only" for="email" >E-mail</label>
+                                                            <input name="email" id="loginEmail" class="form-control formLogin" type="email" placeholder="Correo electronico" required>
+                                                            <span class="span-registro" id="avisoEmailLogin"></span>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="sr-only" for="contraseña" >Contraseña</label>
+                                                            <input name="pass" id="loginPass" class="form-control formLogin" type="password" placeholder="Contraeña" required>
+                                                            <span class="span-registro" id="avisoPassLogin"></span>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button id="accede" type="submit" class="btn btn-success btn-block">ACCEDE</button>
+                                                            <span class="span-registro" id="noExiste"></span>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a class="btn btn-primary btn-block" href="registro.html">REGISTRO</a>
+                                        </li>
+                                    </ul>
+                                    <%
+                                } else {
+                                    // si entra aqui el usuario esta loged.
+                                    Usuario usuario = (Usuario)request.getSession().getAttribute("usuario");                                    
+                                    text = usuario.getNombreCompleto();
+                                    %>
+                                    
+                                    <ul id="borrableUsuario" class="dropdown-menu" style="padding: 15px;min-width: 250px;">
+                                        <li><a href="perfil.jsp">Tu perfil</a></li>
+                                        <li><a id="logout" href="<%=request.getContextPath()%>/logout" >Logout</a></li>
+                                    </ul>
+
+                               <% }%>
+                               <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><%=text%><b class="caret"></b></a>
+
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li id="menuCambiable">
-                            <a id="registroAlojamiento" href="index.jsp" class="botones ">Inicio</a>
+                            <a id="toIndex" href="index.jsp" class="botones ">Inicio</a>
                         </li>  
                     </ul>
                </div>
@@ -58,9 +105,14 @@
                     <div class="row">
                         <h3 class="center">Registra tu alojamiento aquí: </h3>
                             <div class="col-md-12">
-                                <form class="form" role="form" action="#" method="post" accept-charset="UTF-8">
+                                <form class="form" action="RegistroAlojamiento" method="post" id="form-registro-alojamiento" role="form"  accept-charset="UTF-8">
                                     <div class="form-group">
-                                        <label for="sel1">Tipo de alojamiento:</label>
+                                        <label for="titulo"><span class="requeridoAst">*</span>Titulo del alojamiento:</label>
+                                        <input type="text" name="titulo"  id="titulo" class="form-control" required>
+                                        <span class="span-registro" id="span-titulo"> </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sel1"><span class="requeridoAst">*</span>Tipo de alojamiento:</label>
                                         <select class="form-control" id="tipoAloj" required>
                                             <option>Apartamento</option>
                                             <option>Chalet</option>
@@ -69,20 +121,20 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="nHuesp">Número máximo de husepedes:</label>
+                                        <label for="nHuesp"><span class="requeridoAst">*</span>Número máximo de husepedes:</label>
                                         <input type="number" name="maxHuespedes" min="1" max="10"  id="nHuesp" class="form-control" required>
                                         <span class="span-registro" id="span-nHuesp"> </span>
                                     </div>
                                     <div class="form-group">
-                                        <label>Barrio</label>
-                                        <select class="form-control" id="barrio">
+                                        <label><span class="requeridoAst">*</span>Barrio</label>
+                                        <select class="form-control" id="barrio" required>
                                             <option>El Ensanche</option>
                                             <option>Lakua-Arriaga</option>
                                             <option>Zabalgana</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="politica">Política de cancelación de tu alojamiento (para onsultar como funcionan las políticas de cancelación <a href="politicas.html">haz click aquí</a>): </label>
+                                        <label for="politica"><span class="requeridoAst">*</span>Política de cancelación de tu alojamiento (para onsultar como funcionan las políticas de cancelación <a href="politicas.html">haz click aquí</a>): </label>
                                         <select class="form-control" id="politica" required>
                                             <option>Cancelación Gratuita</option>
                                             <option>Flexible</option>
@@ -90,15 +142,25 @@
                                         </select>
                                     </div>   
                                     <div class="form-group">
-                                        <label for="tarif">Tárifa por noche ( €/noche):</label>
-                                        <input type="text" pattern="[0-9]{1,4}\.[0-9]{1}[0-9]{1}$" id="tarifa" class="form-control" required title="Utiliza un número con dos decimales entre 0.00 y 9999.99" >
+                                        <label for="tarifa">Tárifa por noche ( €/noche):</label>
+                                        <input type="text" pattern="[0-9]{1,4}\.[0-9]{1}[0-9]{1}$" id="tarifa" class="form-control" title="Utiliza un número con dos decimales entre 0.00 y 9999.99" >
                                         <span class="span-registro" id="span-tarifa"> </span>
                                     </div>
                                     <div class="form-group">
                                         <label for="map">Geolocalización: </label><br>
-                                        Escribe una dirección: <input type="text" id="buscador" title="Dirección a Geocode" class="Direccion" required/>
+                                        Escribe una dirección: <input type="text" id="buscador" title="Dirección a Geocode" class="Direccion"/>
                                         <input type="button" id="btnBuscador" title="Buscar" value="Busca"/><br><br>
                                         <div class="map" id="map"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="piso">Piso:</label>
+                                        <input type="text" name="piso"  id="piso" class="form-control">
+                                        <span class="span-registro" id="span-piso"> </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="coment">Comentarios sobre el piso:</label>
+                                        <input type="text" name="titulo"  id="coment" class="form-control">
+                                        <span class="span-registro" id="span-coment"> </span>
                                     </div>
                                     <div class="form-group"> 
                                         <label>Foto de tu alojamiento: </label>
@@ -107,6 +169,7 @@
                                 <button id="botonFormPerfil" type="submit" class="btn btn-default center-block">Registrar alojamiento</button>
                             </form>
                         </div>
+                        <p class="requerido"> Los campos con * son obligatorios.</p>
                    </div>
                 </div>
             </div>
@@ -124,7 +187,6 @@
         <script src="js/loadGeolocation.js" type="text/javascript"></script> 
         <script src="js/main.js" type="text/javascript"></script> 
         <script src="js/perfil.js" type="text/javascript"></script> 
-        <script src="js/dragDrop.js" type="text/javascript"></script> 
         <!-- Validar formulario -->
         <script src="js/bootstrap.min.js"></script>
     </body>

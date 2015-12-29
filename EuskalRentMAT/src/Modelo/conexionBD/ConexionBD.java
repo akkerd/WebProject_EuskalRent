@@ -2,7 +2,12 @@
 package Modelo.conexionBD;
 
 
+import Modelo.Entidades.Alojamiento;
+import Modelo.Entidades.Alquiler;
+import Modelo.Entidades.Reserva;
 import Modelo.Entidades.Usuario;
+import Modelo.Listas.ListaAlquileres;
+import Modelo.Listas.ListaReservas;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -96,17 +101,25 @@ public class ConexionBD {
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            
+            /* Comprobamos de que el usuario exista */
             if (!rs.next() ) {
                 cerrarConexion(conexion);
                 return null;
             }
-            String pass = rs.getString("pass");
-            if (!contraseña.equals(pass) ) {
+            
+            /* Comprobamos que la contraeña coincida */
+            if (!contraseña.equals(rs.getString("pass")) ) {
                 cerrarConexion(conexion);
                 return null;
             }
-            Usuario user = new Usuario (rs.getInt("idUsuario"),rs.getString("nombreCompleto"),rs.getString("email"),rs.getString("fotoPerfil"),rs.getInt("telefono"),rs.getString("descripcion"));
+            /* Guardamos las reservas del usuario */
+            ListaReservas listaReservas = getListaReservas(rs.getInt("idUsuario"));
+            /* Guardamos los alquileres del usuario */
+            ListaAlquileres listaAlquileres = getListaAlquileres(rs.getInt("idUsuario"));
+            /* Guardamos los datos de usuario */
+            Usuario user = new Usuario (rs.getInt("idUsuario"),rs.getString("nombreCompleto"),rs.getString("email"),rs.getString("fotoPerfil"),rs.getInt("telefono"),rs.getString("descripcion"),listaReservas,listaAlquileres);
+            /* Guardamos las reservas del usuario */
+            
             cerrarConexion(conexion);
             return user;   
         }
@@ -115,8 +128,94 @@ public class ConexionBD {
             return null;
         }
     }
-    /*public ListaReservas getListaReservas(int idUsuario){
-        
-    }*/
+    /**
+    * Metodo para recuperar todas las reservas de un usuario (Se llamara al cargar un usuario).
+    * 
+    * @return ListaReservas
+    * 
+    */
+    public ListaReservas getListaReservas(int idUsuario){
+        try{
+            /* Creamos la conexion con la base de datos */
+            Connection conexion = getConexion();
+            /* Guardamos la sentencia SQL */
+            String sql = "SELECT * FROM reservas WHERE IdUsuario ='" + idUsuario + "'";
+            /* Ejecutamos la sentencia SQL y guardamos el resultado*/
+            Statement stmt = conexion.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            /* Creamos la lista de reservas */
+            ListaReservas listaReservas = new ListaReservas();
+            /* Recorremos y guardamos el resultado de la sentencia sql*/
+            while(rs.next()){                
+                listaReservas.añadirReserva(new Reserva(rs.getInt("idReserva"),rs.getInt("idAlquiler"),rs.getDate("fechaReserva"),rs.getDate("fechaEntrada"),rs.getDate("fechaSalida")));
+            }
+            return listaReservas;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    /**
+    * Metodo para recuperar todos los alquileres de un usuario (Se llamara al cargar un usuario).
+    * 
+    * @return ListaAlquileres
+    */
+    public ListaAlquileres getListaAlquileres(int idUsuario){
+        try{
+            /* Creamos la conexion con la base de datos */
+            Connection conexion = getConexion();
+            /* Guardamos la sentencia SQL */
+            String sql = "SELECT * FROM alquiler WHERE IdUsuario ='" + idUsuario + "'";
+            /* Ejecutamos la sentencia SQL y guardamos el resultado*/
+            Statement stmt = conexion.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            /* Creamos la lista de alquileres */
+            ListaAlquileres listaAlquileres = new ListaAlquileres();
+            /* Recorremos y guardamos el resultado de la sentencia sql*/
+            while(rs.next()){
+                Alojamiento alojamiento = getAlojamiento(rs.getInt("idAlojamiento"));
+                Alquiler alquiler = new Alquiler(rs.getInt("idAlquiler"),alojamiento,rs.getDate("fechaAlquiler"),rs.getDate("fechaInicio"),rs.getDate("fechaFin"));
+                listaAlquileres.añadirAlquiler(alquiler);
+            }
+            return listaAlquileres;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    /**
+    * Metodo para recuperar el alojamiento de cada alquiler. (Se llamara al cargar un alquiler).
+    * 
+    * @return ListaAlquileres
+    */
+    public Alojamiento getAlojamiento(int idAlojamiento){
+        try{
+            /* Creamos la conexion con la base de datos */
+            Connection conexion = getConexion();
+            /* Guardamos la sentencia SQL */
+            String sql = "SELECT * FROM alojamiento WHERE IdAlojamiento ='" + idAlojamiento + "'";
+            /* Ejecutamos la sentencia SQL y guardamos el resultado*/
+            Statement stmt = conexion.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            /* Comprobamos de que el alojamiento exista */
+            if (!rs.next() ) {
+                cerrarConexion(conexion);
+                return null;
+            }
+            /* Creamos el alojamiento */
+            Alojamiento alojamiento = new Alojamiento(rs.getInt("idAlojamiento"),rs.getString("tipoAlojamiento"),rs.getInt("numHabitaciones"),rs.getString("barrio"),rs.getString("direccion"),rs.getString("fotoAlojamiento"),rs.getInt("precioNoche"),rs.getString("tipoCancelacion"),rs.getString("Comentario"));
+
+            return alojamiento;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
 }
 

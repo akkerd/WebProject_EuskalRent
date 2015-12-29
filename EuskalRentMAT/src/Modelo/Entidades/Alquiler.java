@@ -13,16 +13,14 @@ import java.util.Date;
  */
 public class Alquiler {
     private int idAlquiler;
-    private int idUsuario;
-    private int idAlojamiento;
+    private Alojamiento alojamiento;
     private Date fechaAlquiler;
     private Date fechaInicio;
     private Date fechaFin;
     
-    public Alquiler (int idAlquiler,int idUsuario,int idAlojamiento,Date fechaAlquiler,Date fechaInicio,Date fechaFin){
+    public Alquiler (int idAlquiler,Alojamiento alojamiento,Date fechaAlquiler,Date fechaInicio,Date fechaFin){
         this.idAlquiler = idAlquiler;
-        this.idUsuario = idUsuario;
-        this.idAlojamiento = idAlojamiento;
+        this.alojamiento= alojamiento;
         this.fechaAlquiler = fechaAlquiler;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -40,34 +38,6 @@ public class Alquiler {
      */
     public void setIdAlquiler(int idAlquiler) {
         this.idAlquiler = idAlquiler;
-    }
-
-    /**
-     * @return the idUsuario
-     */
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    /**
-     * @param idUsuario the idUsuario to set
-     */
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    /**
-     * @return the idAlojamiento
-     */
-    public int getIdAlojamiento() {
-        return idAlojamiento;
-    }
-
-    /**
-     * @param idAlojamiento the idAlojamiento to set
-     */
-    public void setIdAlojamiento(int idAlojamiento) {
-        this.idAlojamiento = idAlojamiento;
     }
 
     /**
@@ -110,6 +80,20 @@ public class Alquiler {
      */
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    /**
+     * @return the alojamiento
+     */
+    public Alojamiento getAlojamiento() {
+        return alojamiento;
+    }
+
+    /**
+     * @param alojamiento the alojamiento to set
+     */
+    public void setAlojamiento(Alojamiento alojamiento) {
+        this.alojamiento = alojamiento;
     }
     
 }

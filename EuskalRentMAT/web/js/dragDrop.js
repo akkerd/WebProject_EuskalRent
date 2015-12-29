@@ -6,7 +6,7 @@
 
 // JOSEBA DRAG
   
-$(document).on('dragover','.cambiable',function(){   
+/*$(document).on('dragover','.cambiable',function(){   
 
 
        $('#drop-zone #drop-zone2').on('dragover',function(e){
@@ -87,3 +87,4 @@ $(document).on('dragover','.cambiable',function(){
      }
  }); 
     
+*/

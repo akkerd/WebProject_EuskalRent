@@ -118,6 +118,11 @@ body {
     text-align:center;
     font-size: 1px;
 }
+
+.requeridoAst {
+    color:#d45252;
+}
+
 /************************ PERFIL *********************/
 .nav-menus {
   border-bottom: 1px solid #ddd;

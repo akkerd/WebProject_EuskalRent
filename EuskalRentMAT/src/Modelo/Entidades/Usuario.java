@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Modelo.Entidades;
+
+import Modelo.Listas.ListaAlquileres;
+import Modelo.Listas.ListaReservas;
 
 
 public class Usuario {
@@ -14,15 +13,19 @@ public class Usuario {
     private String fotoPerfil;
     private int telefono;
     private String descripcion;
+    private ListaReservas listaReservas;
+    private ListaAlquileres listaAlquileres;
 
     
-    public Usuario(int idUsuario,String nombreCompleto, String email,String fotoPerfil, int telefono, String descripcion){
+    public Usuario(int idUsuario,String nombreCompleto, String email,String fotoPerfil, int telefono, String descripcion,ListaReservas listaReservas,ListaAlquileres listaAlquileres){
         this.idUsuario = idUsuario;
         this.nombreCompleto = nombreCompleto;
         this.email = email;
         this.fotoPerfil = fotoPerfil;
         this.telefono = telefono;
         this.descripcion = descripcion;
+        this.listaReservas = listaReservas;
+        this.listaAlquileres = listaAlquileres;
     }
 
     /**
@@ -107,6 +110,34 @@ public class Usuario {
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    /**
+     * @return the listaReservas
+     */
+    public ListaReservas getListaReservas() {
+        return listaReservas;
+    }
+
+    /**
+     * @param listaReservas the listaReservas to set
+     */
+    public void setListaReservas(ListaReservas listaReservas) {
+        this.listaReservas = listaReservas;
+    }
+
+    /**
+     * @return the listaAlquileres
+     */
+    public ListaAlquileres getListaAlquileres() {
+        return listaAlquileres;
+    }
+
+    /**
+     * @param listaAlquileres the listaAlquileres to set
+     */
+    public void setListaAlquileres(ListaAlquileres listaAlquileres) {
+        this.listaAlquileres = listaAlquileres;
     }
     
 }

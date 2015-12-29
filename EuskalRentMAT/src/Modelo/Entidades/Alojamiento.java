@@ -20,10 +20,10 @@ public class Alojamiento {
     private int precioNoche;
     private String tipoCancelacion;
     private String comentario;
-    // DIEGO pongo titulo
     private String titulo;
+    private String piso;
     
-    public Alojamiento (int idAlojamiento, String tipoAlojamiento,int numHabitaciones,String barrio,String direccion,String fotoAlojamiento ,int precioNoche,String tipoCancelacion,String comentario ){
+    public Alojamiento (int idAlojamiento, String tipoAlojamiento,int numHabitaciones, String barrio, String direccion,String fotoAlojamiento ,int precioNoche,String tipoCancelacion,String comentario, String titulo, String piso ){
         
         this.idAlojamiento = idAlojamiento;
         this.tipoAlojamiento = tipoAlojamiento;
@@ -35,6 +35,7 @@ public class Alojamiento {
         this.tipoCancelacion = tipoCancelacion;
         this.comentario = comentario;
         this.titulo = titulo;
+        this.piso = piso;
         
     }
 
@@ -165,17 +166,30 @@ public class Alojamiento {
     }
     
     /**
-     * @return titulo
+     * @return the titulo
      */
     public String getTitulo() {
         return titulo;
     }
 
     /**
-     * @param titulo to set titulo
+     * @param titulo the comentario to set
      */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+    /**
+     * @return the piso
+     */
+    public String getPiso() {
+        return piso;
+    }
+
+    /**
+     * @param piso the comentario to set
+     */
+    public void setPiso(String piso) {
+        this.piso = piso;
     }
     
 }

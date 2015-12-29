@@ -14,15 +14,13 @@ import java.util.Date;
 public class Reserva {
     
     private int idReserva;
-    private int idUsuario;
     private int idAlquiler;
     private Date fechaReserva;
     private Date fechaEntrada;
     private Date fechaSalida;
     
-    public Reserva ( int idReserva, int idUsuario,int idAlquiler, Date fechaReserva, Date fechaEntrada, Date fechaSalida){
+    public Reserva ( int idReserva,int idAlquiler, Date fechaReserva, Date fechaEntrada, Date fechaSalida){
        this.idReserva = idReserva;
-       this.idUsuario = idUsuario;
        this.idAlquiler = idAlquiler;
        this.fechaReserva = fechaReserva;
        this.fechaEntrada = fechaEntrada;
@@ -41,20 +39,6 @@ public class Reserva {
      */
     public void setIdReserva(int idReserva) {
         this.idReserva = idReserva;
-    }
-
-    /**
-     * @return the idUsuario
-     */
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    /**
-     * @param idUsuario the idUsuario to set
-     */
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
     }
 
     /**
