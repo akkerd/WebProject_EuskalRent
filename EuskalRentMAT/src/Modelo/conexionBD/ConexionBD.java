@@ -319,8 +319,11 @@ public class ConexionBD {
     * Metodo para insertar un alquiler en la base de datos.
     * 
     */
-    public void añadirAlquiler(Alquiler alquiler, int idUsuario, int idAlojamiento){
+    public void añadirAlquiler(Alquiler alquiler, int idUsuario){
         try{
+            int idAlojamiento = getNextIdAlojamiento();
+            /* Llamamos al metodo Añadir alojamiento para guardarlo en la BD */
+            añadirAlojamiento(alquiler.getAlojamiento());
             /* Creamos la conexion con la base de datos */
             Connection conexion = getConexion();
             /* Guardamos la sentencia SQL */
@@ -328,14 +331,37 @@ public class ConexionBD {
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(sql);
-            /* Llamamos al metodo Añadir alojamiento para guardarlo en la BD */
-            añadirAlojamiento(alquiler.getAlojamiento());
+
         }
         catch(Exception e){
             e.printStackTrace();
         }
     }
-        
+    
+    public int getNextIdAlojamiento(){
+        try{
+            Connection conexion = getConexion();
+            /* Guardamos la sentencia SQL */
+            String sql = "select max(idAlojamiento) as id from alojamiento";
+            /* Ejecutamos la sentencia SQL y guardamos el resultado*/
+            Statement stmt = conexion.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            /* Comprobamos de que el usuario exista */
+            if (!rs.next() ) {
+                cerrarConexion(conexion);
+                return 0;
+                
+            }
+             int aux = rs.getInt("id");
+             aux++;
+             cerrarConexion(conexion);
+             return aux;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
     /**
     * Metodo para insertar un alojamiento en la base de datos ( llamado desde añadirAlquiler )
     * 
@@ -349,10 +375,11 @@ public class ConexionBD {
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(sql);
+
         }
         catch(Exception e){
             e.printStackTrace();
         }
-    }   
+    }
 }
 

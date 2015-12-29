@@ -3,6 +3,7 @@
     Created on : 26-dic-2015, 22:58:48
     Author     : Diegaker
 --%>
+<%@page import="java.util.Calendar"%>
 <%@page import="Modelo.Entidades.Usuario"%>
 <%@page import="Modelo.conexionBD.ConexionBD"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -143,12 +144,18 @@
                                     <label>Fechas en las que se podría alquilar:</label>
                                     <h5>(Si lo dejas en blanco significa que pueden reservar cualquier día)</h5>
                                     <div class="input-group form-group">
-                                        <input type="text" class="form-control" name="date1" id="date1" data-select="datepicker" placeholder="Fecha inicio">
-                                        <span class="input-group-btn"><button type="button" class="btn btn-primary" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button></span>
+                                    <%
+                                        Calendar c = Calendar.getInstance();
+                                        String dia = Integer.toString(c.get(Calendar.DATE));
+                                        String mes = Integer.toString(c.get(Calendar.MONTH)+1);
+                                        String año = Integer.toString(c.get(Calendar.YEAR));
+                                    %>
+                                    <input type="date"  class="form-control" min="<%=año+"-"+mes+"-"+dia%>" name="date" id="date-llegada">
+                                    
                                     </div>
                                     <div class="input-group form-group">
-                                        <input type="text" class="form-control" name="date2" id="date2" data-select="datepicker" placeholder="Fecha fin">
-                                        <span class="input-group-btn"><button type="button" class="btn btn-primary" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button></span>
+                                        <input type="date" class="form-control" min="" name="date" id="date-salida">
+
                                     </div>
                                     <div class="form-group">
                                         <label for="tarifa">Tárifa por noche ( €/noche):</label>
@@ -187,11 +194,11 @@
         <!-- JS -->
         <script src="js/jquery-1.11.3.min.js"></script>
         <script src="js/datepicker.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="http://maps.google.com/maps/api/js?sensor=false" language="javascript" type="text/javascript"></script>
-        <script src="js/loadGeolocation.js" type="text/javascript"></script> 
         <script src="js/main.js" type="text/javascript"></script> 
-        <script src="js/perfil.js" type="text/javascript"></script> 
+        <script src="http://maps.google.com/maps/api/js?sensor=false" language="javascript" type="text/javascript"></script>
+        <script src="js/loadGeolocation.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <!--<script src="js/perfil.js" type="text/javascript"></script> -->
         <!-- Validar formulario -->
     </body>
 </html>

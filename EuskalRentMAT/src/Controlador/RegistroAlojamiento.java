@@ -126,37 +126,54 @@ public class RegistroAlojamiento extends HttpServlet {
             RequestDispatcher rd = sc.getRequestDispatcher("/index.jsp");
             rd.forward(request,response);
         }else{
-    
-            // Incrementamos el numero de alojamientos para usarlo como id
-            // int numAlojamiento += 1;
+            // Para ALOJAMIENTO
+            //String titulo = request.getParameter("titulo");
             String tipoAlojamiento = request.getParameter("tipoAloj");
             int numHuespedes = Integer.parseInt( request.getParameter("nHuesp") );// Esto deberia ser numHuespedes, no habitaciones
-            String barrio = request.getParameter("barrio");
+            String barrio = request.getParameter("barrio");            
             String direccion = request.getParameter("buscador");
             String fotoAlojamiento = request.getParameter("drop-zone2"); // De aquí recoger el String base64
             int precioNoche = Integer.parseInt( request.getParameter("tarifa") );
             String tipoCancelacion = request.getParameter("politica");
             String comentario = request.getParameter("coment");
-            //String titulo = request.getParameter("titulo");
+            
+            // Para ALQUILER
+            String date1 = request.getParameter("date-inicio");
+            String date2 = request.getParameter("date-fin");
+            
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+
+            out.println("<html>");
+            out.println("<body>");
+            out.println("<p>Tipo alojamiento:"+ tipoAlojamiento +"</p>");
+            out.println("<p>Num huespedes"+ numHuespedes +"</p>");
+            out.println("<p>Barrio: "+barrio  +"</p>");
+            out.println("<p>Direccion: "+ direccion +"</p>");
+            out.println("<p>Foto: "+ fotoAlojamiento +"</p>");
+            out.println("<p>Precio noche: "+ precioNoche +"</p>");
+            out.println("<p>Cancelacion: "+ tipoCancelacion +"</p>");
+            out.println("<p>Comentario: "+  comentario +"</p>");
+            out.println("<p>Fecha1: "+ date1 +"</p>");
+            out.println("<p>Fecha2: "+ date2 +"</p>");
+            
+            out.println("</body>");
+            out.println("</html>");
             
             // Creo el objeto Alojamiento
             Alojamiento miAlojamiento = new Alojamiento( 0, tipoAlojamiento,numHuespedes,barrio,direccion,fotoAlojamiento,precioNoche,tipoCancelacion,comentario);
-            int idUsuario = miUsuario.getIdUsuario();
             
+            int idUsuario = miUsuario.getIdUsuario();
             fechaHoy = new Date();
             
             // Creo el objeto Alquiler
             Alquiler miAlquiler = new Alquiler(0, miAlojamiento, fechaHoy, fechaHoy, fechaHoy);
             
-            // addAlojamientoBD();
+            // Añade un nuevo Alojamiento
             ConexionBD.getConexionBD().añadirAlojamiento(miAlojamiento);
-            
-           // POSIBLE SOLUCION AL TEMA DE LOS IDs
-            ListaAlojamientos miListaAlojamientos = ConexionBD.getConexionBD().getListaAlojamientos();
-            int numAlojamientos = miListaAlojamientos.getNumeroAumentos();
-            
-            // addAlquilerBD
-            ConexionBD.getConexionBD().añadirAlquiler(miAlquiler, idUsuario, numAlojamientos+1);
+                        
+            // Añade un nuevo Alquiler con el último Alojamiento que hay en la lista
+            ConexionBD.getConexionBD().añadirAlquiler(miAlquiler, idUsuario);
             
             ServletContext sc = getServletContext();
             RequestDispatcher rd = sc.getRequestDispatcher("/perfil.jsp");

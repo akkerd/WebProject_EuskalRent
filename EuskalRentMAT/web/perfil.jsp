@@ -191,11 +191,10 @@
         
         <script src="js/jquery-1.11.3.min.js"></script>
         <script src="js/datepicker.min.js"></script>
+        <script src="js/main.js" type="text/javascript"></script> 
         <script src="http://maps.google.com/maps/api/js?sensor=false" language="javascript" type="text/javascript"></script>
         <script src="js/loadGeolocation.js" type="text/javascript"></script> 
-        <script src="js/main.js" type="text/javascript"></script> 
         <script src="js/perfil.js" type="text/javascript"></script> 
-        <script src="js/dragDrop.js" type="text/javascript"></script> 
         <script src="js/bootstrap.min.js"></script>
     </body>
 </html>

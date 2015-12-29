@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
-    Created on : 27-dic-2015, 17:54:13
-    Author     : Diegaker
+    Created on : 26-dic-2015, 18:19:27
+    Author     : joseba
 --%>
 
 <%@page import="Modelo.Entidades.Usuario"%>
@@ -32,9 +32,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                    </button>
-                    <a id="logo" class="navbar-brand" href="#"><img id="imgLogo" src="img/logo.png"></a>
+                    <a id="logo" class="navbar-left" href="index.jsp"><img id="imgLogo" src="img/logo.png"></a>
                 </div>
-                <!-- Navegador superior -->
+                   <!-- Navegador superior -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">               
                     <ul class="nav navbar-nav navbar-right">                
                         <li id="menuCambiable" class="dropdown">
@@ -55,7 +55,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="sr-only" for="contraseña" >Contraseña</label>
-                                                            <input name="pass" id="loginPass" class="form-control formLogin" type="password" placeholder="Contraeña" required>
+                                                            <input name="pass" id="loginPass" class="form-control formLogin" type="pass" placeholder="Contraeña" required>
                                                             <span class="span-registro" id="avisoPassLogin"></span>
                                                         </div>
                                                         <div class="form-group">
@@ -68,7 +68,7 @@
                                         </li>
                                         <li class="divider"></li>
                                         <li>
-                                            <a class="btn btn-primary btn-block" href="registro.html">REGISTRO</a>
+                                            <a class="btn btn-primary btn-block" href="registro.jsp">REGISTRO</a>
                                         </li>
                                     </ul>
                                     <%
@@ -92,10 +92,10 @@
                         <li id="menuCambiable">
                             <a id="registroAlojamiento" href="registroAlojamiento.jsp" class="botones ">Registra tu alojamiento</a>
                         </li>  
-                    </ul>                    
+                    </ul>  
                </div>
             </div>
-        </nav><!-- /navbar -->          
+        </nav><!-- /navbar -->           
            <div class="jumbotron"> 
                <div class="container-fluid">                   
                     <div class="row">
@@ -119,24 +119,25 @@
                         </div>
                         <div class="col-md-6">
                             <h3 id="tituloBuscador" class="center-block">¡Busca tu alojamiento ahora mismo!</h3>
-                            <form role="form">
+                            <form role="form" action="busqueda.jsp">
                                 <div class="form-group">
                                     <label>Destino</label>
-                                    <div>Selecciona barrio de destino:</div>
-                                    <select class="form-control" id="barrio">
-                                        <option>El Ensanche</option>
-                                        <option>Lakua-Arriaga</option>
-                                        <option>Zabalgana</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Barrio" required>
                                 </div>
                                 <label>Fechas</label>
                                 <div class="input-group form-group">
-                                    <input type="text" class="form-control" name="date" id="date" data-select="datepicker" placeholder="Llegada">
-                                    <span class="input-group-btn"><button type="button" class="btn btn-primary" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button></span>
+                                    <%
+                                        Calendar c = Calendar.getInstance();
+                                        String dia = Integer.toString(c.get(Calendar.DATE));
+                                        String mes = Integer.toString(c.get(Calendar.MONTH)+1);
+                                        String año = Integer.toString(c.get(Calendar.YEAR));
+                                    %>
+                                    <input type="date"  class="form-control" min="<%=año+"-"+mes+"-"+dia%>" name="date" id="date-llegada">
+                                    
                                 </div>
                                 <div class="input-group form-group">
-                                    <input type="text" class="form-control" name="date" id="date" data-select="datepicker" placeholder="Salida">
-                                    <span class="input-group-btn"><button type="button" class="btn btn-primary" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button></span>
+                                    <input type="date" class="form-control" min="" name="date" id="date-salida">
+                                    
                                 </div>
                                 <button id="botonBuscar" type="submit" class="btn btn-default center-block">Buscar</button>
                             </form>
@@ -175,3 +176,4 @@
         <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
+
