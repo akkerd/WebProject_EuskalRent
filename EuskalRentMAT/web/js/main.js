@@ -1,104 +1,6 @@
 $(document).ready(function(){
-    
-    
-    /*comprobarLogin();
-    function comprobarLogin()
-    {
-        
-        var userLogged = sessionStorage.getItem("logged");
-        if(userLogged === null){
-            sessionStorage.setItem("logged",0);
-            userLogged = sessionStorage.getItem("logged");
-        } else if (userLogged !== "0"){
-            var usuario = JSON.parse(sessionStorage.getItem(userLogged));
-        }
-
-        if(userLogged === "0"){
-            cambiarCabeceraNotLoged();
-
-        }  else {
-            cambiarCabeceraLoged(usuario.nombre);
-        } 
-            
-        
-    }
-
-    function cambiarCabeceraLoged(nombre)
-    {
-        $("#borrableLogearse").remove();
-        $.get("menuUsuario.html", function (data) {
-            $("#menuCambiable").append(data);
-        });
-        $("a#nombreUser").text(nombre);        
-    }
-    function cambiarCabeceraNotLoged()
-    {
-        $("#borrableUsuario").remove();
-        $.get("menuLogearse.html", function (data) {
-            $("#menuCambiable").append(data);
-        });       
-    }   
-    
-    //Handles menu drop down
-    $('.dropdown-menu').find('form').click(function (e) {
-        e.stopPropagation();
-    });
-    $('.myCarousel').carousel({
-        interval: 3000
-    });
-    
-    $(".formLogin").bind('change blur keyup',function(e){
-        var elemento = e.target;
-        if (elemento.validity.valid) {
-            elemento.style.background = '#FFFFFF';
-            if(elemento === document.getElementById("loginEmail")){
-                $("#avisoEmailLogin").text("");
-            }
-            else if(elemento === document.getElementById("loginPass")){
-                $("#avisoPassLogin").text("");
-            }
-            
-        }
-        else {
-            elemento.style.background = '#FFA1A1';
-            if(elemento === document.getElementById("loginEmail")){
-                $("#avisoEmailLogin").text("Introduzca un correo válido");
-            }
-            else if(elemento === document.getElementById("loginPass")){
-                $("#avisoPassLogin").text("Introduzca una contraseña valida");
-            }
-           
-        }
-    });
-    
-    $( "#menuCambiable" ).on( "click","#accede" ,function() {
-
-        var email = $("#loginEmail").val();
-        var pass = $("#loginPass").val();
-        var usuario = JSON.parse(sessionStorage.getItem(email));
-
-        
-        if((usuario !== null) && (usuario.pass === pass)){
-            
-            cambiarCabeceraLoged(usuario.nombre)
-
-            sessionStorage.setItem("logged",usuario.email);         
-        }
-        $("a#nombreUser").text(usuario.nombre); 
-    });
-    $( "#menuCambiable" ).on( "click","#logout" ,function() {
-
-        
-        sessionStorage.setItem("logged",0);
-        cambiarCabeceraNotLoged();
-        $("a#nombreUser").text("ACCEDE");   
-        
-
-    });
-    */
-    
+       
     //Joseba
-  
   
     //validación en la página de perfil
     $(document).on('click','.cambiable',function(){
@@ -164,68 +66,11 @@ $(document).ready(function(){
         });             
     }
 
-   
-    /*
-     //guarda los valores de la página de registro
-    $("#formulario-registro").click(function(){
-        
-        nombre = $("#nombre").val();
-        apellidos = $("#appellidos").val();
-        tel = $("#tel").val();
-        email = $("#email").val();
-        pwd = $("#pwd").val();
-        
-        guardaJson(nombre,apellidos,tel,email,pwd);
-        
-    });
-    //guarda los valores de la página perfil, valores modificados
-    $("#formulario-cambio").click(function(){
-        
-        nombre = $("#nombre-perfil").val();
-        apellidos = $("#appellidos-perfil").val();
-        tel = $("#tel-perfil").val();
-        email = $("#email-perfil").val();
-        pwd = $("#pwd-perfil").val();
-        
-        guardaJson(nombre,apellidos,tel,email,pwd);
-        
-    });
-     //función para añadir datos JSON a la sesion.     
-    function guardaJson(nombre,apellidos,tel,email,pwd){
-        var datos = {
-            nombre : nombre,
-            apellidos : apellidos,
-            telefono : tel,
-            email : email,
-            pass : pwd
-        };
-        
-        var json = JSON.stringify(datos);;
-        
-        sessionStorage.setItem(email,json);
-    }  
-    
-      //----Insertar datos del usuario en la página perfil
-     insertarJson();
-                 
-         function insertarJson(){
-             var email = sessionStorage.getItem("logged");
-             var usuario = JSON.parse(sessionStorage.getItem(email));
-             
-             $("#nombre-perfil").val(usuario.nombre);
-             $("#apellidos-perfil").val(usuario.apellidos);
-             $("#tel-perfil").val(usuario.telefono);
-             $("#email-perfil").val(usuario.email);
-         }
-    //----Fin--Insertar datos del usuario en la página perfil
-    */
     // JOSEBA DRAG
-    
-   
-    $(document).on('dragover','.cambiable',function(){   
+    //$(document).on('dragover','.cambiable',function(){   
            
 
-           $('#drop-zone #drop-zone2').on('dragover',function(e){
+           /*$('#drop-zone #drop-zone2').on('dragover',function(e){
                
                e.stopPropagation();
                e.preventDefault();
@@ -245,11 +90,11 @@ $(document).ready(function(){
            
        
            var dropZone;
-           var dropZone2;
+           var dropZone2;*/
                      
          //window.onload = function(){
              
-           dropZone = document.getElementById("drop-zone");
+           /*dropZone = document.getElementById("drop-zone");
            dropZone.ondragenter = ignoreDrag;
            dropZone.ondragover = ignoreDrag;
            dropZone.ondrop = drop;
@@ -257,9 +102,9 @@ $(document).ready(function(){
            dropZone2 = document.getElementById("drop-zone2");
            dropZone2.ondragenter = ignoreDrag;
            dropZone2.ondragover = ignoreDrag;
-           dropZone2.ondrop = drop2;
+           dropZone2.ondrop = drop2;*/
          //};
-         function ignoreDrag(e){
+         /*function ignoreDrag(e){
            e.stopPropagation();
            e.preventDefault();
          }
@@ -270,17 +115,26 @@ $(document).ready(function(){
 
            var data = e.dataTransfer;
            var files = data.files;
+           processFiles(files);*/
+           
+           // DIEGO           
+           /*var imageUrl = e.dataTransfer.getData('text/html');
+           if($(imageUrl).children().length > 0 ){
+                var url = $(imageUrl).find('img').attr('src');
+            }else{        
+                var url = $(imageUrl).attr('src');
+            }
+            console.log(url);*/
+    
+        //}
 
-           processFiles(files);
-        }
-
-         function processFiles(files){
+         /*function processFiles(files){
             var file = files[0],
             reader = new FileReader();
             reader.onload = function(e){
             dropZone.style.backgroundImage = "url('"+e.target.result+"')";
-           };
-           reader.readAsDataURL(file);
+            };
+            reader.readAsDataURL(file);
          }
          
          function drop2(e){
@@ -302,7 +156,7 @@ $(document).ready(function(){
            reader.readAsDataURL(file);
          }
    
-     }); 
+     }); */
          
     
     //----Control de navegación en la página de perfil------
@@ -338,52 +192,58 @@ $(document).ready(function(){
     };
     
   //-----geolocation
-  initMapa();
+  //initMapa();
    
 
 });
 
-//-------------Geolocation
-var mapa;
-var direccion = new google.maps.LatLng(42.8591656,-2.681791800000042);
-var marcador;
-var infoMarcador;
-var localizacion;
+// DIEGO DRAG
+$(document).on('dragover','.cambiable',function(){
+    var dropZoneId = "drop-zone";
+    var buttonId = "clickHere";
+    var mouseOverClass = "mouse-over";
 
-function initMapa(){
-    var mapOptions = {
-        center: direccion,
-        zoom: 13,
-        mapTypeId: google.maps.MapTypeId.SATELLITE
-    };
-    
-    mapa = new google.maps.Map(document.getElementById('map'), mapOptions);
-    
-    marcador = new google.maps.Marker({  
-        position: direccion,
-        map: mapa,
-        title:"Titulo",
-        draggable: true
-    });
-    
-    infoMarcador = new google.maps.InfoWindow({ content:"direccion"});
-    function mostrarInfo(){
-        infoMarcador.open(mapa, marcador);
+    var dropZone = $("#" + dropZoneId);
+    var ooleft = dropZone.offset().left;
+    var ooright = dropZone.outerWidth() + ooleft;
+    var ootop = dropZone.offset().top;
+    var oobottom = dropZone.outerHeight() + ootop;
+    var inputFile = dropZone.find("input");
+    document.getElementById(dropZoneId).addEventListener("dragover", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.addClass(mouseOverClass);
+        var x = e.pageX;
+        var y = e.pageY;
+
+        if (!(x < ooleft || x > ooright || y < ootop || y > oobottom)) {
+            inputFile.offset({ top: y - 15, left: x - 100 });
+        } else {
+            inputFile.offset({ top: -400, left: -400 });
+        }
+
+    }, true);
+
+    if (buttonId != "") {
+        var clickZone = $("#" + buttonId);
+
+        var oleft = clickZone.offset().left;
+        var oright = clickZone.outerWidth() + oleft;
+        var otop = clickZone.offset().top;
+        var obottom = clickZone.outerHeight() + otop;
+
+        $("#" + buttonId).mousemove(function (e) {
+            var x = e.pageX;
+            var y = e.pageY;
+            if (!(x < oleft || x > oright || y < otop || y > obottom)) {
+                inputFile.offset({ top: y - 15, left: x - 160 });
+            } else {
+                inputFile.offset({ top: -400, left: -400 });
+            }
+        });
     }
-    google.maps.event.addListener(marcador, 'click', mostrarInfo);
-} 
 
-google.maps.event.addDomListener(window, 'load', initMapa);
-
-function buscarDireccion(direccion) {
-    var geoCoder = new google.maps.Geocoder(direccion);
-    var consulta = {address:direccion};
-    geoCoder.geocode(consulta, function(result, status){
-        localizacion = new google.maps.LatLng(result[0].geometry.location.lat(), result[0].geometry.location.lng());
-    });
-    
-    mapa.panTo(localizacion);
-    mapa.setZoom(17);
-    marcador.setPosition(localizacion);
-    
-}
+    document.getElementById(dropZoneId).addEventListener("drop", function (e) {
+        $("#" + dropZoneId).removeClass(mouseOverClass);
+    }, true);
+});

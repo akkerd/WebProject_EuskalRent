@@ -55,7 +55,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="sr-only" for="contraseña" >Contraseña</label>
-                                                            <input name="pass" id="loginPass" class="form-control formLogin" type="pass" placeholder="Contraeña" required>
+                                                            <input name="pass" id="loginPass" class="form-control formLogin" type="password" placeholder="Contraeña" required>
                                                             <span class="span-registro" id="avisoPassLogin"></span>
                                                         </div>
                                                         <div class="form-group">
@@ -119,10 +119,15 @@
                         </div>
                         <div class="col-md-6">
                             <h3 id="tituloBuscador" class="center-block">¡Busca tu alojamiento ahora mismo!</h3>
-                            <form role="form" action="busqueda.jsp">
+                            <form role="form" action="buscarAloj">
                                 <div class="form-group">
                                     <label>Destino</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Barrio" required>
+                                    <!--<input type="text" class="form-control" id="exampleInputEmail2" placeholder="Barrio" required>-->
+                                    <select class="form-control" id="barrio" name="barrio" required>
+                                            <option>El Ensanche</option>
+                                            <option>Lakua-Arriaga</option>
+                                            <option>Zabalgana</option>
+                                    </select>
                                 </div>
                                 <label>Fechas</label>
                                 <div class="input-group form-group">

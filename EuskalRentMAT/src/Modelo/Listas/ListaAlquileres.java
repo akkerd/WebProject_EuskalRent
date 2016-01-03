@@ -24,14 +24,14 @@ public class ListaAlquileres {
     * @return Numero de objetos que consta la lista.
     */
     public int getNumeroAlquileres(){
-        return alquileres.size(); 
+        return getAlquileres().size(); 
     }
     /**
     * Metodo que borra un alquiler de la lista.
     * @param idAlquiler id del Alquiler a borrar.
     */
     public void borrarAlquiler(int idAlquiler){
-        Iterator<Alquiler> it = alquileres.iterator();
+        Iterator<Alquiler> it = getAlquileres().iterator();
         boolean controlador = false;
         while(it.hasNext() && controlador == false){
             if ( it.next().getIdAlquiler() == idAlquiler){
@@ -44,6 +44,20 @@ public class ListaAlquileres {
     * @param Alquiler Alquiler a añadir.
     */
     public void añadirAlquiler(Alquiler alquiler){
-        alquileres.add(alquiler);
+        getAlquileres().add(alquiler);
+    }
+
+    /**
+     * @return the alquileres
+     */
+    public ArrayList<Alquiler> getAlquileres() {
+        return alquileres;
+    }
+
+    /**
+     * @param alquileres the alquileres to set
+     */
+    public void setAlquileres(ArrayList<Alquiler> alquileres) {
+        this.alquileres = alquileres;
     }
 }

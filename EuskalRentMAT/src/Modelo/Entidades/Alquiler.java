@@ -14,12 +14,14 @@ import java.util.Date;
 public class Alquiler {
     private int idAlquiler;
     private Alojamiento alojamiento;
+    private String titulo;
     private Date fechaAlquiler;
     private Date fechaInicio;
     private Date fechaFin;
     
-    public Alquiler (int idAlquiler,Alojamiento alojamiento,Date fechaAlquiler,Date fechaInicio,Date fechaFin){
+    public Alquiler (int idAlquiler,Alojamiento alojamiento,String titulo,Date fechaAlquiler,Date fechaInicio,Date fechaFin){
         this.idAlquiler = idAlquiler;
+        this.titulo = titulo;
         this.alojamiento= alojamiento;
         this.fechaAlquiler = fechaAlquiler;
         this.fechaInicio = fechaInicio;
@@ -94,6 +96,20 @@ public class Alquiler {
      */
     public void setAlojamiento(Alojamiento alojamiento) {
         this.alojamiento = alojamiento;
+    }
+
+    /**
+     * @return the titulo
+     */
+    public String getTitulo() {
+        return titulo;
+    }
+
+    /**
+     * @param titulo the titulo to set
+     */
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
     
 }

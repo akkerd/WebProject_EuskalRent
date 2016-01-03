@@ -25,6 +25,20 @@ public class ListaAlojamientos {
     * @return Numero de objetos que consta la lista.
     */
     public int getNumeroAumentos(){
-        return alojamientos.size(); 
+        return getAlojamientos().size(); 
+    }
+
+    /**
+     * @return the alojamientos
+     */
+    public ArrayList<Alojamiento> getAlojamientos() {
+        return alojamientos;
+    }
+
+    /**
+     * @param alojamientos the alojamientos to set
+     */
+    public void setAlojamientos(ArrayList<Alojamiento> alojamientos) {
+        this.alojamientos = alojamientos;
     }
 }

@@ -27,7 +27,21 @@ public class ListaPuntuaciones {
     * @return Numero de objetos que consta la lista.
     */
     public int getNumeroAumentos(){
-        return puntuaciones.size(); 
+        return getPuntuaciones().size(); 
+    }
+
+    /**
+     * @return the puntuaciones
+     */
+    public ArrayList<Puntuacion> getPuntuaciones() {
+        return puntuaciones;
+    }
+
+    /**
+     * @param puntuaciones the puntuaciones to set
+     */
+    public void setPuntuaciones(ArrayList<Puntuacion> puntuaciones) {
+        this.puntuaciones = puntuaciones;
     }
     
 }

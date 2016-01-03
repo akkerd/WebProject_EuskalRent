@@ -17,11 +17,11 @@ public class Alojamiento {
     private String barrio;
     private String direccion;
     private String fotoAlojamiento;
-    private int precioNoche;
+    private float precioNoche;
     private String tipoCancelacion;
     private String comentario;
     
-    public Alojamiento (int idAlojamiento,String tipoAlojamiento,int numHuespedes, String barrio, String direccion,String fotoAlojamiento ,int precioNoche,String tipoCancelacion,String comentario ){
+    public Alojamiento (int idAlojamiento,String tipoAlojamiento,int numHuespedes, String barrio, String direccion,String fotoAlojamiento ,float precioNoche,String tipoCancelacion,String comentario ){
         
         this.idAlojamiento = idAlojamiento;
         this.tipoAlojamiento = tipoAlojamiento;
@@ -103,14 +103,14 @@ public class Alojamiento {
     /**
      * @return the precioNoche
      */
-    public int getPrecioNoche() {
+    public float getPrecioNoche() {
         return precioNoche;
     }
 
     /**
      * @param precioNoche the precioNoche to set
      */
-    public void setPrecioNoche(int precioNoche) {
+    public void setPrecioNoche(float precioNoche) {
         this.precioNoche = precioNoche;
     }
 

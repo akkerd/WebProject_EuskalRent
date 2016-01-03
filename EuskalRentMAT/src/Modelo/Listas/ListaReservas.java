@@ -28,14 +28,14 @@ public class ListaReservas {
     * @return Numero de objetos que consta la lista.
     */
     public int getNumeroReservas(){
-        return reservas.size(); 
+        return getReservas().size(); 
     }
     /**
     * Metodo que borra una reserva de la lista.
     * @param idReserva id de la reserva a borrar.
     */
     public void borrarReserva(int idReserva){
-        Iterator<Reserva> it = reservas.iterator();
+        Iterator<Reserva> it = getReservas().iterator();
         boolean controlador = false;
         while(it.hasNext() && controlador == false){
             if ( it.next().getIdReserva() == idReserva){
@@ -48,7 +48,21 @@ public class ListaReservas {
     * @param Reserva Reserva a añadir.
     */
     public void añadirReserva(Reserva reserva){
-        reservas.add(reserva);
+        getReservas().add(reserva);
+    }
+
+    /**
+     * @return the reservas
+     */
+    public ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
+
+    /**
+     * @param reservas the reservas to set
+     */
+    public void setReservas(ArrayList<Reserva> reservas) {
+        this.reservas = reservas;
     }
     
 }

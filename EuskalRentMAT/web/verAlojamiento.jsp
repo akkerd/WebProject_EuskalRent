@@ -1,11 +1,12 @@
 <%-- 
-    Document   : registro.jsp
-    Created on : 27-dic-2015, 21:20:01
-    Author     : joseba
+    Document   : verAlojamiento
+    Created on : 02-ene-2016, 19:21:57
+    Author     : Diegaker
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.Calendar"%>
 <%@page import="Modelo.Entidades.Usuario"%>
+<%@page import="Modelo.conexionBD.ConexionBD"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,14 +15,16 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>EuskalRent</title>
+        <title>Registra tu alojamiento</title>
         <!-- CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/datepicker.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-       <!-- Navegador -->
+        <%
+            ConexionBD conexion = ConexionBD.getConexionBD();
+        %>
+            
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -38,6 +41,7 @@
                     <ul class="nav navbar-nav navbar-right">                
                         <li id="menuCambiable" class="dropdown">
                             <% String text;
+                            Usuario usuario = null;
                             // Si entra aqui quiere decir que el usuario no esta loged
                                 if (request.getSession().getAttribute("usuario") == null){
                                     text = "ACCEDE";
@@ -70,12 +74,12 @@
                                             <a class="btn btn-primary btn-block" href="registro.jsp">REGISTRO</a>
                                         </li>
                                     </ul>
-                                    <%
+                                <%
                                 } else {
                                     // si entra aqui el usuario esta loged.
-                                    Usuario usuario = (Usuario)request.getSession().getAttribute("usuario");                                    
+                                     usuario = (Usuario)request.getSession().getAttribute("usuario");                                    
                                     text = usuario.getNombreCompleto();
-                                    %>
+                                %>
                                     
                                     <ul id="borrableUsuario" class="dropdown-menu" style="padding: 15px;min-width: 250px;">
                                         <li><a href="perfil.jsp">Tu perfil</a></li>
@@ -85,61 +89,97 @@
                                <% }%>
                                <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><%=text%><b class="caret"></b></a>
 
-                        </li>
-                    </ul>
-               </div>
-            </div>
-        </nav><!-- /navbar -->        
-           <div class="jumbotron">
-               <div class="prueba">
-               <div  id="contenedorJumbotron" class="container-fluid">  
-                   <!-- formulario de registro-->
-                    <h3 id="formRegistro" class="center-block">¡Regístrate!</h3>  
-                    <div id="inputRegistro" class="center-block">
-                        <form action="insertUser" role="form" name="registro">
-                            <div class="form-group">
-                                <label for="nombre">*Nombre completo:</label>
-                                <input type="text" name="nombre-registro" pattern="[A-Za-z ,.'-]{3,}" maxlength="20" id="nombre" class="form-control formularioRegistro" required >
-                                <span class="span-registro" id="span-nombre"> </span>
-                            </div>
-                            <div class="form-group">
-                                <label for="tel">*Teléfono:</label>
-                                <input type="tel" name="tel-registro" pattern="[9|6|7][0-9]{8}"  id="tel" class="form-control formularioRegistro" required>
-                                <span class="span-registro" id="span-tel"> </span>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">*Email:</label>
-                                <input type="email" name="email-registro" class="form-control formularioRegistro" id="email" required>
-                                <span class="span-registro" id="span-email"> </span>
-                            </div>
-                            <div class="form-group">
-                                <label for="pwd">*Contraseña:</label>
-                                <input type="password" name="pwd-registro" id="pwd" class="form-control formularioRegistro"  required>
-                                <span class="span-registro"> </span>
-                            </div>
-                             <div class="form-group">
-                                <label for="pwd2">*Comprobar contraseña:</label>
-                                <input type="password" id="pwd2" class="form-control formularioRegistro" required>
-                                <span class="span-registro" id="span-pwd2"> </span>
-                             </div>
-                            <button type="submit" id="formulario-registro" class="btn btn-default">Registrar</button>
-                        </form>   
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li id="menuCambiable">
+                                <a id="registroAlojamiento" href="registroAlojamiento.jsp" class="botones ">Registra tu alojamiento</a>
+                            </li>  
+                        </ul>  
                     </div>
-                    <p class="requerido"> Los campos con * son obligatorios.</p>
-                    <!-- /formulario de registro-->
-               </div>
-           </div>
-            </div>  
+                 </div>
+            </nav><!-- /navbar --> 
 
+        <div class="jumbotron"> 
+            <div  id="contenedorJumbotron" class="container-fluid" > 
+                <br>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Titulo prueba</div>
+                    <div class="panel-body">
+                        <img src="img/a1.jpg" class="col-md-4 img-thumbnail" alt="foto" width="304" height="236">
+                        <!--<div class="col-md-4" id="drop-zone" name="drop-zone" draggable="false"></div>-->
+                        <div class="col-md-8">
+                            <h3 name="titulo"  id="titulo">Titulo del alojamiento</h3>
+                            <br>
+                            <label>Tipo de alojamiento:</label>
+                            <div name="tipoAloj"  id="tipoAloj" class="form-control"></div>
+
+                            <label for="nHuesp">Número máximo de husepedes:</label>
+                            <div name="nHuesp" id="nHuesp" class="form-control"></div>
+
+                            <label>Barrio</label>
+                            <div id="barrio" name="barrio" class="form-control"></div>
+                              
+                            <label>Tárifa por noche ( €/noche):</label>
+                            <div id="tarifa" name="tarifa" class="form-control"></div>
+                            
+                            <label>Localización: </label>
+                            <div id="direccion" name="direccion" class="form-control"></div> 
+                            <div class="map" id="map"></div>
+                            
+                            <label>Comentarios sobre el piso:</label>
+                            <div name="coment"  id="coment" class="form-control"></div>
+                                
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <form class="form" role="form" action="RegistroReserva" method="post" accept-charset="UTF-8">
+                        <div class="center-block col-md-8">
+                            <label>Fechas en las que se puede alquilar:</label>
+                            <div class="input-group form-group">
+                                <%
+                                    Calendar c = Calendar.getInstance();
+                                    String dia = Integer.toString(c.get(Calendar.DATE));
+                                    String mes = Integer.toString(c.get(Calendar.MONTH)+1);
+                                    String año = Integer.toString(c.get(Calendar.YEAR));
+                                %>
+                                <input type="date"  class="form-control" min="<%=año+"-"+mes+"-"+dia%>" name="date" id="date-llegada">    
+                            </div>
+                            <div class="input-group form-group">
+                                <input type="date" class="form-control" min="" name="date" id="date-salida">
+                            </div>
+                            <div class="form-group">
+                                <label for="nHuesp">Número máximo de husepedes:</label>
+                                <input type="number" name="nHuesp" min="1" max="10"  id="nHuesp" class="form-control" required>
+                                <span class="span-registro" id="span-nHuesp"> </span>
+                            </div>   
+                        </div>
+                        <div class="center-block col-md-4">
+                            <label>Este alojamiento tiene política de cancelación del tipo:</label>
+                            <div id="politica" name="politica" class="form-control"></div>
+                            <div>Para consultar como funcionan las políticas de cancelación <a href="politicas.jsp">haz click aquí</a>.</div>
+                        </div>
+                        <div class="col-md-12"> 
+                            <button id="botonFormPerfil" type="submit" class="btn btn-primary center-block">Reservar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <footer class="footer">
             <div class="container">
                 <p class="text-muted textoFooter center-block">EuskalRent - Joseba Alonso, Diego Tobarra y Asier Martinez</p>
             </div>
         </footer>
+                    
         <!-- JS -->
         <script src="js/jquery-1.11.3.min.js"></script>
-        <script src="js/datepicker.min.js"></script>
+        <script src="http://maps.google.com/maps/api/js?sensor=false" language="javascript" type="text/javascript"></script>
         <script src="js/main.js" type="text/javascript"></script> 
+        <script src="js/loadGeolocationReserva.js" type="text/javascript"></script>
+        <script src="js/datepicker.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <!-- Validar formulario -->
     </body>
 </html>
