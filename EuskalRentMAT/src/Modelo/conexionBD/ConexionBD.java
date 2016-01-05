@@ -212,7 +212,7 @@ public class ConexionBD {
                 return null;
             }
             /* Creamos el alojamiento */
-            Alojamiento alojamiento = new Alojamiento(rs.getInt("idAlojamiento"),rs.getString("tipoAlojamiento"),rs.getInt("numHuespedes"),rs.getString("barrio"),rs.getString("direccion"),rs.getString("fotoAlojamiento"),rs.getInt("precioNoche"),rs.getString("tipoCancelacion"),rs.getString("Comentario"));
+            Alojamiento alojamiento = new Alojamiento(rs.getInt("idAlojamiento"),rs.getString("tipoAlojamiento"),rs.getInt("numHuespedes"),rs.getString("barrio"),rs.getString("direccion"),rs.getBlob("fotoAlojamiento"),rs.getInt("precioNoche"),rs.getString("tipoCancelacion"),rs.getString("Comentario"));
 
             return alojamiento;
         }
@@ -598,6 +598,7 @@ public class ConexionBD {
     
     /**
     * Metodo para actualizar los datos de un alquiler.
+    * Modificado por Joseba, en la sentencia el where idReserva ahora es idAlquiler y ya no se envia la fechaAlquiler porque no hace falta
     * 
     * @param Alquiler
     */
@@ -608,10 +609,10 @@ public class ConexionBD {
             /* Aztualizamos el alojamiento */
             actualizarAlojamiento(alquiler.getAlojamiento());
             /* Guardamos la sentencia SQL */
-            String fechaAlquiler = String.format("%1$tY-%1$tm-%1$td", alquiler.getFechaAlquiler());
+            String titulo = alquiler.getTitulo();
             String fechaInicio = String.format("%1$tY-%1$tm-%1$td", alquiler.getFechaInicio());
             String fechaFin = String.format("%1$tY-%1$tm-%1$td", alquiler.getFechaFin());
-            String sql =  "UPDATE alquiler SET `fechaAlquiler`='"+ fechaAlquiler + "', `fechaInicio`='"+ fechaInicio +"', `fechaFin`='"+ fechaFin +"' WHERE `idReserva`='"+ alquiler.getIdAlquiler() +"'";
+            String sql =  "UPDATE alquiler SET `titulo`='"+titulo+"',`fechaInicio`='"+ fechaInicio +"', `fechaFin`='"+ fechaFin +"' WHERE `idAlquiler`='"+ alquiler.getIdAlquiler() +"'";
 
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();

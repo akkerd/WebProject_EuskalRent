@@ -135,7 +135,7 @@
                 </div>
                 <div class="col-md-12">
                     <form class="form" role="form" action="RegistroReserva" method="post" accept-charset="UTF-8">
-                        <div class="center-block col-md-8">
+                        <div class="col-md-4">
                             <label>Fechas en las que se puede alquilar:</label>
                             <div class="input-group form-group">
                                 <%
@@ -155,6 +155,7 @@
                                 <span class="span-registro" id="span-nHuesp"> </span>
                             </div>   
                         </div>
+                        <div class="col-md-4"></div>
                         <div class="center-block col-md-4">
                             <label>Este alojamiento tiene política de cancelación del tipo:</label>
                             <div id="politica" name="politica" class="form-control"></div>

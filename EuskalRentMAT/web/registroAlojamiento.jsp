@@ -116,17 +116,17 @@
             </div>
         </nav><!-- /navbar -->
 
-        <div class="jumbotorn"> 
+        <div class="jumbotron"> 
             <div  id="contenedorJumbotron" class="container-fluid" >  
                 <div class="cambiable">
                 <div id="inputRegistro" class="center-block">
                     <div class="row">
                         <h3 class="center">¡Registra tu alojamiento y empieza a ganar dinero!</h3>
                             <div class="col-md-12">
-                                <form class="form" action="RegistroAloj" method="post" id="form-registro-alojamiento" role="form"  accept-charset="UTF-8">
+                                <form class="form" action="RegistroAloj" method="post" id="form-registro-alojamiento" role="form"  accept-charset="UTF-8"  enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label for="titulo"><span class="requeridoAst">*</span>Titulo del alojamiento:</label>
-                                        <input type="text" name="titulo"  id="titulo" class="form-control" required>
+                                        <input type="text" name="titulo"  id="titulo" class="form-control" value="Piso muy luminoso en el centro" required>
                                         <span class="span-registro" id="span-titulo"> </span>
                                     </div>
                                     <div class="form-group">
@@ -140,7 +140,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="nHuesp"><span class="requeridoAst">*</span>Número máximo de husepedes:</label>
-                                        <input type="number" name="nHuesp" min="1" max="10"  id="nHuesp" class="form-control" required>
+                                        <input type="number" name="nHuesp" min="1" max="10"  id="nHuesp" class="form-control" value="10" required>
                                         <span class="span-registro" id="span-nHuesp"> </span>
                                     </div>
                                     <div class="form-group">
@@ -164,44 +164,57 @@
                                     <div class="input-group form-group">
                                     <%
                                         Calendar c = Calendar.getInstance();
-                                        String dia = Integer.toString(c.get(Calendar.DATE));
-                                        String mes = Integer.toString(c.get(Calendar.MONTH)+1);
+                                        int intDia = c.get(Calendar.DATE);
+                                        String dia = Integer.toString(intDia);
+                                        if(intDia < 10){
+                                            dia = "0".concat(dia);
+                                        }
+                                        
+                                        int intMes = c.get(Calendar.MONTH)+1;
+                                        String mes = Integer.toString(intMes);
+                                        if(intMes < 10){
+                                            mes = "0".concat(mes);
+                                        }
+                                            
                                         String año = Integer.toString(c.get(Calendar.YEAR));
                                     %>
-                                    <input type="date"  class="form-control" min="<%=año+"-"+mes+"-"+dia%>" name="date-inicio" id="date-inicio">
+                                    <input type="date"  class="form-control" min="<%=año+"-"+mes+"-"+dia%>" value="<%=año+"-"+mes+"-"+dia%>" name="date-inicio" id="date-inicio">
                                     
                                     </div>
                                     <div class="input-group form-group">
-                                        <input type="date" class="form-control" min="" name="date-fin" id="date-fin">
+                                        <input type="date" class="form-control" min="" max="" value="<%=año+"-"+mes+"-"+dia%>" name="date-fin" id="date-fin">
 
                                     </div>
                                     <div class="form-group">
                                         <label for="tarifa">Tárifa por noche ( €/noche):</label>
-                                        <input type="text" pattern="[0-9]{1,4}\.[0-9]{1}[0-9]{1}$" id="tarifa" name="tarifa" class="form-control" title="Utiliza un número con dos decimales entre 0.00 y 9999.99" >
+                                        <input type="text" pattern="[0-9]{1,4}\.[0-9]{1}[0-9]{1}$" id="tarifa" name="tarifa" class="form-control" value="10.00" title="Utiliza un número con dos decimales entre 0.00 y 9999.99" >
                                         <span class="span-registro" id="span-tarifa"> </span>
                                     </div>
                                     <div class="form-group">
                                         <label for="map">Geolocalización: </label><br>
-                                        Escribe una dirección: <input type="text" id="buscador" name="buscador" title="Dirección a Geocode" class="Direccion"/>
+                                        Escribe una dirección: <input type="text" id="buscador" name="buscador" title="Dirección a Geocode" value="Escuela Universitaria de Ingeniería, Vitoria-Gasteiz" class="Direccion"/>
                                         <input type="button" id="btnBuscador" title="Buscar" value="Busca"/><br><br>
                                         <div class="map" id="map"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="coment">Comentarios sobre el piso:</label>
-                                        <textarea type="text" name="coment"  id="coment" class="form-control"></textarea>
+                                        <label for"=coment">Comentarios sobre el piso:</label>
+                                        <textarea type="text" name="coment"  id="coment" value="No se admiten mascotas" class="form-control">No se admiten mascotas</textarea>
                                         <span class="span-registro" id="span-coment"> </span>
                                     </div>
                                     <div class="form-group"> 
                                         <label>Foto de tu alojamiento: </label>
                                         <!--<div class="center-block dnd" id="drop-zone" name="drop-zone" draggable="true">   </div>-->
                                         <div id="drop-zone">
-                                            Suelta tu imagen aquí...
+                                            <div id="dentroFoto">
+                                                Suelta tu imagen aquí...
+                                            </div>
                                             <div id="clickHere">
                                                 o haz click...
                                                 <input type="file" name="file" id="file"/>
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="text" name="fotoDrag" id="fotoDrag"/>
                                     <br>
                                 <button id="botonFormPerfil" type="submit" class="btn btn-default center-block">Registrar alojamiento</button>
                             </form>
@@ -214,8 +227,8 @@
             
         </div>
         <% }%>
-
-        <footer class="footer">
+ 
+       <footer class="footer">
             <div class="container">
                 <p class="text-muted textoFooter center-block">EuskalRent - Joseba Alonso, Diego Tobarra y Asier Martinez</p>
             </div>

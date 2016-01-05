@@ -27,6 +27,27 @@ public class Alquiler {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
+    
+     /**
+     * Metodo que comprueba si el usuario puede realizar una reserva dentro de las fechas dadas.
+     * @return boolean
+     */
+    public boolean comprobarSaldo(Date fechaEntrada, Date fechaSalida, int saldo){
+        
+        int numDias = diasEntreDosFechas(fechaEntrada, fechaSalida);
+        float precioTotal = numDias * this.alojamiento.getPrecioNoche();
+        if ( precioTotal >= saldo){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public int diasEntreDosFechas(Date fecha1, Date fecha2)
+    {       
+        return (int)((fecha2.getTime() - fecha1.getTime()) / (1000*60*60*24l));
+    }
+
 
     /**
      * @return the idAlquiler

@@ -5,6 +5,8 @@
  */
 package Modelo.Entidades;
 
+import java.sql.Blob;
+
 /**
  *
  * @author Asierph
@@ -16,12 +18,12 @@ public class Alojamiento {
     private int numHuespedes;
     private String barrio;
     private String direccion;
-    private String fotoAlojamiento;
+    private Blob fotoAlojamiento;
     private float precioNoche;
     private String tipoCancelacion;
     private String comentario;
     
-    public Alojamiento (int idAlojamiento,String tipoAlojamiento,int numHuespedes, String barrio, String direccion,String fotoAlojamiento ,float precioNoche,String tipoCancelacion,String comentario ){
+    public Alojamiento (int idAlojamiento,String tipoAlojamiento,int numHuespedes, String barrio, String direccion,Blob fotoAlojamiento ,float precioNoche,String tipoCancelacion,String comentario ){
         
         this.idAlojamiento = idAlojamiento;
         this.tipoAlojamiento = tipoAlojamiento;
@@ -89,14 +91,14 @@ public class Alojamiento {
     /**
      * @return the fotoAlojamiento
      */
-    public String getFotoAlojamiento() {
+    public Blob getFotoAlojamiento() {
         return fotoAlojamiento;
     }
 
     /**
      * @param fotoAlojamiento the fotoAlojamiento to set
      */
-    public void setFotoAlojamiento(String fotoAlojamiento) {
+    public void setFotoAlojamiento(Blob fotoAlojamiento) {
         this.fotoAlojamiento = fotoAlojamiento;
     }
 

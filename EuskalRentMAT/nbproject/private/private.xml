@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Diegaker/Documents/GitHub/EuskalRent/EuskalRentMAT/web/js/loadGeolocation.js</file>
             <file>file:/C:/Users/Diegaker/Documents/GitHub/EuskalRent/EuskalRentMAT/web/verAlojamiento.jsp</file>
-            <file>file:/C:/Users/Diegaker/Documents/GitHub/EuskalRent/EuskalRentMAT/src/Controlador/buscarAloj.java</file>
-            <file>file:/C:/Users/Diegaker/Documents/GitHub/EuskalRent/EuskalRentMAT/web/busqueda.jsp</file>
-            <file>file:/C:/Users/Diegaker/Documents/GitHub/EuskalRent/EuskalRentMAT/web/js/loadGeolocationReserva.js</file>
+            <file>file:/C:/Users/Diegaker/Documents/GitHub/EuskalRent/EuskalRentMAT/web/js/main.js</file>
+            <file>file:/C:/Users/Diegaker/Documents/GitHub/EuskalRent/EuskalRentMAT/web/registroAlojamiento.jsp</file>
+            <file>file:/C:/Users/Diegaker/Documents/GitHub/EuskalRent/EuskalRentMAT/src/Controlador/RegistroAloj.java</file>
         </group>
     </open-files>
 </project-private>

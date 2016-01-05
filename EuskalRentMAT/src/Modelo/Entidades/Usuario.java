@@ -11,13 +11,14 @@ public class Usuario {
     private String nombreCompleto;
     private String email;
     private String fotoPerfil;
+    private float saldo;
     private int telefono;
     private String descripcion;
     private ListaReservas listaReservas;
     private ListaAlquileres listaAlquileres;
 
     
-    public Usuario(int idUsuario,String nombreCompleto, String email,String fotoPerfil, int telefono, String descripcion,ListaReservas listaReservas,ListaAlquileres listaAlquileres){
+    public Usuario(int idUsuario,String nombreCompleto, String email,String fotoPerfil, float saldo, int telefono, String descripcion,ListaReservas listaReservas,ListaAlquileres listaAlquileres){
         this.idUsuario = idUsuario;
         this.nombreCompleto = nombreCompleto;
         this.email = email;
@@ -26,6 +27,8 @@ public class Usuario {
         this.descripcion = descripcion;
         this.listaReservas = listaReservas;
         this.listaAlquileres = listaAlquileres;
+        this.saldo = saldo;
+
     }
     public Usuario(int idUsuario,String nombreCompleto, String email,String fotoPerfil, int telefono, String descripcion){
         this.idUsuario = idUsuario;
@@ -36,6 +39,7 @@ public class Usuario {
         this.descripcion = descripcion;
         this.listaReservas = new ListaReservas();
         this.listaAlquileres = new ListaAlquileres();
+        this.saldo = 0;
     }
 
 
