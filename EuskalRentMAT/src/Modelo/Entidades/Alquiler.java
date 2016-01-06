@@ -32,11 +32,11 @@ public class Alquiler {
      * Metodo que comprueba si el usuario puede realizar una reserva dentro de las fechas dadas.
      * @return boolean
      */
-    public boolean comprobarSaldo(Date fechaEntrada, Date fechaSalida, int saldo){
+    public boolean comprobarSaldo(Date fechaEntrada, Date fechaSalida, float saldo){
         
         int numDias = diasEntreDosFechas(fechaEntrada, fechaSalida);
         float precioTotal = numDias * this.alojamiento.getPrecioNoche();
-        if ( precioTotal >= saldo){
+        if ( precioTotal <= saldo){
             return true;
         } else {
             return false;

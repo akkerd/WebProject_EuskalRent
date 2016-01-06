@@ -11,18 +11,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Modelo.Listas.ListaAlquileres;
-import Modelo.Entidades.Alquiler;
 import Modelo.conexionBD.ConexionBD;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.sql.*;
+import Modelo.Entidades.Usuario;
 
 /**
  *
  * @author joseba
  */
-public class buscarAloj extends HttpServlet {
+public class deleteUser extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,33 +36,11 @@ public class buscarAloj extends HttpServlet {
         try {
             /* TODO output your page here. You may use following sample code. */
             ConexionBD con = ConexionBD.getConexionBD();
-            
-            String barrio = request.getParameter("barrio");
-            String fechaEntrada = request.getParameter("date1");
-            String fechaSalida = request.getParameter("date2");
-           
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
-            try{
-            java.util.Date dateIn= formato.parse(fechaEntrada);
-            java.util.Date dateOut = formato.parse(fechaSalida);
-            
-            java.sql.Date dateEntrada = new java.sql.Date(dateIn.getTime());
-            java.sql.Date dateSalida = new java.sql.Date(dateOut.getTime());
-            
-            ListaAlquileres listaAlquileres = con.getListaAlquileresPorFechaBarrio(dateEntrada, dateSalida, barrio);
-            request.getSession().setAttribute("listaAlquileres", listaAlquileres);
-            request.getSession().setAttribute("fechaEntrada", dateEntrada);
-            request.getSession().setAttribute("fechaSalida", dateSalida);
-            request.getRequestDispatcher("busqueda.jsp").forward(request, response);
-
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
-            
-            
-            
-            
+            int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
+            con.borrarUsuario(idUsuario);
+            Usuario usuario = null;
+            request.getSession().setAttribute("usuario", usuario);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         } finally {
             out.close();
         }

@@ -1,8 +1,7 @@
-/* global RegistroAloj */
-
 $(document).ready(function(){
-       
+        
     //Joseba
+  
   
     //validación en la página de perfil
     $(document).on('click','.cambiable',function(){
@@ -67,10 +66,12 @@ $(document).ready(function(){
             }
         });             
     }
+
+   
     
     //------------------------ DIEGO DRAG --------------------------------------
     var dropZoneId = "drop-zone";
-    var buttonId = "clickHere";
+    //var buttonId = "clickHere";
     var mouseOverClass = "mouse-over";
 
     var dropZone = $("#" + dropZoneId);
@@ -100,7 +101,7 @@ $(document).ready(function(){
 
     }, true);
 
-    if (buttonId !== "") {
+    /*if (buttonId !== "") {
         var clickZone = $("#" + buttonId);
 
         var oleft = clickZone.offset().left;
@@ -117,7 +118,7 @@ $(document).ready(function(){
                 inputFile.offset({ top: -400, left: -400 });
             }
         });
-    }
+    }*/
     
     document.getElementById(dropZoneId).addEventListener("drop", function (e) {
         e.stopPropagation();
@@ -138,7 +139,9 @@ $(document).ready(function(){
             // Quito cosas sobrantes del drag-zone
             document.getElementById("dentroFoto").style.display = "none";
             // Añado el base64 a mi input oculto
-            $('#fotoDrag').val(e.target.result.toString());
+            
+            var base64 = document.getElementById("drop-zone").getAttribute("style");
+            $('#fotoDrag').val(base64);
         };
         reader.readAsDataURL(file);
     }
@@ -147,89 +150,7 @@ $(document).ready(function(){
       e.stopPropagation();
       e.preventDefault();
     }
-    //-------------------------------------------------------------------------
-
-    // JOSEBA DRAG
-    //$(document).on('dragover','.cambiable',function(){   
-           
-
-           /*$('#drop-zone #drop-zone2').on('dragover',function(e){
-               
-               e.stopPropagation();
-               e.preventDefault();
-           });
-
-           $('#drop-zone').on('drop',function(e){
-               e.preventDefault();
-               e.stopPropagation();
-               drop(e);
-           });
-           
-            $('#drop-zone2').on('drop',function(e){
-               e.preventDefault();
-               e.stopPropagation();
-               drop2(e);
-           });
-           
-       
-           var dropZone;
-           var dropZone2;*/
-                     
-         //window.onload = function(){
-             
-           /*dropZone = document.getElementById("drop-zone");
-           dropZone.ondragenter = ignoreDrag;
-           dropZone.ondragover = ignoreDrag;
-           dropZone.ondrop = drop;
-           
-           dropZone2 = document.getElementById("drop-zone2");
-           dropZone2.ondragenter = ignoreDrag;
-           dropZone2.ondragover = ignoreDrag;
-           dropZone2.ondrop = drop2;*/
-         //};
-         /*function ignoreDrag(e){
-           e.stopPropagation();
-           e.preventDefault();
-         }
-
-        function drop(e){
-           e.stopPropagation();
-           e.preventDefault();
-
-           var data = e.dataTransfer;
-           var files = data.files;
-           processFiles(files);*/    
-        //}
-
-         /*function processFiles(files){
-            var file = files[0],
-            reader = new FileReader();
-            reader.onload = function(e){
-            dropZone.style.backgroundImage = "url('"+e.target.result+"')";
-            };
-            reader.readAsDataURL(file);
-         }
-         
-         function drop2(e){
-           e.stopPropagation();
-           e.preventDefault();
-
-           var data = e.dataTransfer;
-           var files = data.files;
-
-           processFiles2(files);
-        }
-
-         function processFiles2(files){
-            var file = files[0],
-            reader = new FileReader();
-            reader.onload = function(e){
-            dropZone2.style.backgroundImage = "url('"+e.target.result+"')";
-           };
-           reader.readAsDataURL(file);
-         }
-   
-     }); */
+    //------------------------------------------------------------------------- 
          
     
     //----Control de navegación en la página de perfil------
@@ -237,6 +158,8 @@ $(document).ready(function(){
       $("#perfil").click(function(){
         $("#gAlojamientos").fadeOut();
         $("#gReservas").fadeOut();
+        $("#gSaldo").fadeOut();
+        $("#gBorrado").fadeOut();
         $("#gPerfil").fadeIn();
        
     });
@@ -244,6 +167,8 @@ $(document).ready(function(){
     $("#reservas").click(function(){
         $("#gAlojamientos").fadeOut();
         $("#gPerfil").fadeOut();
+        $("#gBorrado").fadeOut();
+        $("#gSaldo").fadeOut();
         $("#gReservas").fadeIn();
        
     });
@@ -251,8 +176,27 @@ $(document).ready(function(){
     $("#alojamiento").click(function(){
         $("#gPerfil").fadeOut();
         $("#gReservas").fadeOut();
+        $("#gBorrado").fadeOut();
+        $("#gSaldo").fadeOut();
         $("#gAlojamientos").fadeIn();
+        
         google.maps.event.trigger(mapa,'resize');
+       
+    });
+    $("#borrado").click(function(){ 
+        $("#gAlojamientos").fadeOut();
+        $("#gPerfil").fadeOut();
+        $("#gReservas").fadeOut();
+        $("#gSaldo").fadeOut();
+        $("#gBorrado").fadeIn();
+       
+    });
+     $("#saldo").click(function(){
+        $("#gBorrado").fadeOut();
+        $("#gAlojamientos").fadeOut();
+        $("#gPerfil").fadeOut();
+        $("#gReservas").fadeOut();
+        $("#gSaldo").fadeIn();
        
     });
     
@@ -266,6 +210,4 @@ $(document).ready(function(){
     
   //-----geolocation
   //initMapa();
-   
-
 });

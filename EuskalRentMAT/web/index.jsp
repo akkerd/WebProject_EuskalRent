@@ -119,7 +119,7 @@
                         </div>
                         <div class="col-md-6">
                             <h3 id="tituloBuscador" class="center-block">¡Busca tu alojamiento ahora mismo!</h3>
-                            <form role="form" action="buscarAloj">
+                            <form method="post" role="form" action="buscarAloj">
                                 <div class="form-group">
                                     <label>Destino</label>
                                     <!--<input type="text" class="form-control" id="exampleInputEmail2" placeholder="Barrio" required>-->
@@ -132,16 +132,25 @@
                                 <label>Fechas</label>
                                 <div class="input-group form-group">
                                     <%
+                                        String dia = null;
+                                        String mes = null;
                                         Calendar c = Calendar.getInstance();
-                                        String dia = Integer.toString(c.get(Calendar.DATE));
-                                        String mes = Integer.toString(c.get(Calendar.MONTH)+1);
+                                        if(c.get(Calendar.DATE) < 10){
+                                            dia = "0"+Integer.toString(c.get(Calendar.DATE));
+                                        }
+                                        if (c.get(Calendar.MONTH) < 10){
+                                            mes = "0"+ Integer.toString(c.get(Calendar.MONTH)+1);
+                                        }
+                                        else{
+                                            dia = Integer.toString(c.get(Calendar.DATE));
+                                            mes = Integer.toString(c.get(Calendar.MONTH)+1);
+                                        }
                                         String año = Integer.toString(c.get(Calendar.YEAR));
                                     %>
-                                    <input type="date"  class="form-control" min="<%=año+"-"+mes+"-"+dia%>" name="date" id="date-llegada">
-                                    
+                                    <input type="date"  class="form-control" min="<%=año+"-"+mes+"-"+dia%>" name="date1" id="date-llegada" required>
                                 </div>
                                 <div class="input-group form-group">
-                                    <input type="date" class="form-control" min="" name="date" id="date-salida">
+                                    <input type="date" class="form-control" min="" name="date2" id="date-salida" required>
                                     
                                 </div>
                                 <button id="botonBuscar" type="submit" class="btn btn-default center-block">Buscar</button>

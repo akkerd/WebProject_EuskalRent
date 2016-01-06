@@ -11,18 +11,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Modelo.Listas.ListaAlquileres;
 import Modelo.Entidades.Alquiler;
 import Modelo.conexionBD.ConexionBD;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.sql.*;
+import Modelo.Listas.ListaAlquileres;
+import Modelo.Entidades.Usuario;
 
 /**
  *
  * @author joseba
  */
-public class buscarAloj extends HttpServlet {
+public class borrarAlquiler extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,33 +38,14 @@ public class buscarAloj extends HttpServlet {
         try {
             /* TODO output your page here. You may use following sample code. */
             ConexionBD con = ConexionBD.getConexionBD();
+            Alquiler alquiler = (Alquiler) request.getSession().getAttribute("alquiler");
+            Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+            int idAlquiler = alquiler.getIdAlquiler();
+            ListaAlquileres ls = usuario.getListaAlquileres();
+            ls.borrarAlquiler(idAlquiler);
+            con.borrarAlquiler(alquiler);
             
-            String barrio = request.getParameter("barrio");
-            String fechaEntrada = request.getParameter("date1");
-            String fechaSalida = request.getParameter("date2");
-           
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
-            try{
-            java.util.Date dateIn= formato.parse(fechaEntrada);
-            java.util.Date dateOut = formato.parse(fechaSalida);
-            
-            java.sql.Date dateEntrada = new java.sql.Date(dateIn.getTime());
-            java.sql.Date dateSalida = new java.sql.Date(dateOut.getTime());
-            
-            ListaAlquileres listaAlquileres = con.getListaAlquileresPorFechaBarrio(dateEntrada, dateSalida, barrio);
-            request.getSession().setAttribute("listaAlquileres", listaAlquileres);
-            request.getSession().setAttribute("fechaEntrada", dateEntrada);
-            request.getSession().setAttribute("fechaSalida", dateSalida);
-            request.getRequestDispatcher("busqueda.jsp").forward(request, response);
-
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
-            
-            
-            
-            
+             request.getRequestDispatcher("perfil.jsp").forward(request, response);
         } finally {
             out.close();
         }

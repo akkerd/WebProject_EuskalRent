@@ -5,24 +5,21 @@
  */
 package Controlador;
 
+import Modelo.conexionBD.ConexionBD;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Modelo.Listas.ListaAlquileres;
+import Modelo.Entidades.Alojamiento;
 import Modelo.Entidades.Alquiler;
-import Modelo.conexionBD.ConexionBD;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.sql.*;
 
 /**
  *
  * @author joseba
  */
-public class buscarAloj extends HttpServlet {
+public class updateAloj extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,34 +36,29 @@ public class buscarAloj extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
-            ConexionBD con = ConexionBD.getConexionBD();
+            int idAlquiler = Integer.parseInt(request.getParameter("idAlquiler"));
+            int idAlojamiento = Integer.parseInt(request.getParameter("idAlojamiento"));
             
+            String titulo = request.getParameter("titulo");
+            String tipoAlojamiento = request.getParameter("tipoAloj");
+            int numMax = Integer.parseInt(request.getParameter("nHuesp"));
             String barrio = request.getParameter("barrio");
-            String fechaEntrada = request.getParameter("date1");
-            String fechaSalida = request.getParameter("date2");
-           
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
-            try{
-            java.util.Date dateIn= formato.parse(fechaEntrada);
-            java.util.Date dateOut = formato.parse(fechaSalida);
-            
-            java.sql.Date dateEntrada = new java.sql.Date(dateIn.getTime());
-            java.sql.Date dateSalida = new java.sql.Date(dateOut.getTime());
-            
-            ListaAlquileres listaAlquileres = con.getListaAlquileresPorFechaBarrio(dateEntrada, dateSalida, barrio);
-            request.getSession().setAttribute("listaAlquileres", listaAlquileres);
-            request.getSession().setAttribute("fechaEntrada", dateEntrada);
-            request.getSession().setAttribute("fechaSalida", dateSalida);
-            request.getRequestDispatcher("busqueda.jsp").forward(request, response);
-
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
+            String politica = request.getParameter("politica");
             
             
+            java.util.Date fechaInicio = (java.util.Date)request.getSession().getAttribute("date-inicio");
+            java.util.Date fechaFin = (java.util.Date)request.getSession().getAttribute("date-fin");
+            java.util.Date fechaAlquiler = (java.util.Date)request.getSession().getAttribute("fechaAlquiler");
             
+            float tarifa = Float.parseFloat(request.getParameter("tarifa"));
+            String direccion = request.getParameter("buscador");
+            String comentario = request.getParameter("coment");
             
+            Alojamiento alojamiento = new Alojamiento(idAlojamiento,tipoAlojamiento,numMax,barrio,direccion,null,tarifa,politica,comentario);
+            Alquiler alquiler = new Alquiler(idAlquiler, alojamiento, titulo, fechaAlquiler, fechaInicio, fechaFin);
+            ConexionBD con = ConexionBD.getConexionBD();
+            con.actualizarAlquiler(alquiler);
+            request.getRequestDispatcher("perfil.jsp").forward(request, response);
         } finally {
             out.close();
         }

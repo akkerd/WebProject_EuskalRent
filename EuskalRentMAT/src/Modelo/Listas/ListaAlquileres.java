@@ -36,6 +36,7 @@ public class ListaAlquileres {
         while(it.hasNext() && controlador == false){
             if ( it.next().getIdAlquiler() == idAlquiler){
                 controlador = true;
+                it.remove();
             }
         }
     }

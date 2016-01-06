@@ -4,13 +4,11 @@
     Author     : joseba
 --%>
 
-<%@page import="java.util.Iterator"%>
-<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Modelo.Listas.ListaAlquileres"%>
 <%@page import="Modelo.Listas.ListaReservas"%>
 <%@page import="Modelo.Entidades.Usuario"%>
-
+<%@page import="java.util.*"%>
 <%@page import="Modelo.Entidades.Alquiler"%>
 <%@page import="Modelo.Entidades.Reserva"%>
 <%@page import="Modelo.conexionBD.ConexionBD"%>
@@ -27,6 +25,7 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/datepicker.min.css" rel="stylesheet">
         <link href="css/style.css"  rel="stylesheet">
+        <link href="css/css-Joseba.css"  rel="stylesheet">
     </head>
     <body>
         <!-- Navegador -->
@@ -108,7 +107,7 @@
            <div class="jumbotron"> 
                <div  id="contenedorJumbotron" class="container-fluid" >                   
                    
-                    <ul class="nav nav-menus">                 
+                    <ul class="nav nav-menus ">                 
                          <li  class="btn-toolbar"  >
                              <a id="perfil"  aria-expanded="false" href="" class="dropdown-toggle confPerfil" data-toggle="dropdown">Gestionar Perfil</a>    
                          </li>
@@ -119,18 +118,25 @@
                          <li class="btn-toolbar" >
                              <a id="alojamiento" aria-expanded="false" href="#" class="dropdown-toggle" data-toggle="dropdown">Gestionar Alojamientos</a>
                          </li>
+                         <li class="btn-toolbar" >
+                             <a id="saldo" aria-expanded="false" href="#" class="dropdown-toggle" data-toggle="dropdown">Añade saldo</a>
+                         </li>
+                         <li class="btn-toolbar" >
+                             <a id="borrado" aria-expanded="false" href="#" class="dropdown-toggle" data-toggle="dropdown">Borrar Cuenta</a>
+                         </li>
                      </ul> 
              
                    <%
                    String nombre = usuario.getNombreCompleto();
                    int tel = usuario.getTelefono();
                    String email = usuario.getEmail();
+                   String foto = usuario.getFotoPerfil();
                    %>
                     <div class="cambiable">
                         <div id="gPerfil">
                             <div id="inputRegistro" class="center-block">
                                 <h3 class="center">Modifica los datos de tu perfil</h3>
-                                    <form role="form" name="registro">
+                                    <form method="post" role="form" action="updateUser" name="registro">
                                         <div class="form-group">
                                             <label for="nombre">*Nombre completo:</label>
                                             <input type="text" name="nombre-perfil" value="<%=nombre%>"pattern="[A-Za-z ,.'-]{3,}" maxlength="20" id="nombre-perfil" class="form-control input-registro" required >
@@ -157,98 +163,116 @@
                                            <span class="span-registro" id="span-pwd2"> </span>
                                         </div>
                                         <label for="pwd2">Foto de perfil:</label>
-                                        <div class="center-block dnd" name="foto-perfil" id="drop-zone" draggable="true">   </div>
+                                        <div class="center-block dnd" style="background-image: url(&quot;data:image/jpeg;base64,<%=foto%>;);" name="foto-perfil" id="drop-zone" draggable="true">   </div>
+                                        <% request.getSession().setAttribute("usuario", usuario); %>
                                         <button type="submit" id="formulario-cambio" class="btn btn-default">Modificar datos</button>
                                     </form> 
                             </div>
                         </div>
                             
                         <div id="gReservas" >
-                            <div id="inputRegistro" class="center-block">
+                            
                                 <h3  class="center" >Gestiona tus reservas</h3>
                                 <div id="arrendador">
-                                    <h2>como arrendador</h2>
-                                    <table class="table table-striped">
-                                        <tr>
-                                            <th>Reserva</th>
-                                            <th>Fecha Reserva</th>
-                                            <th>Fecha Entrada</th>
-                                            <th>Fecha Salida</th>
-                                            <th>Acción</th>
-                                        </tr>
+                                    <h2 class="titu-gestion-reservas">como arrendador</h2>
+                                    
                                         <%
                                         if(usuario != null){
                                             
                                             ConexionBD conexion = ConexionBD.getConexionBD();
-                                            ListaReservas ls = conexion.getListaReservasPorAlquileres(usuario.getIdUsuario());
-                                            ArrayList<Reserva> al = ls.getReservas();
-                                            Iterator<Reserva> it = al.iterator();
-                                            
-                                            while(it.hasNext()){
-                                                  Reserva alq = it.next();
-                                                String fA = String.format("%1$td-%1$tm-%1$tY", alq.getFechaReserva());
-                                                String fI = String.format("%1$td-%1$tm-%1$tY", alq.getFechaEntrada());
-                                                String fF = String.format("%1$td-%1$tm-%1$tY", alq.getFechaSalida());
-                                                %><tr>
-                                                    <td>titulo</td>
-                                                    <td><%=fA%></td>
-                                                    <td><%=fI%></td>
-                                                    <td><%=fF%></td>
-                                                    <td><button class="btn-link">cancelar</button><button class="btn-link">modificar</button></td>
-                                                <tr><%
+                                            int idUsuario = usuario.getIdUsuario();
+                                            ListaReservas ls = conexion.getListaReservasPorAlquileres(idUsuario);
+                                            if(ls != null){
+                                                ArrayList<Reserva> al = ls.getReservas();
+                                                Iterator<Reserva> it = al.iterator();
+
+                                                while(it.hasNext()){
+                                                      Reserva alq = it.next();
+                                                    String fA = String.format("%1$td-%1$tm-%1$tY", alq.getFechaReserva());
+                                                    String fI = String.format("%1$td-%1$tm-%1$tY", alq.getFechaEntrada());
+                                                    String fF = String.format("%1$td-%1$tm-%1$tY", alq.getFechaSalida());
+                                                    int idReserva = alq.getIdReserva();
+                                                    Alquiler alqui = conexion.getAlquilerDeReserva(idReserva);
+                                                    String titulo = alqui.getTitulo();
                                                 
+                                                %>
+                                                <table class="tabla-pisos table-responsive" align="center">
+                                                    <tr class="tabla-tr">
+                                                        <th><%=titulo%></th>
+                                                        <th>Fecha Reserva</th>
+                                                        <th>Fecha Entrada</th>
+                                                        <th>Fecha Salida</th>
+                                                        <th>Acción</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>foto</td>
+                                                        <td><%=fA%></td>
+                                                        <td><%=fI%></td>
+                                                        <td><%=fF%></td>
+                                                        <td><form method="post" action="borrarReservaArrendador"><input type="hidden" name="idUser" value="<%=idUsuario%>"><input type="hidden" name="idReserva" value="<%=idReserva%>" ><input type="submit" value="cancelar" class="btn-danger"></form></td>
+                                                    </tr> 
+                                                </table><%
+                                                
+                                            }
                                             }
                                             
                                         %>
                                        
-                                    </table>
+                                   
                                 </div>
                                 <div id="arrendatario">
-                                    <h2>como arrendatario</h2>
-                                    <table class="table table-striped">
-                                        <tr>
-                                                <th>Reserva</th>
-                                                <th>Fecha Reserva</th>
-                                                <th>Fecha Entrada</th>
-                                                <th>Fecha Salida</th>
-                                                <th>Acción</th>
-                                        </tr>
+                                    <h2 class="titu-gestion-reservas">como arrendatario</h2>
                                          <%
                                            
                                             ListaReservas lsr = usuario.getListaReservas();
-                                            ArrayList<Reserva> alr = lsr.getReservas();
-                                            Iterator<Reserva> itr = alr.iterator();
-                                            
-                                            while(itr.hasNext()){
-                                                Reserva rs = itr.next();
-                                                String fRR = String.format("%1$td-%1$tm-%1$tY", rs.getFechaReserva());
-                                                String fRI = String.format("%1$td-%1$tm-%1$tY", rs.getFechaEntrada());
-                                                String fRF = String.format("%1$td-%1$tm-%1$tY", rs.getFechaSalida());
-                                                %><tr>
-                                                    <td>titulo</td>
-                                                    <td><%=fRR%></td>
-                                                    <td><%=fRI%></td>
-                                                    <td><%=fRF%></td>
-                                                    <td><button class="btn-link">cancelar</button><button class="btn-link">modificar</button></td>
-                                                <tr><%
+                                            if(lsr != null){
+                                                ArrayList<Reserva> alr = lsr.getReservas();
+                                                Iterator<Reserva> itr = alr.iterator();
+
+                                                while(itr.hasNext()){
+                                                    Reserva rs = itr.next();
+                                                    String fRR = String.format("%1$td-%1$tm-%1$tY", rs.getFechaReserva());
+                                                    String fRI = String.format("%1$td-%1$tm-%1$tY", rs.getFechaEntrada());
+                                                    String fRF = String.format("%1$td-%1$tm-%1$tY", rs.getFechaSalida());
+                                                    int idReserva = rs.getIdReserva();
+                                                    Alquiler alq = conexion.getAlquilerDeReserva(idReserva);
+                                                    if(alq != null){
+                                                    String titulo = alq.getTitulo();
+                                                    request.getSession().setAttribute("reserva",rs);
+                                                    Date dateInicio = rs.getFechaEntrada();
+                                                    Date dateFin = rs.getFechaSalida();
+                                                    request.getSession().setAttribute("fechaEntrada", dateInicio);
+                                                    request.getSession().setAttribute("fechaSalida", dateFin);
+                                                %>
+                                                <table class="tabla-pisos table-responsive" align="center">
+                                                    <tr class="tabla-tr">
+                                                            <th><%=titulo%></th>
+                                                            <th>Fecha Reserva</th>
+                                                            <th>Fecha Entrada</th>
+                                                            <th>Fecha Salida</th>
+                                                            <th>Acción</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>foto</td>
+                                                        <td><%=fRR%></td>
+                                                        <td><%=fRI%></td>
+                                                        <td><%=fRF%></td>
+                                                        <td><form method="post" action="modificarReserva.jsp"><button class="btn-info">modificar</button></form><br><form action="borrarReservaArrendatario" method="post"><input type="hidden" name="idUser" value="<%=idUsuario%>"><input type="hidden" name="idReserva" value="<%=idReserva%>" ><input type="submit" value="cancelar"   class="btn-danger"></form></td
+                                                    </tr>
+                                                </table><%
                                                 
+                                            }
+                                                }
                                             }
                                             }
                                         %>
-                                    </table>
+                                    
                                 </div>
-                            </div>
+                            
                         </div>
                         <div id="gAlojamientos" >
-                            <div id="inputRegistro" class="center-block">
                                 <div class="row">
-                                    <table class="table table-striped">
-                                                <tr>
-                                                    <th>Titulo</th>
-                                                    <th>Dirección</th>
-                                                    <th>Precio/noche</th>
-                                                    <!--<th>Foto</th>/-->
-                                                </tr>
+                                   <h2 class="titu-gestion-reservas">Esta es la lista de tus alojamientos:</h2>
                                             <%
                                                 ListaAlquileres lal = usuario.getListaAlquileres();
                                                 ArrayList<Alquiler> alq = lal.getAlquileres();
@@ -260,17 +284,70 @@
                                                     String direc = alquiler.getAlojamiento().getDireccion();
                                                     float precioAl = alquiler.getAlojamiento().getPrecioNoche();
                                                     //String foto = alquiler.getAlojamiento().getFotoAlojamiento();
-                                                    
-                                                %><tr>
-                                                    <td><%=titu%></td>
-                                                    <td><%=direc%></td>
-                                                    <td><%=precioAl%></td>
-                                                    <!--<td>%=foto%</td>/-->
-                                                <tr><%
+                                                    request.getSession().setAttribute("alquiler", alquiler);
+                                                    request.getSession().setAttribute("usuario", usuario);
+                                                %>
+                                                 <table class="tabla-pisos table-responsive" align="center">
+                                                    <tr class="tabla-tr">
+                                                        
+                                                        <th><%=titu%></th>
+                                                        <th>Dirección</th>
+                                                        <th>Precio/noche</th>
+                                                        <th>Acción</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Foto</td>
+                                                        <td><%=direc%></td>
+                                                        <td><%=precioAl%></td>
+                                                        <td><form method="post" action="modificarAlojamiento.jsp"> <input type="submit" value="Modificar"   class="btn-info"></form><br><form action="borrarAlquiler"><input type="submit" value="Dar de baja"   class="btn-danger"></form></td>
+                                                    </tr>
+                                                </table>
+                                                <%
                                                 }
                                             %>
-                                    </table>
                                </div>
+                        </div>
+                               <div id="gSaldo">
+                                   <h3 id="formRegistro" class="center-block">Añade saldo a tu cuenta</h3>  
+                                    <div id="inputRegistro" class="center-block">
+
+                                        <form action="addSaldo" role="form" name="registro" method="post">
+                                            <div class="form-group">
+                                                <label for="email">*Correo de paypal:</label>
+                                                <input type="email" name="email" class="form-control formularioRegistro" id="email" required>
+                                                <span class="span-registro" id="span-email"> </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="pwd">*Contraseña:</label>
+                                                <input type="password" name="pass" id="pwd" class="form-control formularioRegistro"  required>
+                                                <span class="span-registro"> </span>
+                                            </div>
+                                             <div class="form-group">
+                                                <label for="pwd2">*Comprobar contraseña:</label>
+                                                <input type="password" id="pwd2" class="form-control formularioRegistro" required>
+                                                <span class="span-registro" id="span-pwd2"> </span>
+                                             </div>
+                                             <div class="form-group">
+                                                <label for="number">*Saldo que se desea añadir a la cuenta  ( Min = 5, Max = 100 )</label>
+                                                <input type="number" class="form-control formularioRegistro" min="5" max="100" name="saldo"  required>
+                                            </div>
+                                            <button type="submit" id="formulario-registro" class="btn btn-default">Pagar con paypal</button>
+                                        </form>   
+                                    </div>
+                                    <p class="requerido"> Los campos con * son obligatorios.</p>
+                                   
+                               </div>
+                        <div id="gBorrado">
+                            <%
+                                int idUser = usuario.getIdUsuario();
+                            %>
+                            <div id="inputRegistro" class="center-block">
+                                <h2>¿Seguro que desea dejar EuskalRent?</h2>
+                                <p>Si es así, desde EuskalRent le agradecemos el uso de nuestra aplicación y esperamos volver a verle por aquí pronto. Gracias por usar nuestro servicio, esperamos que haya sido de su agrado.</p>
+                                <form method="post" action="deleteUser">
+                                    <input type="hidden" name="idUsuario" value="<%=idUser%>">
+                                    <button type="submit" class="center-block btn btn-danger">Borrar Cuenta</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -292,3 +369,4 @@
         <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
+

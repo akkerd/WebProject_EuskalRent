@@ -5,24 +5,24 @@
  */
 package Controlador;
 
+import Modelo.Entidades.Reserva;
+import Modelo.conexionBD.ConexionBD;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Modelo.Listas.ListaAlquileres;
-import Modelo.Entidades.Alquiler;
-import Modelo.conexionBD.ConexionBD;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.sql.*;
+import Modelo.Listas.ListaReservas;
+import Modelo.Entidades.Usuario;
 
 /**
  *
  * @author joseba
  */
-public class buscarAloj extends HttpServlet {
+public class updateReserva extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +40,14 @@ public class buscarAloj extends HttpServlet {
         try {
             /* TODO output your page here. You may use following sample code. */
             ConexionBD con = ConexionBD.getConexionBD();
+            Date fechaReserva = (Date)request.getSession().getAttribute("fechaReserva");
+            Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+            int idReserva = Integer.parseInt(request.getParameter("idReserva"));
+            int idUsuario = usuario.getIdUsuario();
+            int idAlquiler = Integer.parseInt(request.getParameter("idAlquiler"));
             
-            String barrio = request.getParameter("barrio");
-            String fechaEntrada = request.getParameter("date1");
-            String fechaSalida = request.getParameter("date2");
+            String fechaEntrada = request.getParameter("fechaEntrada");
+            String fechaSalida = request.getParameter("fechaSalida");
            
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
             try{
@@ -52,21 +56,17 @@ public class buscarAloj extends HttpServlet {
             
             java.sql.Date dateEntrada = new java.sql.Date(dateIn.getTime());
             java.sql.Date dateSalida = new java.sql.Date(dateOut.getTime());
+            Reserva reserva = new Reserva(idReserva, idAlquiler, fechaReserva, dateEntrada, dateSalida);
+            con.actualizarReserva(reserva);
+            ListaReservas ls = con.getListaReservas(idUsuario);
+            usuario.setListaReservas(ls);
             
-            ListaAlquileres listaAlquileres = con.getListaAlquileresPorFechaBarrio(dateEntrada, dateSalida, barrio);
-            request.getSession().setAttribute("listaAlquileres", listaAlquileres);
-            request.getSession().setAttribute("fechaEntrada", dateEntrada);
-            request.getSession().setAttribute("fechaSalida", dateSalida);
-            request.getRequestDispatcher("busqueda.jsp").forward(request, response);
-
+            
+            request.getRequestDispatcher("perfil.jsp").forward(request, response);
             }
             catch(Exception e){
                 e.printStackTrace();
             }
-            
-            
-            
-            
         } finally {
             out.close();
         }

@@ -40,10 +40,14 @@ public class updateUser extends HttpServlet {
             int telefono = Integer.parseInt(request.getParameter("tel-perfil"));
             String foto = request.getParameter("foto-perfil");
             String pass = request.getParameter("pwd-perfil");
+            Usuario usuario1 = (Usuario) request.getSession().getAttribute("usuario");
+            int idUsuario = usuario1.getIdUsuario();
             
-            Usuario user = new Usuario(0,nombre,email,foto,telefono,null);
+            Usuario user = new Usuario(idUsuario,nombre,email,foto,telefono,null);
             ConexionBD con = ConexionBD.getConexionBD();
-            //con.updateUser(user,pass);
+            con.actualizarUsuario(user, pass);
+            Usuario usuario = con.buscarUsuario(email, pass);
+            request.getSession().setAttribute("usuario", usuario);
             
             request.getRequestDispatcher("perfil.jsp").forward(request, response);
         } finally {

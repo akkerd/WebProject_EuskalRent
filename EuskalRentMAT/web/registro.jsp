@@ -96,7 +96,7 @@
                    <!-- formulario de registro-->
                     <h3 id="formRegistro" class="center-block">¡Regístrate!</h3>  
                     <div id="inputRegistro" class="center-block">
-                        <form action="insertUser" role="form" name="registro">
+                        <form action="insertUser" method="post" role="form" name="registro">
                             <div class="form-group">
                                 <label for="nombre">*Nombre completo:</label>
                                 <input type="text" name="nombre-registro" pattern="[A-Za-z ,.'-]{3,}" maxlength="20" id="nombre" class="form-control formularioRegistro" required >

@@ -21,15 +21,51 @@
         <servlet-name>buscarAloj</servlet-name>
         <servlet-class>Controlador.buscarAloj</servlet-class>
     </servlet>
+    <!-- FIN_declaracion -->
+    <!-- Mapeado -->
+    <servlet>
+        <servlet-name>borrarReserva</servlet-name>
+        <servlet-class>Controlador.borrarReservaArrendado</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>borrarReservaArrendatario</servlet-name>
+        <servlet-class>Controlador.borrarReservaArrendatario</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>borrarReservaArrendador</servlet-name>
+        <servlet-class>Controlador.borrarReservaArrendador</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateAloj</servlet-name>
+        <servlet-class>Controlador.updateAloj</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteUser</servlet-name>
+        <servlet-class>Controlador.deleteUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>registroReserva</servlet-name>
+        <servlet-class>Controlador.registroReserva</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>borrarAlquiler</servlet-name>
+        <servlet-class>Controlador.borrarAlquiler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateReserva</servlet-name>
+        <servlet-class>Controlador.updateReserva</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addSaldo</servlet-name>
+        <servlet-class>Controlador.addSaldo</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>RegistroAloj</servlet-name>
         <servlet-class>Controlador.RegistroAloj</servlet-class>
     </servlet>
-    <!-- FIN_declaracion -->
-    <!-- Mapeado -->
     <servlet>
-        <servlet-name>RegistroReserva</servlet-name>
-        <servlet-class>Controlador.RegistroReserva</servlet-class>
+        <servlet-name>subirImagenServlet</servlet-name>
+        <servlet-class>Controlador.subirImagenServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>logear</servlet-name>
@@ -51,10 +87,6 @@
         <servlet-name>buscarAloj</servlet-name>
         <url-pattern>/buscarAloj</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>RegistroAloj</servlet-name>
-        <url-pattern>/RegistroAloj</url-pattern>
-    </servlet-mapping>
     <!-- FIN_Mapeado -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
@@ -68,8 +100,48 @@
     </resource-ref>
     <!-- FIN_Base de datos -->
     <servlet-mapping>
-        <servlet-name>RegistroReserva</servlet-name>
-        <url-pattern>/RegistroReserva</url-pattern>
+        <servlet-name>borrarReserva</servlet-name>
+        <url-pattern>/borrarReserva</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>borrarReservaArrendatario</servlet-name>
+        <url-pattern>/borrarReservaArrendatario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>borrarReservaArrendador</servlet-name>
+        <url-pattern>/borrarReservaArrendador</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateAloj</servlet-name>
+        <url-pattern>/updateAloj</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteUser</servlet-name>
+        <url-pattern>/deleteUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>registroReserva</servlet-name>
+        <url-pattern>/registroReserva</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>borrarAlquiler</servlet-name>
+        <url-pattern>/borrarAlquiler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateReserva</servlet-name>
+        <url-pattern>/updateReserva</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addSaldo</servlet-name>
+        <url-pattern>/addSaldo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistroAloj</servlet-name>
+        <url-pattern>/RegistroAloj</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>subirImagenServlet</servlet-name>
+        <url-pattern>/subirImagenServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -126,10 +126,12 @@ body {
 /************************ PERFIL *********************/
 .nav-menus {
   border-bottom: 1px solid #ddd;
+  text-align: center;
 }
 
 .nav-menus > li {
-  float: left;
+  display: inline-block;
+  float: none;
   margin-bottom: -1px;
 }
 
@@ -204,7 +206,6 @@ body {
 }*/
 
 
-
 .dnd.over {
   border: 2px dashed #000;
 }
@@ -230,8 +231,11 @@ height:300px;
 }
 
 /* Oculta partes de la página de perfil al principio*/
-#gAlojamientos, #gReservas{
+#gAlojamientos, #gReservas, #gBorrado{
     display:none;
+}
+#gSaldo{
+    display: none;
 }
 
 /*********DRAG&DROP DIEGO***********/
@@ -274,17 +278,13 @@ height:300px;
     cursor: pointer;
     left: 0px;
     top: 0px;
-    /*Important This is only comment out for demonstration purpeses.*/
     opacity:0; 
 }
 
-/*Important*/
 #drop-zone.mouse-over{
     border: 5px dashed rgba(0,255,0,0.7);
 }
 
-
-/*If you dont want the button*/
 #clickHere {
     position: absolute;
     cursor: pointer;

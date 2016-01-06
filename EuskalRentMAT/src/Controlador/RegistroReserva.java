@@ -11,12 +11,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import Modelo.Entidades.Reserva;
+import Modelo.conexionBD.ConexionBD;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import Modelo.Entidades.Usuario;
+import Modelo.Listas.ListaReservas;
 
 /**
  *
- * @author Diegaker
+ * @author joseba
  */
-public class RegistroReserva extends HttpServlet {
+public class registroReserva extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,15 +39,27 @@ public class RegistroReserva extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RegistroReserva</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RegistroReserva at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            ConexionBD con = ConexionBD.getConexionBD();
+            Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+            int idUsuario = usuario.getIdUsuario();
+            int idAlquiler = Integer.parseInt(request.getParameter("idAlquiler"));
+            Date fechaHoy = new Date();
+           
+           
+            
+            Date dateEntrada = (Date)request.getSession().getAttribute("fechaEntrada");
+            Date dateSalida = (Date) request.getSession().getAttribute("fechaSalida");
+            
+            
+            Reserva reserva = new Reserva(0,idAlquiler,fechaHoy,dateEntrada,dateSalida);
+            con.añadirReserva(reserva, idUsuario, idAlquiler);
+            ListaReservas ls = con.getListaReservas(idUsuario);
+            usuario.setListaReservas(ls);
+            
+            request.getRequestDispatcher("perfil.jsp").forward(request, response);
+            
+            
+            
         } finally {
             out.close();
         }

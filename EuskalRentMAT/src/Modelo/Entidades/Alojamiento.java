@@ -18,12 +18,12 @@ public class Alojamiento {
     private int numHuespedes;
     private String barrio;
     private String direccion;
-    private Blob fotoAlojamiento;
+    private String fotoAlojamiento;
     private float precioNoche;
     private String tipoCancelacion;
     private String comentario;
     
-    public Alojamiento (int idAlojamiento,String tipoAlojamiento,int numHuespedes, String barrio, String direccion,Blob fotoAlojamiento ,float precioNoche,String tipoCancelacion,String comentario ){
+    public Alojamiento (int idAlojamiento,String tipoAlojamiento,int numHuespedes, String barrio, String direccion,String fotoAlojamiento ,float precioNoche,String tipoCancelacion,String comentario ){
         
         this.idAlojamiento = idAlojamiento;
         this.tipoAlojamiento = tipoAlojamiento;
@@ -91,14 +91,14 @@ public class Alojamiento {
     /**
      * @return the fotoAlojamiento
      */
-    public Blob getFotoAlojamiento() {
+    public String getFotoAlojamiento() {
         return fotoAlojamiento;
     }
 
     /**
      * @param fotoAlojamiento the fotoAlojamiento to set
      */
-    public void setFotoAlojamiento(Blob fotoAlojamiento) {
+    public void setFotoAlojamiento(String fotoAlojamiento) {
         this.fotoAlojamiento = fotoAlojamiento;
     }
 

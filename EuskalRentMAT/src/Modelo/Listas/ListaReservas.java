@@ -40,6 +40,7 @@ public class ListaReservas {
         while(it.hasNext() && controlador == false){
             if ( it.next().getIdReserva() == idReserva){
                 controlador = true;
+                it.remove();
             }
         }
     }

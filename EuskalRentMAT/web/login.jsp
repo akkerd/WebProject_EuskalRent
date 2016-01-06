@@ -32,7 +32,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                    </button>
-                    <a id="logo" class="navbar-brand" href="#"><img id="imgLogo" src="img/logo.png"></a>
+                    <a id="logo" class="navbar-left" href="#"><img id="imgLogo" src="img/logo.png"></a>
                 </div>
                    <!-- Navegador superior -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">    

@@ -1,8 +1,11 @@
 
 package Modelo.Entidades;
 
+import Controlador.decodificadorImagen;
 import Modelo.Listas.ListaAlquileres;
 import Modelo.Listas.ListaReservas;
+import java.sql.Blob;
+import javax.sql.rowset.serial.SerialBlob;
 
 
 public class Usuario {
@@ -154,5 +157,14 @@ public class Usuario {
     public void setListaAlquileres(ListaAlquileres listaAlquileres) {
         this.listaAlquileres = listaAlquileres;
     }
+
+    public float getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
+    }
+    
     
 }

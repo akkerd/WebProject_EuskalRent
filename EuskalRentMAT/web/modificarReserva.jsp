@@ -1,11 +1,15 @@
 <%-- 
-    Document   : verAlojamiento
-    Created on : 02-ene-2016, 19:21:57
-    Author     : Diegaker
+    Document   : modificarReserva
+    Created on : 05-ene-2016, 0:32:48
+    Author     : joseba
 --%>
+
+
 <%@page import="java.util.*"%>
 <%@page import="Modelo.Entidades.Usuario"%>
 <%@page import="Modelo.Entidades.Alquiler"%>
+<%@page import="Modelo.Entidades.Reserva"%>
+<%@page import="Modelo.Listas.ListaReservas"%>
 <%@page import="Modelo.conexionBD.ConexionBD"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -104,7 +108,11 @@
         <div class="jumbotron"> 
             <div  id="contenedorJumbotron" class="container-fluid" > 
                 <%
-                    Alquiler alquiler = (Alquiler)request.getSession().getAttribute("alquiler");
+                    Reserva reserva = (Reserva) request.getSession().getAttribute("reserva");
+                    int idReserva = reserva.getIdReserva();
+                    Alquiler alquiler = conexion.getAlquilerDeReserva(idReserva);
+                    
+                    
                     String titulo = alquiler.getTitulo();
                     String tipoAloj = alquiler.getAlojamiento().getTipoAlojamiento();
                     int numMax = alquiler.getAlojamiento().getNumHuespedes();
@@ -114,7 +122,15 @@
                     String comentario = alquiler.getAlojamiento().getComentario();
                     String politica = alquiler.getAlojamiento().getTipoCancelacion();
                     
-                    java.util.Date fechaFin = alquiler.getFechaFin();
+                    Date fechaFinalq = alquiler.getFechaFin();
+                    
+                    Date fechaEntrada = (Date) request.getSession().getAttribute("fechaEntrada");
+                    Date fechaSalida = (Date) request.getSession().getAttribute("fechaSalida");
+                    Date fechaReserva = reserva.getFechaReserva();
+                    request.getSession().setAttribute("fechaReserva", fechaReserva);
+                    
+                    
+                    
                 %>
                 <br>
                 <div class="panel panel-primary">
@@ -152,25 +168,34 @@
                             <%
                                 if(usuario != null)
                                 {
-                                    float saldo = usuario.getSaldo();
-                                    Date dateEntrada = (Date)request.getSession().getAttribute("fechaEntrada");
-                                    Date dateSalida = (Date) request.getSession().getAttribute("fechaSalida");
-                                    boolean conDinero = alquiler.comprobarSaldo(dateEntrada, dateSalida, saldo);
-                                    if(conDinero == false){
-                                        %><p class="center-block alert-danger center"> No dispone de suficiente dinero para reservar este alojamiento, pruebe a añadir dinero a su cuenta.</p><%
-                                    }
-                                    else{
-                                    request.getSession().setAttribute("fechaEntrada", dateEntrada);
-                                    request.getSession().setAttribute("fechaEntrada", dateSalida);
+                                    
                                     %>
-                               <form class="form" role="form" action="registroReserva" method="post" accept-charset="UTF-8">
+                               <form class="form" role="form" action="updateReserva" method="post" accept-charset="UTF-8">
                                     <div class="col-md-4">
-                                        
-                                        <div class="form-group">
-                                            <label for="nHuesp">Número máximo de husepedes:</label>
-                                            <input type="number" name="nHuesp" min="1" max="10"  id="nHuesp" class="form-control" required>
-                                            <span class="span-registro" id="span-nHuesp"> </span>
-                                        </div>   
+                                        <label>Fechas en las que se puede alquilar:</label>
+                                        <div class="input-group form-group">
+                                            <%
+                                                 String dia = null;
+                                                    String mes = null;
+                                                    Calendar c = Calendar.getInstance();
+                                                    if(c.get(Calendar.DATE) < 10){
+                                                        dia = "0"+Integer.toString(c.get(Calendar.DATE));
+                                                    }
+                                                    if (c.get(Calendar.MONTH) < 10){
+                                                        mes = "0"+ Integer.toString(c.get(Calendar.MONTH)+1);
+                                                    }
+                                                    else{
+                                                        dia = Integer.toString(c.get(Calendar.DATE));
+                                                        mes = Integer.toString(c.get(Calendar.MONTH)+1);
+                                                    }
+                                                    String año = Integer.toString(c.get(Calendar.YEAR));
+                                                    
+                                            %>
+                                            <input type="date"  class="form-control" value="<%=fechaEntrada%>" min="<%=año+"-"+mes+"-"+dia%>" name="fechaEntrada" id="date-llegada">    
+                                        </div>
+                                        <div class="input-group form-group">
+                                            <input type="date" class="form-control" value="<%=fechaSalida%>" min="" max="<%=fechaFinalq%>" name="fechaSalida" id="date-salida">
+                                        </div>  
                                     </div>
                                     <div class="col-md-4"></div>
                                     <div class="center-block col-md-4">
@@ -180,16 +205,19 @@
                                     </div>
                                     <div class="col-md-12">
                                         <%
-                                        request.getSession().setAttribute("usuario", usuario);
+                                        
                                         int idAlquiler = alquiler.getIdAlquiler();
+                                        request.getSession().setAttribute("usuario", usuario);
+                                       
                                         %>
                                         
+                                         <input type="hidden" name="idReserva" value="<%=idReserva%>">
                                         <input type="hidden" name="idAlquiler" value="<%=idAlquiler%>">
-                                        <button id="botonFormPerfil" type="submit" class="btn btn-primary center-block">Reservar</button>
+                                        <button id="botonFormPerfil" type="submit" class="btn btn-primary center-block">Modificar reservar</button>
                                         
                                     </div>
                                 </form>
-                                    <%}
+                                    <%
                                 }
                                 else{
                                     %><form method="post" action="login.jsp"><button type="submit" class="center-block btn-danger">Necesita estar logueado para realizar una reserva</button></form><%

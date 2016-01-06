@@ -1,11 +1,13 @@
 <%-- 
-    Document   : registroAlojamiento
-    Created on : 26-dic-2015, 22:58:48
-    Author     : Diegaker
+    Document   : modificarAlojamiento
+    Created on : 04-ene-2016, 14:10:09
+    Author     : joseba
 --%>
+
 <%@page import="java.util.Calendar"%>
 <%@page import="Modelo.Entidades.Usuario"%>
 <%@page import="Modelo.conexionBD.ConexionBD"%>
+<%@page import="Modelo.Entidades.Alquiler"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -86,7 +88,6 @@
                            </div>
                         </div>
                     </nav><!-- /navbar -->
-                    <h1>Tienes que registrarte para poder registrar tu alojamiento.</h1>
                                     <%
                                 } else {
                                     // si entra aqui el usuario esta loged.
@@ -110,48 +111,65 @@
                </div>
             </div>
         </nav><!-- /navbar -->
-
+        <%
+            Alquiler alquiler = (Alquiler)request.getSession().getAttribute("alquiler");
+            String titulo = alquiler.getTitulo();
+            String tipoAlojamiento = alquiler.getAlojamiento().getTipoAlojamiento();
+            int numMax = alquiler.getAlojamiento().getNumHuespedes();
+            String barrio = alquiler.getAlojamiento().getBarrio();
+            String politica = alquiler.getAlojamiento().getTipoAlojamiento();
+            int idAlquiler = alquiler.getIdAlquiler();
+            int idAlojamiento = alquiler.getAlojamiento().getIdAlojamiento();
+            
+            java.util.Date fechaInicio = alquiler.getFechaInicio();
+            java.util.Date fechaFin = alquiler.getFechaFin();
+            java.util.Date fechaAlquiler = alquiler.getFechaAlquiler();
+            
+            float tarifa = alquiler.getAlojamiento().getPrecioNoche();
+            String direccion = alquiler.getAlojamiento().getDireccion();
+            String comentario = alquiler.getAlojamiento().getDireccion();
+        %>
         <div class="jumbotron"> 
             <div  id="contenedorJumbotron" class="container-fluid" >  
                 <div class="cambiable">
                 <div id="inputRegistro" class="center-block">
                     <div class="row">
-                        <h3 class="center">¡Registra tu alojamiento y empieza a ganar dinero!</h3>
+                        <h3 class="center">Modifique los datos de su alojamiento</h3>
                             <div class="col-md-12">
-                                <form class="form" action="RegistroAloj" method="post" id="form-registro-alojamiento" role="form"  accept-charset="UTF-8">
+                                <form class="form" action="updateAloj" method="post" id="form-registro-alojamiento" role="form"  accept-charset="UTF-8">
                                     <div class="form-group">
                                         <label for="titulo"><span class="requeridoAst">*</span>Titulo del alojamiento:</label>
-                                        <input type="text" name="titulo"  id="titulo" class="form-control" required>
+                                        <input type="text" name="titulo"  id="titulo" value="<%=titulo%>" class="form-control" required>
                                         <span class="span-registro" id="span-titulo"> </span>
                                     </div>
                                     <div class="form-group">
                                         <label for="sel1"><span class="requeridoAst">*</span>Tipo de alojamiento:</label>
-                                        <select class="form-control" name="tipoAloj" id="tipoAloj" required>
-                                            <option>Apartamento</option>
-                                            <option>Chalet</option>
-                                            <option>Duplex</option>
-                                            <option>Otro</option>
+                                        <select class="form-control" value="<%=tipoAlojamiento%>" name="tipoAloj" id="tipoAloj" required>
+                                            <option value="Apartamento">Apartamento</option>
+                                            <option value="Chalet">Chalet</option>
+                                            <option value="Duplex">Duplex</option>
+                                            <option value="Otro">Otro</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="nHuesp"><span class="requeridoAst">*</span>Número máximo de husepedes:</label>
-                                        <input type="number" name="nHuesp" min="1" max="10"  id="nHuesp" class="form-control" required>
+                                        <input type="number" value="<%=numMax%>" name="nHuesp" min="1" max="10"  id="nHuesp" class="form-control" required>
                                         <span class="span-registro" id="span-nHuesp"> </span>
                                     </div>
                                     <div class="form-group">
                                         <label><span class="requeridoAst">*</span>Barrio</label>
-                                        <select class="form-control" id="barrio" name="barrio" required>
-                                            <option>El Ensanche</option>
-                                            <option>Lakua-Arriaga</option>
-                                            <option>Zabalgana</option>
+                                        <select class="form-control" value="<%=barrio%>" id="barrio" name="barrio" required>
+                                            <option value="El Ensanche">El Ensanche</option>
+                                            <option value="Lakua-Arriaga">Lakua-Arriaga</option>
+                                            <option value="Zabalgana">Zabalgana</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="politica"><span class="requeridoAst">*</span>Política de cancelación de tu alojamiento (para onsultar como funcionan las políticas de cancelación <a href="politicas.html">haz click aquí</a>): </label>
-                                        <select class="form-control" id="politica" name="politica" required>
-                                            <option>Cancelación Gratuita</option>
-                                            <option>Flexible</option>
-                                            <option>Estricta</option>
+                                        <select class="form-control" value="<%=politica%>" id="politica" name="politica" required>
+                                            <option value="Gratuita">Gratuita</option>
+                                            <option value="Flexible">Flexible</option>
+                                            <option value="Estricta">Estricta</option>
                                         </select>
                                     </div>   
                                     <label>Fechas en las que se podría alquilar:</label>
@@ -172,43 +190,41 @@
                                             mes = Integer.toString(c.get(Calendar.MONTH)+1);
                                         }
                                         String año = Integer.toString(c.get(Calendar.YEAR));
+                                        request.getSession().setAttribute("date-inicio", fechaInicio);
+                                        request.getSession().setAttribute("date-fin", fechaFin);
+                                        request.getSession().setAttribute("date-alquiler", fechaAlquiler);
                                     %>
-                                    <input type="date"  class="form-control" min="<%=año+"-"+mes+"-"+dia%>" name="date-inicio" id="date-llegada">
+                                    <input type="date"  class="form-control" value="<%=fechaInicio%>" min="<%=año+"-"+mes+"-"+dia%>" name="date-inicio" id="date-llegada">
                                     
                                     </div>
                                     <div class="input-group form-group">
-                                        <input type="date" class="form-control" min="" name="date-fin" id="date-salida">
+                                        <input type="date" class="form-control" value="<%=fechaFin%>" min="" name="date-fin" id="date-salida">
 
                                     </div>
                                     <div class="form-group">
                                         <label for="tarifa">Tárifa por noche ( €/noche):</label>
-                                        <input type="text" pattern="[0-9]{1,4}\.[0-9]{1}[0-9]{1}$" id="tarifa" name="tarifa" class="form-control" title="Utiliza un número con dos decimales entre 0.00 y 9999.99" >
+                                        <input type="text" value="<%=tarifa%>" pattern="[0-9]{1,4}\.[0-9]{1}[0-9]{1}$" id="tarifa" name="tarifa" class="form-control" title="Utiliza un número con dos decimales entre 0.00 y 9999.99" >
                                         <span class="span-registro" id="span-tarifa"> </span>
                                     </div>
                                     <div class="form-group">
                                         <label for="map">Geolocalización: </label><br>
-                                        Escribe una dirección: <input type="text" id="buscador" name="buscador" title="Dirección a Geocode" class="Direccion"/>
+                                        Escribe una dirección: <input type="text" id="buscador" value="<%=direccion%>" name="buscador" title="Dirección a Geocode" class="Direccion"/>
                                         <input type="button" id="btnBuscador" title="Buscar" value="Busca"/><br><br>
                                         <div class="map" id="map"></div>
                                     </div>
                                     <div class="form-group">
                                         <label for="coment">Comentarios sobre el piso:</label>
-                                        <input type="text" name="coment"  id="coment" class="form-control">
+                                        <input type="text" value="<%=comentario%>" name="coment"  id="coment" class="form-control">
                                         <span class="span-registro" id="span-coment"> </span>
                                     </div>
                                     <div class="form-group"> 
                                         <label>Foto de tu alojamiento: </label>
-                                        <!--<div class="center-block dnd" id="drop-zone" name="drop-zone" draggable="true">   </div>-->
-                                        <div id="drop-zone">
-                                            <div id="dentroFoto">
-                                                Suelta tu imagen aquí...
-                                            </div>
-                                        </div>
+                                        <div class="center-block dnd" id="drop-zone" name="drop-zone" draggable="true">   </div>
                                     </div>
-                                    <br>
-                                    <input type="text" name="fotoDrag" id="fotoDrag"/>
-                                    <br>
-                                <button id="botonFormPerfil" type="submit" class="btn btn-default center-block">Registrar alojamiento</button>
+                                        <input type="hidden" value="<%=idAlquiler%>" name="idAlquiler">
+                                        <input type="hidden" value="<%=idAlojamiento%>" name="idAlojamiento">
+                                        <input type="hidden" value="<%=fechaAlquiler%>" name="fechaAlquiler">
+                                <button id="botonFormPerfil" type="submit" class="btn btn-default center-block">Modifica el alojamiento</button>
                             </form>
                         </div>
                         <p class="requerido"> Los campos con * son obligatorios.</p>
@@ -236,3 +252,4 @@
         <!-- Validar formulario -->
     </body>
 </html>
+
