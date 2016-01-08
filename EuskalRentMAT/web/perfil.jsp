@@ -27,7 +27,7 @@
         <link href="css/style.css"  rel="stylesheet">
         <link href="css/css-Joseba.css"  rel="stylesheet">
     </head>
-    <body>
+    <body style="background-color: #c8e5e3">
         <!-- Navegador -->
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container-fluid">
@@ -54,6 +54,15 @@
                                         <li>
                                             <div class="row">
                                                 <div class="col-md-12">
+                                                     <% 
+                                                     Boolean failLoged =(Boolean)request.getSession().getAttribute("failLogin");
+                                                     if (failLoged != null){
+                                                        if(failLoged == true){%>                                                     
+                                                            <p style="color: red">Los datos introducidos son invalidos</p>
+                                                     <%    
+                                                        }
+                                                     }
+                                                     %>
                                                     <form action="logear" method="post" role="form" id="login-nav">
                                                         <div class="form-group">
                                                             <label class="sr-only" for="email" >E-mail</label>
@@ -78,20 +87,46 @@
                                             <a class="btn btn-primary btn-block" href="registro.jsp">REGISTRO</a>
                                         </li>
                                     </ul>
+                                    <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><%=text%><b class="caret"></b></a>
+                                    </li>
+                                    </ul>
+                                        <ul class="nav navbar-nav navbar-right">
+                                        <li id="menuCambiable">
+                                            <a id="registroAlojamiento" href="registroAlojamiento.jsp" class="botones ">Registra tu alojamiento</a>
+                                        </li>  
+                                    </ul>  
+                               </div>
+                            </div>
+                        </nav><!-- /navbar --> 
+                         <div class="jumbotron"> 
+                            <div  id="contenedorJumbotron" class="container-fluid" >
+                                <h3>Necesita logearse para acceder a esta seccion</h3>
+                                <button><a href="index.jsp">Volver</a></button>
+                            </div>
+                        </div>
+                                    
                                     <%
                                 } else {
                                     // si entra aqui el usuario esta loged.
                                      usuario = (Usuario)request.getSession().getAttribute("usuario");                                    
                                     text = usuario.getNombreCompleto();
+                                    String fotoPerfil = usuario.getFotoPerfil();
+                                    if(fotoPerfil.equalsIgnoreCase("null"))
+                                    {
+                                        fotoPerfil = "sinFoto.jpg";
+                                    }
                                     %>
                                     
                                     <ul id="borrableUsuario" class="dropdown-menu" style="padding: 15px;min-width: 250px;">
+                                        
+                                        <li><a href="index.jsp">Inicio</a></li>
                                         <li><a href="perfil.jsp">Tu perfil</a></li>
+                                        <li><a href="perfil.jsp">Tu saldo:<%=usuario.getSaldo() %>€</a></li>
                                         <li><a id="logout" href="<%=request.getContextPath()%>/logout" >Logout</a></li>
                                     </ul>
 
-                               <% }%>
-                               <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><%=text%><b class="caret"></b></a>
+                               
+                                        <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><img class=" img-perfil img-circle" src="img/perfil/<%=fotoPerfil%>"><%=text%><b class="caret"></b></a>
 
                         </li>
                     </ul>
@@ -107,7 +142,7 @@
            <div class="jumbotron"> 
                <div  id="contenedorJumbotron" class="container-fluid" >                   
                    
-                    <ul class="nav nav-menus ">                 
+                    <ul class="nav nav-menus">                 
                          <li  class="btn-toolbar"  >
                              <a id="perfil"  aria-expanded="false" href="" class="dropdown-toggle confPerfil" data-toggle="dropdown">Gestionar Perfil</a>    
                          </li>
@@ -130,7 +165,8 @@
                    String nombre = usuario.getNombreCompleto();
                    int tel = usuario.getTelefono();
                    String email = usuario.getEmail();
-                   String foto = usuario.getFotoPerfil();
+                   String fotoModPerfil = usuario.getFotoPerfil();
+                  
                    %>
                     <div class="cambiable">
                         <div id="gPerfil">
@@ -162,8 +198,21 @@
                                            <input type="password" id="pwd2-perfil" class="form-control input-registro" required>
                                            <span class="span-registro" id="span-pwd2"> </span>
                                         </div>
-                                        <label for="pwd2">Foto de perfil:</label>
-                                        <div class="center-block dnd" style="background-image: url(&quot;data:image/jpeg;base64,<%=foto%>;);" name="foto-perfil" id="drop-zone" draggable="true">   </div>
+                                           
+                                        <%
+                                            //if(fotoPerfil == null){
+                                        %>
+                                        
+                                        <div class="form-group"> 
+                                            <label>Foto de perfil : </label>
+
+                                            <div id="drop-zone">
+                                                <div id="dentroFoto">
+                                                    Suelta tu imagen aquí...
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="text" name="fotoDrag" id="fotoDrag"/>
                                         <% request.getSession().setAttribute("usuario", usuario); %>
                                         <button type="submit" id="formulario-cambio" class="btn btn-default">Modificar datos</button>
                                     </form> 
@@ -174,7 +223,7 @@
                             
                                 <h3  class="center" >Gestiona tus reservas</h3>
                                 <div id="arrendador">
-                                    <h2 class="titu-gestion-reservas">como arrendador</h2>
+                                    <h3 class="titu-gestion-reservas">Como arrendador</h3>
                                     
                                         <%
                                         if(usuario != null){
@@ -182,7 +231,7 @@
                                             ConexionBD conexion = ConexionBD.getConexionBD();
                                             int idUsuario = usuario.getIdUsuario();
                                             ListaReservas ls = conexion.getListaReservasPorAlquileres(idUsuario);
-                                            if(ls != null){
+                                            if(ls.getNumeroReservas() > 0){
                                                 ArrayList<Reserva> al = ls.getReservas();
                                                 Iterator<Reserva> it = al.iterator();
 
@@ -194,6 +243,11 @@
                                                     int idReserva = alq.getIdReserva();
                                                     Alquiler alqui = conexion.getAlquilerDeReserva(idReserva);
                                                     String titulo = alqui.getTitulo();
+                                                    String fotoAlq = alqui.getAlojamiento().getFotoAlojamiento();
+                                                    if(fotoAlq.equalsIgnoreCase("null"))
+                                                    {
+                                                        fotoAlq = "sinFoto.jpg";
+                                                    }
                                                 
                                                 %>
                                                 <table class="tabla-pisos table-responsive" align="center">
@@ -205,7 +259,7 @@
                                                         <th>Acción</th>
                                                     </tr>
                                                     <tr>
-                                                        <td>foto</td>
+                                                        <td> <img src="img/alojamientos/<%=fotoAlq%>" class="img-table img-rounded"> </td>
                                                         <td><%=fA%></td>
                                                         <td><%=fI%></td>
                                                         <td><%=fF%></td>
@@ -213,7 +267,10 @@
                                                     </tr> 
                                                 </table><%
                                                 
-                                            }
+                                                }
+                                            } else {%>
+                                               <h4 class="titu-gestion-reservas">No dispone de reservas</h4>     
+                                           <% 
                                             }
                                             
                                         %>
@@ -221,11 +278,11 @@
                                    
                                 </div>
                                 <div id="arrendatario">
-                                    <h2 class="titu-gestion-reservas">como arrendatario</h2>
+                                    <h3 class="titu-gestion-reservas">Como arrendatario</h3>
                                          <%
                                            
                                             ListaReservas lsr = usuario.getListaReservas();
-                                            if(lsr != null){
+                                            if(lsr.getNumeroReservas() > 0){
                                                 ArrayList<Reserva> alr = lsr.getReservas();
                                                 Iterator<Reserva> itr = alr.iterator();
 
@@ -243,6 +300,7 @@
                                                     Date dateFin = rs.getFechaSalida();
                                                     request.getSession().setAttribute("fechaEntrada", dateInicio);
                                                     request.getSession().setAttribute("fechaSalida", dateFin);
+                                                    String fotoAlq = alq.getAlojamiento().getFotoAlojamiento();
                                                 %>
                                                 <table class="tabla-pisos table-responsive" align="center">
                                                     <tr class="tabla-tr">
@@ -253,7 +311,7 @@
                                                             <th>Acción</th>
                                                     </tr>
                                                     <tr>
-                                                        <td>foto</td>
+                                                        <td> <img src="img/alojamientos/<%=fotoAlq%>" class="img-table img-rounded"> </td>
                                                         <td><%=fRR%></td>
                                                         <td><%=fRI%></td>
                                                         <td><%=fRF%></td>
@@ -263,6 +321,9 @@
                                                 
                                             }
                                                 }
+                                            } else {%>
+                                                <h4 class="titu-gestion-reservas">No dispone de reservas de sus alojamientos</h4> 
+                                            <%
                                             }
                                             }
                                         %>
@@ -272,21 +333,29 @@
                         </div>
                         <div id="gAlojamientos" >
                                 <div class="row">
-                                   <h2 class="titu-gestion-reservas">Esta es la lista de tus alojamientos:</h2>
+                                   <h3 class="titu-gestion-reservas">Esta es la lista de tus alojamientos:</h3>
                                             <%
                                                 ListaAlquileres lal = usuario.getListaAlquileres();
                                                 ArrayList<Alquiler> alq = lal.getAlquileres();
-                                                Iterator<Alquiler> ital = alq.iterator();
-                                                
-                                                while(ital.hasNext()){
-                                                    Alquiler alquiler = ital.next();
-                                                    String titu = alquiler.getTitulo();
-                                                    String direc = alquiler.getAlojamiento().getDireccion();
-                                                    float precioAl = alquiler.getAlojamiento().getPrecioNoche();
-                                                    //String foto = alquiler.getAlojamiento().getFotoAlojamiento();
-                                                    request.getSession().setAttribute("alquiler", alquiler);
-                                                    request.getSession().setAttribute("usuario", usuario);
-                                                %>
+                                                if(lal.getNumeroAlquileres() > 0){                                                 
+
+                                                    Iterator<Alquiler> ital = alq.iterator();
+
+                                                    while(ital.hasNext()){
+                                                        Alquiler alquiler = ital.next();
+                                                        String titu = alquiler.getTitulo();
+                                                        String direc = alquiler.getAlojamiento().getDireccion();
+                                                        float precioAl = alquiler.getAlojamiento().getPrecioNoche();
+                                                        
+                                                        String fotoAlq = alquiler.getAlojamiento().getFotoAlojamiento();
+                                                        if(fotoAlq.equalsIgnoreCase("null"))
+                                                        {
+                                                            fotoAlq = "sinFoto.jpg";
+                                                        }
+                                                        
+                                                        request.getSession().setAttribute("alquiler", alquiler);
+                                                        request.getSession().setAttribute("usuario", usuario);
+                                                    %>
                                                  <table class="tabla-pisos table-responsive" align="center">
                                                     <tr class="tabla-tr">
                                                         
@@ -296,7 +365,7 @@
                                                         <th>Acción</th>
                                                     </tr>
                                                     <tr>
-                                                        <td>Foto</td>
+                                                        <td> <img src="img/alojamientos/<%=fotoAlq%>" class="img-table img-rounded"> </td>
                                                         <td><%=direc%></td>
                                                         <td><%=precioAl%></td>
                                                         <td><form method="post" action="modificarAlojamiento.jsp"> <input type="submit" value="Modificar"   class="btn-info"></form><br><form action="borrarAlquiler"><input type="submit" value="Dar de baja"   class="btn-danger"></form></td>
@@ -304,10 +373,16 @@
                                                 </table>
                                                 <%
                                                 }
-                                            %>
+                                                } else {%>
+                                                
+                                                <h4 class="titu-gestion-reservas">No dispone de alojamientos en alquiler. </h4>       
+                                                <%
+                                                }
+                                                %>
                                </div>
                         </div>
                                <div id="gSaldo">
+                                   <br>
                                    <h3 id="formRegistro" class="center-block">Añade saldo a tu cuenta</h3>  
                                     <div id="inputRegistro" class="center-block">
 
@@ -353,7 +428,7 @@
                     </div>
                 </div>
             </div>
-           
+           <% }%>
             
         <footer class="footer">
             <div class="container">

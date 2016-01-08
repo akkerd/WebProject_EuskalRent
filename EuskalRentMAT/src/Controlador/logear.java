@@ -34,9 +34,14 @@ public class logear extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            boolean failLogin = false;
             String email = request.getParameter("email");
             String pass = request.getParameter("pass");
             Usuario usuario = ConexionBD.getConexionBD().buscarUsuario(email, pass);
+            if (usuario == null){
+                failLogin = true;               
+            } 
+            request.getSession().setAttribute("failLogin", failLogin);
             request.getSession().setAttribute("usuario", usuario);
             request.getRequestDispatcher("index.jsp").forward(request, response);
         } finally {

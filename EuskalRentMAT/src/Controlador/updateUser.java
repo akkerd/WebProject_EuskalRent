@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Modelo.Entidades.Usuario;
 import Modelo.conexionBD.ConexionBD;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -35,16 +36,31 @@ public class updateUser extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
+            ConexionBD con = ConexionBD.getConexionBD();
             String nombre = request.getParameter("nombre-perfil");
             String email = request.getParameter("email-perfil");
             int telefono = Integer.parseInt(request.getParameter("tel-perfil"));
-            String foto = request.getParameter("foto-perfil");
+            //-----------------------FOTO 2 BASE64----------------------------------
+                String fotoDrag = request.getParameter("fotoDrag");
+                String ruta = "";
+                if ( !fotoDrag.equals("") ){
+                    
+                    ruta = fotoDrag;
+                    String[] rutaAux = ruta.split(",");
+                    ruta = rutaAux[1];
+                }
+                
+                decodificadorImagen imageDecoder = new decodificadorImagen();
+                BufferedImage bi = imageDecoder.decodeToImage(ruta);
+                String imagenString = imageDecoder.guardarFotoUsuarioEnSistema(bi, con.getNextIdAlojamiento());
+                
+                //-----------------------FIN FOTO 2 BASE64----------------------------------
             String pass = request.getParameter("pwd-perfil");
             Usuario usuario1 = (Usuario) request.getSession().getAttribute("usuario");
             int idUsuario = usuario1.getIdUsuario();
             
-            Usuario user = new Usuario(idUsuario,nombre,email,foto,telefono,null);
-            ConexionBD con = ConexionBD.getConexionBD();
+            Usuario user = new Usuario(idUsuario,nombre,email,imagenString,telefono,null);
+            
             con.actualizarUsuario(user, pass);
             Usuario usuario = con.buscarUsuario(email, pass);
             request.getSession().setAttribute("usuario", usuario);

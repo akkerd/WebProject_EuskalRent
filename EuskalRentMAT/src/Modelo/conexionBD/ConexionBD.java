@@ -155,6 +155,7 @@ public class ConexionBD {
             while(rs.next()){                
                 listaReservas.añadirReserva(new Reserva(rs.getInt("idReserva"),rs.getInt("idAlquiler"),rs.getDate("fechaReserva"),rs.getDate("fechaEntrada"),rs.getDate("fechaSalida")));
             }
+            cerrarConexion(conexion);
             return listaReservas;
         }
         catch(Exception e){
@@ -162,6 +163,39 @@ public class ConexionBD {
             return null;
         }
     }
+    
+    /**
+    * Metodo para recuperar todos las reservas
+    * 
+    * @return ListaAlquileres
+    */
+    public ListaReservas getListaReservas(){
+        try{
+            /* Creamos la conexion con la base de datos */
+            Connection conexion = getConexion();
+            /* Guardamos la sentencia SQL */
+            String sql = "SELECT * FROM reservas";
+            /* Ejecutamos la sentencia SQL y guardamos el resultado*/
+            Statement stmt = conexion.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            /* Creamos la lista de reservas */
+            ListaReservas listaReservas = new ListaReservas();
+            /* Recorremos y guardamos el resultado de la sentencia sql*/
+            while(rs.next()){
+                Reserva reserva = new Reserva(rs.getInt("idReserva"),rs.getInt("idAlquiler"),rs.getDate("fechaReserva"),rs.getDate("fechaEntrada"),rs.getDate("fechaSalida"));
+                listaReservas.añadirReserva(reserva);
+            }
+            cerrarConexion(conexion);
+            return listaReservas;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    
     /**
     * Metodo para recuperar todos los alquileres de un usuario (Se llamara al cargar un usuario).
     * 
@@ -185,6 +219,7 @@ public class ConexionBD {
                 Alquiler alquiler = new Alquiler(rs.getInt("idAlquiler"),alojamiento,rs.getString("titulo"),rs.getDate("fechaAlquiler"),rs.getDate("fechaInicio"),rs.getDate("fechaFin"));
                 listaAlquileres.añadirAlquiler(alquiler);
             }
+            cerrarConexion(conexion);
             return listaAlquileres;
         }
         catch(Exception e){
@@ -213,7 +248,7 @@ public class ConexionBD {
             }
             /* Creamos el alojamiento */
             Alojamiento alojamiento = new Alojamiento(rs.getInt("idAlojamiento"),rs.getString("tipoAlojamiento"),rs.getInt("numHuespedes"),rs.getString("barrio"),rs.getString("direccion"),rs.getString("fotoAlojamiento"),rs.getInt("precioNoche"),rs.getString("tipoCancelacion"),rs.getString("Comentario"));
-
+            cerrarConexion(conexion);
             return alojamiento;
         }
         catch(Exception e){
@@ -245,6 +280,7 @@ public class ConexionBD {
                 Alquiler alquiler = new Alquiler(rs.getInt("idAlquiler"),alojamiento,rs.getString("titulo"),rs.getDate("fechaAlquiler"),rs.getDate("fechaInicio"),rs.getDate("fechaFin"));
                 listaAlquileres.añadirAlquiler(alquiler);
             }
+            cerrarConexion(conexion);
             return listaAlquileres;
         }
         catch(Exception e){
@@ -252,6 +288,8 @@ public class ConexionBD {
             return null;
         }
     }
+   
+       
     /**
     * Metodo para recuperar todas las reservas asociadas a los alquileres de un usuario
     * 
@@ -274,6 +312,7 @@ public class ConexionBD {
             while(rs.next()){                
                 listaReservas.añadirReserva(new Reserva(rs.getInt("idReserva"),rs.getInt("idAlquiler"),rs.getDate("fechaReserva"),rs.getDate("fechaEntrada"),rs.getDate("fechaSalida")));
             }
+            cerrarConexion(conexion);
             return listaReservas;
         }
         catch(Exception e){
@@ -305,6 +344,7 @@ public class ConexionBD {
                 Alquiler alquiler = new Alquiler(rs.getInt("idAlquiler"),alojamiento,rs.getString("titulo"),rs.getDate("fechaAlquiler"),rs.getDate("fechaInicio"),rs.getDate("fechaFin"));
                 listaAlquileres.añadirAlquiler(alquiler);
             }
+            cerrarConexion(conexion);
             return listaAlquileres;
         }
         catch(Exception e){
@@ -335,7 +375,7 @@ public class ConexionBD {
             
             Alojamiento alojamiento = getAlojamiento(rs.getInt("idAlojamiento"));
             Alquiler alquiler = new Alquiler(rs.getInt("idAlquiler"),alojamiento,rs.getString("titulo"),rs.getDate("fechaAlquiler"),rs.getDate("fechaInicio"),rs.getDate("fechaFin"));
-
+            cerrarConexion(conexion);
             return alquiler;
         }
         catch(Exception e){
@@ -361,7 +401,7 @@ public class ConexionBD {
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(sql);
-
+            cerrarConexion(conexion);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -386,6 +426,7 @@ public class ConexionBD {
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(sql);
+            cerrarConexion(conexion);
 
         }
         catch(Exception e){
@@ -413,6 +454,7 @@ public class ConexionBD {
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(sql);
+            cerrarConexion(conexion);
 
         }
         catch(Exception e){
@@ -457,7 +499,7 @@ public class ConexionBD {
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(sql);
-
+            cerrarConexion(conexion);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -479,6 +521,7 @@ public class ConexionBD {
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(sql);
+            cerrarConexion(conexion);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -498,6 +541,7 @@ public class ConexionBD {
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(sql);
+            cerrarConexion(conexion);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -520,6 +564,7 @@ public class ConexionBD {
             stmt.executeUpdate(sql);
             /* Borramos el alojamiento asociado */
             borrarAlojamiento(alquiler.getAlojamiento().getIdAlojamiento());
+            cerrarConexion(conexion);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -539,6 +584,7 @@ public class ConexionBD {
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(sql);
+            cerrarConexion(conexion);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -559,13 +605,35 @@ public class ConexionBD {
             /* Creamos la conexion con la base de datos */
             Connection conexion = getConexion();
             /* Guardamos la sentencia SQL */
-
             String sql =  "UPDATE usuarios SET `nombreCompleto`='"+ usuario.getNombreCompleto() +"',  `email` = '"+ usuario.getEmail() +"', `fotoPerfil`='" + usuario.getFotoPerfil() + "', `telefono`='" + usuario.getTelefono() + "',`descripcion` = '"+ usuario.getDescripcion() + "',`pass` = '"+ pass + "'  WHERE `idUsuario`='"+ usuario.getIdUsuario() +"'";
+            /* Ejecutamos la sentencia SQL y guardamos el resultado*/
+            Statement stmt = conexion.createStatement();
+            stmt.executeUpdate(sql);
+            cerrarConexion(conexion);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+     /**
+    * Metodo para actualizar los datos de un usuario.
+    * 
+    * @param Usuario
+    */
+    public void actualizarUsuarioSinPass(Usuario usuario){
+        try{
+            /* Creamos la conexion con la base de datos */
+            Connection conexion = getConexion();
+            /* Guardamos la sentencia SQL */
+
+            String sql =  "UPDATE usuarios SET `nombreCompleto`='"+ usuario.getNombreCompleto() +"',  `email` = '"+ usuario.getEmail() +"', `fotoPerfil`='" + usuario.getFotoPerfil() + "' ,`saldo` = '"+ usuario.getSaldo()+ "' , `telefono`='" + usuario.getTelefono() + "',`descripcion` = '"+ usuario.getDescripcion() + "'  WHERE `idUsuario`='"+ usuario.getIdUsuario() +"'";
  
 
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(sql);
+            cerrarConexion(conexion);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -590,6 +658,7 @@ public class ConexionBD {
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(sql);
+            cerrarConexion(conexion);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -617,6 +686,7 @@ public class ConexionBD {
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(sql);
+            cerrarConexion(conexion);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -633,10 +703,10 @@ public class ConexionBD {
             Connection conexion = getConexion();
             /* Guardamos la sentencia SQL */
             String sql =  "UPDATE alojamiento SET `tipoAlojamiento`='"+ alojamiento.getTipoAlojamiento() +"', `numHuespedes`='"+ alojamiento.getNumHuespedes() +"', `barrio`='"+ alojamiento.getBarrio() +"', `direccion`='"+ alojamiento.getDireccion() +"', `fotoAlojamiento`='"+ alojamiento.getFotoAlojamiento() +"', `precioNoche`='"+ alojamiento.getPrecioNoche() +"', `tipoCancelacion`='"+ alojamiento.getTipoCancelacion() +"', `Comentario`='"+ alojamiento.getComentario()+ "' WHERE `idAlojamiento`='"+alojamiento.getIdAlojamiento() +"'";
-
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(sql);
+            cerrarConexion(conexion);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -657,6 +727,7 @@ public class ConexionBD {
             /* Ejecutamos la sentencia SQL y guardamos el resultado*/
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(sql);
+            cerrarConexion(conexion);
         }
         catch(Exception e){
             e.printStackTrace();

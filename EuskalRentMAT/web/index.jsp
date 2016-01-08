@@ -5,6 +5,10 @@
 --%>
 
 <%@page import="Modelo.Entidades.Usuario"%>
+<%@page import="Modelo.conexionBD.ConexionBD"%>
+<%@page import="Modelo.Listas.ListaReservas"%>
+<%@page import="Modelo.Entidades.Reserva"%>
+<%@page import="Modelo.Entidades.Alquiler"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <!DOCTYPE html>
@@ -20,8 +24,10 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/datepicker.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
+        <link href="css/css-Joseba.css"  rel="stylesheet">
     </head>
     <body>
+       
         <!-- Navegador -->
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container-fluid">
@@ -47,6 +53,15 @@
                                         <li>
                                             <div class="row">
                                                 <div class="col-md-12">
+                                                    <% 
+                                                     Boolean failLoged =(Boolean)request.getSession().getAttribute("failLogin");
+                                                     if (failLoged != null){
+                                                        if(failLoged == true){%>                                                     
+                                                            <p style="color: red">Los datos introducidos son inválidos</p>
+                                                     <%    
+                                                        }
+                                                     }
+                                                     %>
                                                     <form action="logear" method="post" role="form" id="login-nav">
                                                         <div class="form-group">
                                                             <label class="sr-only" for="email" >E-mail</label>
@@ -71,20 +86,29 @@
                                             <a class="btn btn-primary btn-block" href="registro.jsp">REGISTRO</a>
                                         </li>
                                     </ul>
+                                    <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><%=text%><b class="caret"></b></a>
                                     <%
                                 } else {
                                     // si entra aqui el usuario esta loged.
                                     Usuario usuario = (Usuario)request.getSession().getAttribute("usuario");                                    
                                     text = usuario.getNombreCompleto();
+                                    String fotoPerfil = usuario.getFotoPerfil();
+                                    if(fotoPerfil.equalsIgnoreCase("null"))
+                                    {
+                                        fotoPerfil = "sinFoto.jpg";
+                                    }
                                     %>
                                     
                                     <ul id="borrableUsuario" class="dropdown-menu" style="padding: 15px;min-width: 250px;">
+                                        <li><a href="index.jsp">Inicio</a></li>
                                         <li><a href="perfil.jsp">Tu perfil</a></li>
+                                        <li><a href="#">Tu saldo: <%=usuario.getSaldo() %>€</a></li>
                                         <li><a id="logout" href="<%=request.getContextPath()%>/logout" >Logout</a></li>
                                     </ul>
+                                    <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><img class=" img-perfil img-circle" src="img/perfil/<%=fotoPerfil%>"><%=text%><b class="caret"></b></a>
 
                                <% }%>
-                               <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><%=text%><b class="caret"></b></a>
+                               
 
                         </li>
                     </ul>

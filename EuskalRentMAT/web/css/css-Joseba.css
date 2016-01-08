@@ -5,6 +5,15 @@
     max-height: 100%;
     max-height: 100%;
 }
+.img-perfil{
+    height: 40px;
+    width: 40px;
+    max-height: 100%;
+    max-height: 100%;
+    margin-right: 5px;
+    margin-bottom: -10px;
+    margin-top: -10px;
+}
 
 .tabla-pisos{
     width: 80%;

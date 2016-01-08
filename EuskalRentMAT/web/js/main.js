@@ -1,5 +1,8 @@
 $(document).ready(function(){
-        
+    
+    
+  
+    
     //Joseba
   
   
@@ -68,7 +71,6 @@ $(document).ready(function(){
     }
 
    
-    
     //------------------------ DIEGO DRAG --------------------------------------
     var dropZoneId = "drop-zone";
     //var buttonId = "clickHere";
@@ -208,6 +210,8 @@ $(document).ready(function(){
         input.setAttribute("min", this.value);
     };
     
-  //-----geolocation
-  //initMapa();
+  
+   
+
 });
+

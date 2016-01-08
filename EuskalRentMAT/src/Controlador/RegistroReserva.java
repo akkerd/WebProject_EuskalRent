@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import Modelo.Entidades.Usuario;
 import Modelo.Listas.ListaReservas;
+import Modelo.Entidades.Alquiler;
 
 /**
  *
@@ -41,20 +42,28 @@ public class registroReserva extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             ConexionBD con = ConexionBD.getConexionBD();
             Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+            Alquiler alquiler = (Alquiler) request.getSession().getAttribute("alquiler");
             int idUsuario = usuario.getIdUsuario();
-            int idAlquiler = Integer.parseInt(request.getParameter("idAlquiler"));
+            int idAlquiler = alquiler.getIdAlquiler();
             Date fechaHoy = new Date();
            
            
             
             Date dateEntrada = (Date)request.getSession().getAttribute("fechaEntrada");
             Date dateSalida = (Date) request.getSession().getAttribute("fechaSalida");
+            String fe = dateEntrada.toString();
+            String fa = dateSalida.toString();
             
             
             Reserva reserva = new Reserva(0,idAlquiler,fechaHoy,dateEntrada,dateSalida);
             con.añadirReserva(reserva, idUsuario, idAlquiler);
             ListaReservas ls = con.getListaReservas(idUsuario);
             usuario.setListaReservas(ls);
+            float precioTotal = alquiler.getPrecioTotal(dateEntrada, dateSalida);
+            float saldoUsuario = usuario.getSaldo();
+            float salfoFinal = saldoUsuario - precioTotal;
+            usuario.setSaldo(salfoFinal);
+            con.actualizarUsuarioSinPass(usuario);
             
             request.getRequestDispatcher("perfil.jsp").forward(request, response);
             

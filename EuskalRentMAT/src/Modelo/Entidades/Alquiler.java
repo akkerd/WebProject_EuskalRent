@@ -43,6 +43,17 @@ public class Alquiler {
         }
     }
     
+    /**
+     * Metodo que devuelve el precio de una reserva en base a dos fechas.
+     * @return boolean
+     */
+    public float getPrecioTotal(Date fechaEntrada, Date fechaSalida){
+        
+        int numDias = diasEntreDosFechas(fechaEntrada, fechaSalida);
+        float precioTotal = numDias * this.alojamiento.getPrecioNoche();
+        return precioTotal;
+    }
+    
     public int diasEntreDosFechas(Date fecha1, Date fecha2)
     {       
         return (int)((fecha2.getTime() - fecha1.getTime()) / (1000*60*60*24l));

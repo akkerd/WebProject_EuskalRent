@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Modelo.Entidades.Alojamiento;
 import Modelo.Entidades.Alquiler;
+import Modelo.Entidades.Usuario;
+import Modelo.Listas.ListaAlquileres;
 
 /**
  *
@@ -38,6 +40,8 @@ public class updateAloj extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             int idAlquiler = Integer.parseInt(request.getParameter("idAlquiler"));
             int idAlojamiento = Integer.parseInt(request.getParameter("idAlojamiento"));
+            Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+            int idUsuario = usuario.getIdUsuario();
             
             String titulo = request.getParameter("titulo");
             String tipoAlojamiento = request.getParameter("tipoAloj");
@@ -58,6 +62,9 @@ public class updateAloj extends HttpServlet {
             Alquiler alquiler = new Alquiler(idAlquiler, alojamiento, titulo, fechaAlquiler, fechaInicio, fechaFin);
             ConexionBD con = ConexionBD.getConexionBD();
             con.actualizarAlquiler(alquiler);
+            ListaAlquileres ls = con.getListaAlquileresUsuario(idUsuario);
+            usuario.setListaAlquileres(ls);
+            
             request.getRequestDispatcher("perfil.jsp").forward(request, response);
         } finally {
             out.close();

@@ -43,6 +43,7 @@ public class addSaldo extends HttpServlet {
                 float saldoAux = usuario.getSaldo() + saldo;
                 ConexionBD.getConexionBD().actualizarSaldo(usuario.getIdUsuario(), saldoAux);
                 usuario.setSaldo(saldoAux);
+                request.getSession().setAttribute("usuario", usuario);
                 request.getRequestDispatcher("addSaldoFinalizado.jsp").forward(request, response);
             } else  {
                 request.getSession().setAttribute("failPay", "0"); 

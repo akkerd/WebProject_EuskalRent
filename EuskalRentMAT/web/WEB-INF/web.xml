@@ -21,6 +21,10 @@
         <servlet-name>buscarAloj</servlet-name>
         <servlet-class>Controlador.buscarAloj</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegistroAloj</servlet-name>
+        <servlet-class>Controlador.RegistroAloj</servlet-class>
+    </servlet>
     <!-- FIN_declaracion -->
     <!-- Mapeado -->
     <servlet>
@@ -60,12 +64,8 @@
         <servlet-class>Controlador.addSaldo</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>RegistroAloj</servlet-name>
-        <servlet-class>Controlador.RegistroAloj</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>subirImagenServlet</servlet-name>
-        <servlet-class>Controlador.subirImagenServlet</servlet-class>
+        <servlet-name>decodificadorImajen</servlet-name>
+        <servlet-class>Controlador.decodificadorImajen</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>logear</servlet-name>
@@ -86,6 +86,10 @@
     <servlet-mapping>
         <servlet-name>buscarAloj</servlet-name>
         <url-pattern>/buscarAloj</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistroAloj</servlet-name>
+        <url-pattern>/RegistroAloj</url-pattern>
     </servlet-mapping>
     <!-- FIN_Mapeado -->
     <welcome-file-list>
@@ -136,12 +140,8 @@
         <url-pattern>/addSaldo</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>RegistroAloj</servlet-name>
-        <url-pattern>/RegistroAloj</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>subirImagenServlet</servlet-name>
-        <url-pattern>/subirImagenServlet</url-pattern>
+        <servlet-name>decodificadorImajen</servlet-name>
+        <url-pattern>/decodificadorImajen</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

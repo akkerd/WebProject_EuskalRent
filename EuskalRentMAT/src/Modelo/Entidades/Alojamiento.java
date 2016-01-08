@@ -5,8 +5,6 @@
  */
 package Modelo.Entidades;
 
-import java.sql.Blob;
-
 /**
  *
  * @author Asierph

@@ -44,6 +44,26 @@ public class ListaReservas {
             }
         }
     }
+    
+    /**
+    * Metodo que busca una reserva dado un id
+    * @param idReserva id de la reserva a buscar.
+    */
+    public Reserva buscarReserva(int idReserva){
+        Iterator<Reserva> it = getReservas().iterator();
+        boolean controlador = false;
+        Reserva reserva = null;
+        Reserva reservaFinal = null;
+        while(it.hasNext() && controlador == false){
+            reserva = it.next();
+            if ( reserva.getIdReserva() == idReserva){
+                controlador = true;
+                reservaFinal = reserva;
+            }
+        }
+        return reservaFinal;
+    }
+
     /**
     * Metodo que añade una nueva reserva Reserva
     * @param Reserva Reserva a añadir.

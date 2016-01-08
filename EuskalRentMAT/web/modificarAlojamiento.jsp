@@ -21,6 +21,7 @@
         <!-- CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
+        <link href="css/css-Joseba.css"  rel="stylesheet">
     </head>
     <body>
         <%
@@ -93,13 +94,19 @@
                                     // si entra aqui el usuario esta loged.
                                     Usuario usuario = (Usuario)request.getSession().getAttribute("usuario");                                    
                                     text = usuario.getNombreCompleto();
+                                    String fotoPerfil = usuario.getFotoPerfil();
+                                    if(fotoPerfil.equalsIgnoreCase("null"))
+                                    {
+                                        fotoPerfil = "sinFoto.jpg";
+                                    }
                                     %>
                                     
                                     <ul id="borrableUsuario" class="dropdown-menu" style="padding: 15px;min-width: 250px;">
                                         <li><a href="perfil.jsp">Tu perfil</a></li>
+                                        <li><a href="#">Tu saldo: <%=usuario.getSaldo() %>€</a></li>
                                         <li><a id="logout" href="<%=request.getContextPath()%>/logout" >Logout</a></li>
                                     </ul>                              
-                               <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><%=text%><b class="caret"></b></a>
+                                         <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><img class=" img-perfil img-circle" src="img/perfil/<%=fotoPerfil%>"><%=text%><b class="caret"></b></a>
 
                         </li>
                     </ul>
@@ -127,7 +134,7 @@
             
             float tarifa = alquiler.getAlojamiento().getPrecioNoche();
             String direccion = alquiler.getAlojamiento().getDireccion();
-            String comentario = alquiler.getAlojamiento().getDireccion();
+            String comentario = alquiler.getAlojamiento().getComentario();
         %>
         <div class="jumbotron"> 
             <div  id="contenedorJumbotron" class="container-fluid" >  
@@ -173,7 +180,7 @@
                                         </select>
                                     </div>   
                                     <label>Fechas en las que se podría alquilar:</label>
-                                    <h5>(Si lo dejas en blanco significa que pueden reservar cualquier día)</h5>
+                                    
                                     <div class="input-group form-group">
                                     <%
                                         String dia = null;
@@ -194,11 +201,11 @@
                                         request.getSession().setAttribute("date-fin", fechaFin);
                                         request.getSession().setAttribute("date-alquiler", fechaAlquiler);
                                     %>
-                                    <input type="date"  class="form-control" value="<%=fechaInicio%>" min="<%=año+"-"+mes+"-"+dia%>" name="date-inicio" id="date-llegada">
+                                    <input type="date" required  class="form-control" value="<%=fechaInicio%>" min="<%=año+"-"+mes+"-"+dia%>" name="date-inicio" id="date-llegada">
                                     
                                     </div>
                                     <div class="input-group form-group">
-                                        <input type="date" class="form-control" value="<%=fechaFin%>" min="" name="date-fin" id="date-salida">
+                                        <input type="date" required class="form-control" value="<%=fechaFin%>" min="" name="date-fin" id="date-salida">
 
                                     </div>
                                     <div class="form-group">
@@ -213,7 +220,7 @@
                                         <div class="map" id="map"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="coment">Comentarios sobre el piso:</label>
+                                        <label for="coment">Descripción del alojamiento:</label>
                                         <input type="text" value="<%=comentario%>" name="coment"  id="coment" class="form-control">
                                         <span class="span-registro" id="span-coment"> </span>
                                     </div>

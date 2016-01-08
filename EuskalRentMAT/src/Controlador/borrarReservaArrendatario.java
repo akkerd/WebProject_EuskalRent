@@ -5,10 +5,14 @@
  */
 package Controlador;
 
+import Modelo.Entidades.Alquiler;
+import Modelo.Entidades.Reserva;
+import Modelo.Entidades.Usuario;
 import Modelo.Listas.ListaReservas;
 import Modelo.conexionBD.ConexionBD;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,16 +39,38 @@ public class borrarReservaArrendatario extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
-            
             ConexionBD con = ConexionBD.getConexionBD();
             int id = Integer.parseInt(request.getParameter("idReserva"));
-            int idUser = Integer.parseInt(request.getParameter("idUser"));
-           
-
-            ListaReservas ls = con.getListaReservas(idUser);
+            Usuario usuario = (Usuario)request.getSession().getAttribute("usuario"); 
+            Alquiler alquiler = con.getAlquilerDeReserva(id);
+            ListaReservas ls = con.getListaReservas(usuario.getIdUsuario());
+            Reserva reserva = ls.buscarReserva(id);
+            Date entrada = reserva.getFechaEntrada();
+            Date hoy = new Date();
+            int numDias = (int)((entrada.getTime() - hoy.getTime()) / (1000*60*60*24l));
+            float precio = alquiler.getPrecioTotal(reserva.getFechaEntrada(), reserva.getFechaSalida());
+            String cancelacion = alquiler.getAlojamiento().getTipoCancelacion();
+            
+            
+            if(cancelacion.equals("Gratuita")){
+                usuario.setSaldo(precio + usuario.getSaldo());
+                con.actualizarSaldo(usuario.getIdUsuario(), usuario.getSaldo());
+            } else if ( cancelacion.equals("Flexible")){
+                 if (numDias <= 2){
+                    usuario.setSaldo((precio/2) + usuario.getSaldo());
+                    con.actualizarSaldo(usuario.getIdUsuario(), usuario.getSaldo());
+                 } else{
+                    usuario.setSaldo(precio + usuario.getSaldo());
+                     con.actualizarSaldo(usuario.getIdUsuario(), usuario.getSaldo());
+                 }
+            } 
+            
+            
+            
+            
             int lsize = ls.getNumeroReservas();
             ls.borrarReserva(id);
-             con.borrarReserva(id);
+            con.borrarReserva(id);
             
             request.getRequestDispatcher("perfil.jsp").forward(request, response);
         } finally {

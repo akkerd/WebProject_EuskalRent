@@ -24,6 +24,7 @@
         <!-- CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
+        <link href="css/css-Joseba.css"  rel="stylesheet">
     </head>
     <body>
         <%
@@ -79,20 +80,27 @@
                                             <a class="btn btn-primary btn-block" href="registro.jsp">REGISTRO</a>
                                         </li>
                                     </ul>
+                                <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><%=text%><b class="caret"></b></a>
                                 <%
                                 } else {
                                     // si entra aqui el usuario esta loged.
                                      usuario = (Usuario)request.getSession().getAttribute("usuario");                                    
                                     text = usuario.getNombreCompleto();
+                                    String fotoPerfil = usuario.getFotoPerfil();
+                                    if(fotoPerfil.equalsIgnoreCase("null"))
+                                    {
+                                        fotoPerfil = "sinFoto.jpg";
+                                    }
                                 %>
                                     
                                     <ul id="borrableUsuario" class="dropdown-menu" style="padding: 15px;min-width: 250px;">
                                         <li><a href="perfil.jsp">Tu perfil</a></li>
+                                        <li><a href="#">Tu saldo: <%=usuario.getSaldo() %>€</a></li>
                                         <li><a id="logout" href="<%=request.getContextPath()%>/logout" >Logout</a></li>
                                     </ul>
-
+                                     <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><img class=" img-perfil img-circle" src="img/perfil/<%=fotoPerfil%>"><%=text%><b class="caret"></b></a>
                                <% }%>
-                               <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><%=text%><b class="caret"></b></a>
+                               
 
                             </li>
                         </ul>
@@ -191,10 +199,10 @@
                                                     String año = Integer.toString(c.get(Calendar.YEAR));
                                                     
                                             %>
-                                            <input type="date"  class="form-control" value="<%=fechaEntrada%>" min="<%=año+"-"+mes+"-"+dia%>" name="fechaEntrada" id="date-llegada">    
+                                            <input type="date"  class="form-control" value="<%=fechaEntrada%>" min="<%=año+"-"+mes+"-"+dia%>" max="<%=fechaFinalq%>" name="fechaEntrada" id="date-llegada">    
                                         </div>
                                         <div class="input-group form-group">
-                                            <input type="date" class="form-control" value="<%=fechaSalida%>" min="" max="<%=fechaFinalq%>" name="fechaSalida" id="date-salida">
+                                            <input type="date" class="form-control" value="<%=fechaSalida%>" min="<%=año+"-"+mes+"-"+dia%>" max="<%=fechaFinalq%>" name="fechaSalida" id="date-salida">
                                         </div>  
                                     </div>
                                     <div class="col-md-4"></div>

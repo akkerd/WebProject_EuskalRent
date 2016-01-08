@@ -19,6 +19,7 @@
         <!-- CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
+        <link href="css/css-Joseba.css"  rel="stylesheet">
     </head>
     <body>
         <%
@@ -49,6 +50,15 @@
                                         <li>
                                             <div class="row">
                                                 <div class="col-md-12">
+                                                     <% 
+                                                     Boolean failLoged =(Boolean)request.getSession().getAttribute("failLogin");
+                                                     if (failLoged != null){
+                                                        if(failLoged == true){%>                                                     
+                                                            <p style="color: red">Los datos introducidos son invalidos</p>
+                                                     <%    
+                                                        }
+                                                     }
+                                                     %>
                                                     <form action="logear" method="post" role="form" id="login-nav">
                                                         <div class="form-group">
                                                             <label class="sr-only" for="email" >E-mail</label>
@@ -86,19 +96,34 @@
                            </div>
                         </div>
                     </nav><!-- /navbar -->
-                    <h1>Tienes que registrarte para poder registrar tu alojamiento.</h1>
+                    <div class="jumbotron"> 
+                        <div  id="contenedorJumbotron" class="container-fluid"  >
+                            <h3>Necesita estar logueado para poder registrar su alojamiento.</h3>
+                            <h3>Es muy sencillo registrarse en EuskalRent, simplemente pulse el siguiente boton y rellene el formulario</h3>
+                            <button><a href="registro.jsp">Registrarse</a></button>
+                            <h3>Tambien puede volver al inicio, si así lo desea.</h3>
+                            <button><a href="index.jsp">Volver</a></button>
+                        </div>
+                    </div>
                                     <%
                                 } else {
                                     // si entra aqui el usuario esta loged.
                                     Usuario usuario = (Usuario)request.getSession().getAttribute("usuario");                                    
                                     text = usuario.getNombreCompleto();
+                                    String fotoPerfil = usuario.getFotoPerfil();
+                                    if(fotoPerfil.equalsIgnoreCase("null"))
+                                    {
+                                        fotoPerfil = "sinFoto.jpg";
+                                    }
                                     %>
                                     
                                     <ul id="borrableUsuario" class="dropdown-menu" style="padding: 15px;min-width: 250px;">
+                                        <li><a href="index.jsp">Inicio</a></li>
                                         <li><a href="perfil.jsp">Tu perfil</a></li>
+                                        <li><a href="#">Tu saldo: <%=usuario.getSaldo() %>€</a></li>
                                         <li><a id="logout" href="<%=request.getContextPath()%>/logout" >Logout</a></li>
                                     </ul>                              
-                               <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><%=text%><b class="caret"></b></a>
+                                <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><img class=" img-perfil img-circle" src="img/perfil/<%=fotoPerfil%>"><%=text%><b class="caret"></b></a>
 
                         </li>
                     </ul>
@@ -149,13 +174,12 @@
                                     <div class="form-group">
                                         <label for="politica"><span class="requeridoAst">*</span>Política de cancelación de tu alojamiento (para onsultar como funcionan las políticas de cancelación <a href="politicas.html">haz click aquí</a>): </label>
                                         <select class="form-control" id="politica" name="politica" required>
-                                            <option>Cancelación Gratuita</option>
+                                            <option>Gratuita</option>
                                             <option>Flexible</option>
                                             <option>Estricta</option>
                                         </select>
                                     </div>   
                                     <label>Fechas en las que se podría alquilar:</label>
-                                    <h5>(Si lo dejas en blanco significa que pueden reservar cualquier día)</h5>
                                     <div class="input-group form-group">
                                     <%
                                         String dia = null;
@@ -173,11 +197,11 @@
                                         }
                                         String año = Integer.toString(c.get(Calendar.YEAR));
                                     %>
-                                    <input type="date"  class="form-control" min="<%=año+"-"+mes+"-"+dia%>" name="date-inicio" id="date-llegada">
+                                    <input type="date"  class="form-control" required min="<%=año+"-"+mes+"-"+dia%>" name="date-inicio" id="date-llegada">
                                     
                                     </div>
                                     <div class="input-group form-group">
-                                        <input type="date" class="form-control" min="" name="date-fin" id="date-salida">
+                                        <input type="date" class="form-control" required min="" name="date-fin" id="date-salida">
 
                                     </div>
                                     <div class="form-group">
@@ -192,22 +216,20 @@
                                         <div class="map" id="map"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="coment">Comentarios sobre el piso:</label>
-                                        <input type="text" name="coment"  id="coment" class="form-control">
+                                        <label for="coment">Descripción del alojamiento:</label>
+                                        <input type="text" name="coment"  id="coment" class="form-control" required>
                                         <span class="span-registro" id="span-coment"> </span>
                                     </div>
-                                    <div class="form-group"> 
+                                   <div class="form-group"> 
                                         <label>Foto de tu alojamiento: </label>
-                                        <!--<div class="center-block dnd" id="drop-zone" name="drop-zone" draggable="true">   </div>-->
+                                       
                                         <div id="drop-zone">
                                             <div id="dentroFoto">
                                                 Suelta tu imagen aquí...
                                             </div>
                                         </div>
                                     </div>
-                                    <br>
                                     <input type="text" name="fotoDrag" id="fotoDrag"/>
-                                    <br>
                                 <button id="botonFormPerfil" type="submit" class="btn btn-default center-block">Registrar alojamiento</button>
                             </form>
                         </div>

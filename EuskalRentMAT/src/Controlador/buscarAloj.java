@@ -53,10 +53,17 @@ public class buscarAloj extends HttpServlet {
             java.sql.Date dateEntrada = new java.sql.Date(dateIn.getTime());
             java.sql.Date dateSalida = new java.sql.Date(dateOut.getTime());
             
+          
+            
             ListaAlquileres listaAlquileres = con.getListaAlquileresPorFechaBarrio(dateEntrada, dateSalida, barrio);
-            request.getSession().setAttribute("listaAlquileres", listaAlquileres);
-            request.getSession().setAttribute("fechaEntrada", dateEntrada);
-            request.getSession().setAttribute("fechaSalida", dateSalida);
+            if(listaAlquileres != null){
+                request.getSession().setAttribute("listaAlquileres", listaAlquileres);
+                request.getSession().setAttribute("fechaEntrada", dateEntrada);
+                request.getSession().setAttribute("fechaSalida", dateSalida);
+            }
+            else{
+                listaAlquileres = new ListaAlquileres();
+            }
             request.getRequestDispatcher("busqueda.jsp").forward(request, response);
 
             }

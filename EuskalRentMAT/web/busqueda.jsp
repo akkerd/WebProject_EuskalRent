@@ -75,20 +75,29 @@
                                             <a class="btn btn-primary btn-block" href="registro.jsp">REGISTRO</a>
                                         </li>
                                     </ul>
+                                    <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><%=text%><b class="caret"></b></a>
                                     <%
                                 } else {
                                     // si entra aqui el usuario esta loged.
                                      usuario = (Usuario)request.getSession().getAttribute("usuario");                                    
                                     text = usuario.getNombreCompleto();
+                                    String fotoPerfil = usuario.getFotoPerfil();
+                                    if(fotoPerfil.equalsIgnoreCase("null"))
+                                    {
+                                        fotoPerfil = "sinFoto.jpg";
+                                    }
                                     %>
                                    
                                     <ul id="borrableUsuario" class="dropdown-menu" style="padding: 15px;min-width: 250px;">
+                                        <li><a href="index.jsp">Inicio</a></li>
                                         <li><a href="perfil.jsp">Tu perfil</a></li>
+                                        <li><a href="#">Tu saldo: <%=usuario.getSaldo() %>€</a></li>
                                         <li><a id="logout" href="<%=request.getContextPath()%>/logout" >Logout</a></li>
                                     </ul>
+                                     <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><img class=" img-perfil img-circle" src="img/perfil/<%=fotoPerfil%>"><%=text%><b class="caret"></b></a>
  
                                <% }%>
-                               <a id="nombreUser" href="#" class="botones dropdown-toggle" data-toggle="dropdown"><%=text%><b class="caret"></b></a>
+                               
  
                         </li>
                     </ul>
@@ -102,27 +111,34 @@
         </nav><!-- /navbar -->
         <div class="jumbotron">
              <div  id="contenedorJumbotron" class="container-fluid">
-                 
-                    <h3 class="center">Lista de alojamientos disponibles</h3>
+                    <%
+                        Date dateEntrada = (Date) request.getSession().getAttribute("fechaEntrada");
+                        Date dateSalida = (Date) request.getSession().getAttribute("fechaSalida");
+                        String fechEnt = dateEntrada.toString();
+                        String fechSal = dateSalida.toString();
+                    %>
+                    <h3 class="center">Lista de alojamientos disponibles desde <%=fechEnt%> hasta <%=fechSal%>.</h3>
                     <div id="lista-alojamientos">
                         
                             
                             <%ListaAlquileres ls;
                                 ls = (ListaAlquileres)request.getSession().getAttribute("listaAlquileres");
                                 ArrayList<Alquiler> al = ls.getAlquileres();
-                                Iterator<Alquiler> it = al.iterator();
                                
-                                while(it.hasNext())
-                                {
-                                    Alquiler alquiler = it.next();
-                                    String titulo = alquiler.getTitulo();
-                                    String direccion = alquiler.getAlojamiento().getDireccion();
-                                    float precio = alquiler.getAlojamiento().getPrecioNoche();
-                                    request.getSession().setAttribute("alquiler", alquiler);
-                                    Date dateEntrada = (Date) request.getSession().getAttribute("fechaEntrada");
-                                    Date dateSalida = (Date) request.getSession().getAttribute("fechaSalida");
-                                    request.getSession().setAttribute("fechaEntrada", dateEntrada);
-                                    request.getSession().setAttribute("fechaSalida", dateSalida);
+                                    Iterator<Alquiler> it = al.iterator();
+
+                                    while(it.hasNext())
+                                    {
+                                        Alquiler alquiler = it.next();
+                                        String titulo = alquiler.getTitulo();
+                                        String direccion = alquiler.getAlojamiento().getDireccion();
+                                        float precio = alquiler.getAlojamiento().getPrecioNoche();
+                                        request.getSession().setAttribute("alquiler", alquiler);
+                                        String fotoAlq = alquiler.getAlojamiento().getFotoAlojamiento();
+                                        /*Date dateEntrada = (Date) request.getSession().getAttribute("fechaEntrada");
+                                        Date dateSalida = (Date) request.getSession().getAttribute("fechaSalida");
+                                        request.getSession().setAttribute("fechaEntrada", dateEntrada);
+                                        request.getSession().setAttribute("fechaSalida", dateSalida);*/
                                 %>
                                 <table class="tabla-pisos table-responsive" align="center">
                                 <tr class="tabla-tr">
@@ -131,15 +147,18 @@
                                         <th>Precio/noche</th>
                                 </tr>
                                 <tr>
-                                    <td>Foto</td>
+                                    <td> <img src="img/alojamientos/<%=fotoAlq%>" class="img-table img-rounded"> </td>
                                     <td><%=direccion%></td>
                                     <td><%=precio%> €/noche</td>
-                                </tr><%
-                                }
+                                </tr>
+                                </table><%
+                                    }
+                                
+                               
                             %>
                            
  
-                        </table>
+                        
  
                     </div>
                 

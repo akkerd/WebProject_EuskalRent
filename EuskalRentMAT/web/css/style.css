@@ -125,7 +125,7 @@ body {
 
 /************************ PERFIL *********************/
 .nav-menus {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #337AB7;
   text-align: center;
 }
 
@@ -150,7 +150,7 @@ body {
 .nav-menus > li.active > a:focus {
   color: #555;
   cursor: default;
-  background-color: #fff;
+  background-color: #337AB7;
   border: 1px solid #ddd;
   border-bottom-color: transparent;
 }
@@ -184,60 +184,6 @@ body {
   -khtml-user-drag: element;
   -webkit-user-drag: element;
 }
-/*#drop-zone, #drop-zone2{
-  height: 150px;
-  width: 150px;
-  float: left;
-  border: 2px solid #666666;
-  background-color: #ccc;
-  margin-right: 10px;
-  -webkit-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 3px #000;
-  -ms-box-shadow: inset 0 0 3px #000;
-  box-shadow: inset 0 0 3px #000;
-  text-align: center;
-  cursor: move;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  margin-bottom: 10px;
-}*/
-
-
-.dnd.over {
-  border: 2px dashed #000;
-}
-/*oculta las partes que no se ven en lla página de perfil */
-#gAlojamientos, #gReservas{
-    display: none;
-}
-
-/******** GEOLOCATION **********/
-.map {
-
-margin-left: auto;
-margin-right: auto;
-width:500px;
-height:300px;
-}
-
-#buscador{
-    width: 100%;
-}
-#btnBuscador{
-    margin-left: 42.5%;
-}
-
-/* Oculta partes de la página de perfil al principio*/
-#gAlojamientos, #gReservas, #gBorrado{
-    display:none;
-}
-#gSaldo{
-    display: none;
-}
-
 /*********DRAG&DROP DIEGO***********/
 #drop-zone {
     /*Sort of important*/
@@ -309,3 +255,33 @@ height:300px;
 #fotoDrag {
     display: none;
 }
+
+.dnd.over {
+  border: 2px dashed #000;
+}
+
+
+/******** GEOLOCATION **********/
+.map {
+
+margin-left: auto;
+margin-right: auto;
+width:500px;
+height:300px;
+}
+
+#buscador{
+    width: 100%;
+}
+#btnBuscador{
+    margin-left: 42.5%;
+}
+
+/* Oculta partes de la página de perfil al principio*/
+#gAlojamientos, #gReservas, #gBorrado{
+    display:none;
+}
+#gSaldo{
+    display: none;
+}
+

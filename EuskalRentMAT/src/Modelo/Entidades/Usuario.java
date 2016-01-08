@@ -1,11 +1,8 @@
 
 package Modelo.Entidades;
 
-import Controlador.decodificadorImagen;
 import Modelo.Listas.ListaAlquileres;
 import Modelo.Listas.ListaReservas;
-import java.sql.Blob;
-import javax.sql.rowset.serial.SerialBlob;
 
 
 public class Usuario {

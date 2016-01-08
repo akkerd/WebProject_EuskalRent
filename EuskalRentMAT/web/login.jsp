@@ -20,6 +20,7 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/datepicker.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
+        <link href="css/css-Joseba.css"  rel="stylesheet">
     </head>
     <body>
         <!-- Navegador -->
