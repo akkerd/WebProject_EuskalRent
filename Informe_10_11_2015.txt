@@ -1,0 +1,16 @@
+Informe de reunión de ADSI
+10/11/2015
+
+Nos hemos reunido para diseñar los primeros pasos del proyecto y definir las pantallas de Login y Registro.
+También hemos elegido las herramientas que vamos a utilizar a partir de ahora:
+
+- Usaremos GitHub como gestor de versiones y en esta plataforma guardaremos todos estos informes.
+- Para programar usaremos NetBeans y para la base de datos MySQL .
+
+Hoy hemos elegido las siguientes herramientas:
+- Codepen: Diseños de elementos web.
+- jQuery, jQuery UI: Librería Javascript y su implementación para elementos para definir la interfaz
+- Buscar en google "Diseño web combinación colores" para buscar gamas de colores que combinan: 
+	http://www.silocreativo.com/2014/03/gamas-de-colores-usos-y-combinaciones/
+
+ 
