@@ -4,6 +4,7 @@
     Author     : Asierph
 --%>
 
+<<<<<<< HEAD
 <%@page import="java.time.temporal.TemporalAccessor"%>
 <%@page import="java.time.format.FormatStyle"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
@@ -14,6 +15,10 @@
 <%@page import="java.sql.*"%>
 <%@page import="Modelo.Listas.ListaAlquileres"%>
 <%@page import="Modelo.Entidades.Alquiler"%>
+=======
+<%@page import="Modelo.Entidades.Usuario"%>
+<%@page import="Modelo.conexionBD.ConexionBD"%>
+>>>>>>> origin/master
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,6 +29,7 @@
     <body>
         <%
             ConexionBD conexion = ConexionBD.getConexionBD();
+<<<<<<< HEAD
             Usuario user = conexion.buscarUsuario("d@d.com","1");
             
             String barrio = "El Ensanche";
@@ -63,6 +69,9 @@
                 ex.printStackTrace();
 
             }
+=======
+            Usuario user = conexion.buscarUsuario("asmartinez@ehu.eus","pass1");
+>>>>>>> origin/master
             if ( user != null){
             %>
             <h1><%=user.getNombreCompleto()%></h1>

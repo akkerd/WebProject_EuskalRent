@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <!-- Declaracion -->
+<<<<<<< HEAD
     <servlet>
         <servlet-name>logear</servlet-name>
         <servlet-class>Controlador.logear</servlet-class>
@@ -95,6 +96,15 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+=======
+    <!-- FIN_declaracion -->
+    <!-- Mapeado -->
+    <!-- FIN_Mapeado -->
+    <welcome-file-list>
+        <welcome-file>prueba.jsp</welcome-file>
+    </welcome-file-list>
+    
+>>>>>>> origin/master
     <!-- Base de datos -->
     <resource-ref>
         <description>Pool conexiones MySQL</description>
@@ -103,6 +113,7 @@
         <res-auth>Container</res-auth>
     </resource-ref>
     <!-- FIN_Base de datos -->
+<<<<<<< HEAD
     <servlet-mapping>
         <servlet-name>borrarReserva</servlet-name>
         <url-pattern>/borrarReserva</url-pattern>
@@ -143,6 +154,9 @@
         <servlet-name>decodificadorImajen</servlet-name>
         <url-pattern>/decodificadorImajen</url-pattern>
     </servlet-mapping>
+=======
+    
+>>>>>>> origin/master
     <session-config>
         <session-timeout>
             30

@@ -1,11 +1,142 @@
 $(document).ready(function(){
     
     
+<<<<<<< HEAD
   
     
     //Joseba
   
   
+=======
+    comprobarLogin();
+    function comprobarLogin()
+    {
+        
+        var userLogged = sessionStorage.getItem("logged");
+        if(userLogged === null){
+            sessionStorage.setItem("logged",0);
+            userLogged = sessionStorage.getItem("logged");
+        } else if (userLogged !== "0"){
+            var usuario = JSON.parse(sessionStorage.getItem(userLogged));
+        }
+
+        if(userLogged === "0"){
+            cambiarCabeceraNotLoged();
+
+        }  else {
+            cambiarCabeceraLoged(usuario.nombre);
+        } 
+            
+        
+    }
+
+    function cambiarCabeceraLoged(nombre)
+    {
+        $("#borrableLogearse").remove();
+        $.get("menuUsuario.html", function (data) {
+            $("#menuCambiable").append(data);
+        });
+        $("a#nombreUser").text(nombre);        
+    }
+    function cambiarCabeceraNotLoged()
+    {
+        $("#borrableUsuario").remove();
+        $.get("menuLogearse.html", function (data) {
+            $("#menuCambiable").append(data);
+        });       
+    }   
+    
+    //Handles menu drop down
+    $('.dropdown-menu').find('form').click(function (e) {
+        e.stopPropagation();
+    });
+    $('.myCarousel').carousel({
+        interval: 3000
+    });
+    
+    $(".formLogin").bind('change blur keyup',function(e){
+        var elemento = e.target;
+        if (elemento.validity.valid) {
+            elemento.style.background = '#FFFFFF';
+            if(elemento === document.getElementById("loginEmail")){
+                $("#avisoEmailLogin").text("");
+            }
+            else if(elemento === document.getElementById("loginPass")){
+                $("#avisoPassLogin").text("");
+            }
+            
+        }
+        else {
+            elemento.style.background = '#FFA1A1';
+            if(elemento === document.getElementById("loginEmail")){
+                $("#avisoEmailLogin").text("Introduzca un correo válido");
+            }
+            else if(elemento === document.getElementById("loginPass")){
+                $("#avisoPassLogin").text("Introduzca una contraseña valida");
+            }
+           
+        }
+    });
+    
+    $( "#menuCambiable" ).on( "click","#accede" ,function() {
+
+        var email = $("#loginEmail").val();
+        var pass = $("#loginPass").val();
+        var usuario = JSON.parse(sessionStorage.getItem(email));
+
+        
+        if((usuario !== null) && (usuario.pass === pass)){
+            
+            cambiarCabeceraLoged(usuario.nombre)
+
+            sessionStorage.setItem("logged",usuario.email);         
+        }
+        $("a#nombreUser").text(usuario.nombre); 
+    });
+    $( "#menuCambiable" ).on( "click","#logout" ,function() {
+
+        
+        sessionStorage.setItem("logged",0);
+        cambiarCabeceraNotLoged();
+        $("a#nombreUser").text("ACCEDE");   
+        
+        
+        
+        
+ 
+    });
+    
+
+
+    
+    
+    //Joseba
+    //función para añadir datos JSON a la sesion.
+    $("#formulario-registro").click(function(){
+        
+        nombre = $("#nombre").val();
+        apellidos = $("#appellidos").val();
+        tel = $("#tel").val();
+        email = $("#email").val();
+        pwd = $("#pwd").val();
+        
+        
+        
+        var datos = {
+            nombre : nombre,
+            apellidos : apellidos,
+            telefono : tel,
+            email : email,
+            pass : pwd
+        };
+        
+        var json = JSON.stringify(datos);;
+        
+        sessionStorage.setItem(email,json);
+        
+    });
+    
+>>>>>>> origin/master
     //validación en la página de perfil
     $(document).on('click','.cambiable',function(){
         $(".form-control").bind('change blur keyup',function(e){
@@ -70,6 +201,7 @@ $(document).ready(function(){
         });             
     }
 
+<<<<<<< HEAD
    
     //------------------------ DIEGO DRAG --------------------------------------
     var dropZoneId = "drop-zone";
@@ -215,3 +347,108 @@ $(document).ready(function(){
 
 });
 
+=======
+    
+    
+    // JOSEBA DRAG
+    
+    
+
+
+       
+           var dropZone;
+                     
+         window.onload = function(){
+             
+           dropZone = document.getElementById("drop_zone");
+           dropZone.ondragenter = ignoreDrag;
+           dropZone.ondragover = ignoreDrag;
+           dropZone.ondrop = drop;
+         };
+         function ignoreDrag(e){
+           e.stopPropagation();
+           e.preventDefault();
+         }
+                   
+        
+
+        function drop(e){
+           e.stopPropagation();
+           e.preventDefault();
+
+           var data = e.dataTransfer;
+           var files = data.files;
+
+           processFiles(files);
+        }
+
+         function processFiles(files){
+            var file = files[0],
+            reader = new FileReader();
+            reader.onload = function(e){
+            dropZone.style.backgroundImage = "url('"+e.target.result+"')";
+           };
+           reader.readAsDataURL(file);
+         }
+         insertarJson();
+                 
+         function insertarJson(){
+             var email = sessionStorage.getItem("logged");
+             var usuario = JSON.parse(sessionStorage.getItem(email));
+             
+             $("#nombre-perfil").text(usuario.nombre);
+             $("#apellidos-perfil").text(usuario.apellidos);
+             $("#tel-perfil").text(usuario.telefono);
+             $("#email-perfil").text(usuario.email);
+         }
+  //-----geolocation
+  initMapa();
+   
+    
+});
+
+//-------------Geolocation
+var mapa;
+var direccion = new google.maps.LatLng(42.8591656,-2.681791800000042);
+var marcador;
+var infoMarcador;
+var localizacion;
+
+function initMapa(){
+    var mapOptions = {
+        center: direccion,
+        zoom: 13,
+        mapTypeId: google.maps.MapTypeId.SATELLITE
+    };
+    
+    mapa = new google.maps.Map(document.getElementById('map'), mapOptions);
+    
+    marcador = new google.maps.Marker({  
+        position: direccion,
+        map: mapa,
+        title:"Titulo",
+        draggable: true
+    });
+    
+    infoMarcador = new google.maps.InfoWindow({ content:"direccion"});
+    function mostrarInfo(){
+        infoMarcador.open(mapa, marcador);
+    }
+    google.maps.event.addListener(marcador, 'click', mostrarInfo);
+} 
+
+google.maps.event.addDomListener(window, 'load', initMapa);
+
+function buscarDireccion(direccion) {
+    var geoCoder = new google.maps.Geocoder(direccion);
+    var consulta = {address:direccion};
+    geoCoder.geocode(consulta, function(result, status){
+        localizacion = new google.maps.LatLng(result[0].geometry.location.lat(), result[0].geometry.location.lng());
+    });
+    
+    mapa.panTo(localizacion);
+    mapa.setZoom(17);
+    marcador.setPosition(localizacion);
+    
+}
+>>>>>>> origin/master
